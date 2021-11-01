@@ -9,8 +9,22 @@
 
 
 ## 개발진행과정
-2021.11.1
+2021.11.1<br>
+프론트엔드
 1. next.js 설치
-2. 부트스트랩 설치
-3. 부트스트랩 초기환경 구성
-4. 
+2. Bootstrap 설치
+3. Bootstrap 초기환경 구성
+4. redux 초기환경 구성
+    * redux 설치
+    * 전역 store 구현
+5. 상단바, 사이드바 구현
+
+백엔드
+1. spring initializr로 프로젝트 파일 생성
+2. 라이브러리 의존성 주입
+3. application.yml 초기설정 구성
+4. 더미데이터 저장및 데이터베이스 연동 위한 엔티티클래스 구현
+5. CORS를 하기위해 WebConfiguration클래스 구현
+
+### 깃허브
+https://github.com/jaeyoon492/-weekly-coffee/commit/793095bb2e7c406d5ef0da7628f49d85f6c5158c
