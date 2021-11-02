@@ -9,10 +9,10 @@
 
 
 ## 개발진행과정
-2021.11.1<br>
+# 2021년 11월 1일
 커밋한 내용입니다.<br>
-https://github.com/jaeyoon492/-weekly-coffee/commit/793095bb2e7c406d5ef0da7628f49d85f6c5158c <br>
-프론트엔드
+ https://github.com/jaeyoon492/-weekly-coffee/commit/793095bb2e7c406d5ef0da7628f49d85f6c5158c<br><br>
+## 프론트엔드
 1. next.js 설치
 2. Bootstrap 설치
 3. Bootstrap 초기환경 구성
@@ -21,7 +21,7 @@ https://github.com/jaeyoon492/-weekly-coffee/commit/793095bb2e7c406d5ef0da7628f4
     * 전역 store 구현
 5. 상단바, 사이드바 구현
 
-백엔드
+## 백엔드
 1. spring initializr로 프로젝트 파일 생성
 2. 라이브러리 의존성 주입
 3. application.yml 초기설정 구성
@@ -34,6 +34,29 @@ https://github.com/jaeyoon492/-weekly-coffee/commit/793095bb2e7c406d5ef0da7628f4
 2. https://www.notion.so/2021-11-1-PostgreSQL-70aa33c1ec2b405b9d3373136ec7ebe7
 
 ### 관련 참고자료
-https://parksrazor.tistory.com/218<br>
-https://jogeum.net/8<br>
-https://jeong-pro.tistory.com/231<br>
+- https://parksrazor.tistory.com/218<br>
+- https://jogeum.net/8<br>
+- https://jeong-pro.tistory.com/231<br>
+<br>
+# 2021년 11월 2일
+커밋한 내용입니다.<br>
+ https://github.com/jaeyoon492/-weekly-coffee/commit/059c4b99e148efd06e4906df76dc08657d7bdcbc<br><br>
+
+## 백엔드
+1. 데이터 연관관계 수정 ( 기존 양방향 -> 단방향 )
+2. 메세지큐 연동 테스트
+3. 더미테이터 전송 테스트
+4. 메세지큐 provider메세지큐 전송으로 주문요청 전송 구현
+5. 메세지큐 consumer메세지큐 송신으로 주문요청 수신및 저장 구현
+6. 엔티티 클래스 이름 변경 (SQL예약어 관련)
+
+### 관련 트러블 슈팅
+1.  https://www.notion.so/SQL-Order-859e4216ee8146eb9419e184d61489f5
+2. https://www.notion.so/11-03-9f46fe4424d54c9cacdd0a119430931d
+
+
+### 관련 참고자료
+- https://jogeum.net/7?category=766565<br>
+- https://www.koke.kr/coffee/287<br>
+- https://velog.io/@youns1121/JPA-object-references-an-unsaved-transient-instance-save-the-transient-instance-before-flushing-%EC%97%90%EB%9F%AC<br>
+
