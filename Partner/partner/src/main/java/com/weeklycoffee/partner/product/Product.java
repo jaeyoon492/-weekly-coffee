@@ -13,18 +13,13 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-//@IdClass(ProductId.class)
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long productId;
-
-    @ManyToOne
-    @JoinColumn(name = "partnerId")
-    private Partner partner;
+    private long id;
 
     private String productName;
-    private String productUploadDate;
+    private long productUploadDate;
     private int productPrice;
     private String productImageId;
     private int salesStatus;

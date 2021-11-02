@@ -14,7 +14,7 @@ public class MemberController {
         this.repo = repo;
     }
 
-    @PostMapping("/user")
+    @PostMapping("/members")
     public Member addUser(@RequestBody Member member){
         return repo.save(member);
     }

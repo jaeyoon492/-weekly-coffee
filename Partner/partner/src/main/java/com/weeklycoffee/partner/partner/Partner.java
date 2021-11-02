@@ -1,6 +1,7 @@
 package com.weeklycoffee.partner.partner;
 
 import com.weeklycoffee.partner.member.Member;
+import com.weeklycoffee.partner.subscribe.Subscribe;
 import com.weeklycoffee.partner.product.Product;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -21,12 +22,17 @@ public class Partner {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @OneToOne
+    @OneToOne //단방향 -> Member
     @JoinColumn(name = "memberId")
     private Member member;
 
-    @OneToMany(mappedBy = "partner")
-    private List<Product> product;
+    @OneToMany //단방향 <- List<Product>
+    @JoinColumn(name = "partnerId")
+    private List<Product> products;
+
+    @OneToMany
+    @JoinColumn(name = "partnerId")
+    private List<Subscribe> subscribes;
 
     private String businessRegistrationNumber;
     private String ceoName;
