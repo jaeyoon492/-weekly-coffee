@@ -28,9 +28,6 @@ https://github.com/jaeyoon492/-weekly-coffee/commit/793095bb2e7c406d5ef0da7628f4
 4. 더미데이터 저장및 데이터베이스 연동 위한 엔티티클래스 구현
 5. CORS를 사용하기 위해 WebConfiguration클래스 구현
 
-### 깃허브
-https://github.com/jaeyoon492/-weekly-coffee/commit/793095bb2e7c406d5ef0da7628f49d85f6c5158c
-
 ### 관련 트러블 슈팅
 1.  https://www.notion.so/2021-11-1-DB-6c2073a4966943eca1c43b8a9cdf3e45
 
