@@ -10,6 +10,8 @@
 
 ## 개발진행과정
 2021.11.1<br>
+커밋한 내용입니다.<br>
+https://github.com/jaeyoon492/-weekly-coffee/commit/793095bb2e7c406d5ef0da7628f49d85f6c5158c <br>
 프론트엔드
 1. next.js 설치
 2. Bootstrap 설치
