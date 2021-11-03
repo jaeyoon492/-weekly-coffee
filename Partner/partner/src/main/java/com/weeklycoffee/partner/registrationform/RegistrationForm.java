@@ -31,5 +31,4 @@ public class RegistrationForm {
     private String bank;
     private String bankAccount;
     private String registrationDate;
-
 }

@@ -15,9 +15,9 @@ import javax.persistence.*;
 @Entity
 @IdClass(SubscribeDetailId.class)
 public class SubscribeDetail {
-
     @Id
     private long SubscribeId;
+
     @Id
     private int seq;
 
@@ -25,7 +25,6 @@ public class SubscribeDetail {
     private Product product;
 
     private long partnerId;
-
     private String productName;
     private int productPrice;
     private int beanAmount;

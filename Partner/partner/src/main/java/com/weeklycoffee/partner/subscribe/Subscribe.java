@@ -22,6 +22,8 @@ public class Subscribe {
     @JoinColumn(name = "subscribeId")
     private List<SubscribeDetail> details;
 
+    private long partnerId;
+
     private String subscribeDate;
     private int subscriberId;
     private String subscriberName;

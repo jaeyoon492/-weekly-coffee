@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Formula;
 
 import javax.persistence.*;
 import java.util.List;
@@ -22,18 +23,9 @@ public class Partner {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @OneToOne //단방향 -> Member
-    @JoinColumn(name = "memberId")
-    private Member member;
-
-    @OneToMany //단방향 <- List<Product>
-    @JoinColumn(name = "partnerId")
-    private List<Product> products;
-
-    @OneToMany
-    @JoinColumn(name = "partnerId")
-    private List<Subscribe> subscribes;
-
+//    @ElementCollection(targetClass=String.class)
+//    @Formula("(SELECT p FROM product p WHERE p.partner_id = id LIMIT 4)")
+//    private List<Product> products;
     private String businessRegistrationNumber;
     private String ceoName;
     private String companyName;

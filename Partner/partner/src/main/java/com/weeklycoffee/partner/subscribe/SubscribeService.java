@@ -40,6 +40,7 @@ public class SubscribeService {
         }
 
         Subscribe toSubscribe = Subscribe.builder()
+                .partnerId(subRequest.getPartnerId())
                 .subscribeDate(subRequest.getSubscribeDate())
                 .subscriberId(subRequest.getSubscriberId())
                 .subscriberName(subRequest.getSubscriberName())
@@ -55,7 +56,6 @@ public class SubscribeService {
         Subscribe saveSubscribe = subscribeRepo.save(toSubscribe);
 
         List<SubscribeDetail> toSubscribeDetail = new ArrayList<SubscribeDetail>();
-        List<Long> partnersId = new ArrayList<>();
         for (SubscribeRequest.SubscribeDetail reqDetail : subRequest.getSubscribeDetails()) {
             SubscribeDetail detail = SubscribeDetail.builder()
                     .SubscribeId(saveSubscribe.getId()) // 상위 레코드의 id값
@@ -72,14 +72,11 @@ public class SubscribeService {
                     .productImageId(reqDetail.getProductImageId())
                     .build();
 
-            partnersId.add(reqDetail.getPartnerId());
-
             toSubscribeDetail.add(detail);
         }
         List<SubscribeDetail> saveSubscribeDetails = subscribeDetailRepo.saveAll(toSubscribeDetail);
 
         saveSubscribe.setDetails(saveSubscribeDetails);
-//        subscribeController.addSubscribe(saveSubscribe,partnersId);
 
         return saveSubscribe;
     }

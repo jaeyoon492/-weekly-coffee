@@ -19,6 +19,7 @@ public class SubscribeRequest {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int subscriberId;
 
+    private long partnerId;
     private String subscribeDate;
     private String subscriberName;
     private String subscriberPhone;

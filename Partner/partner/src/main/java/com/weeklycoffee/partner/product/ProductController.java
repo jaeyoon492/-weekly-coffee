@@ -22,9 +22,10 @@ public class ProductController {
     }
 
     @Transactional(rollbackOn = Exception.class)
-    @PostMapping("/products/{id}")
-    public Product createProduct(@PathVariable long id, @RequestBody Product product) {
+    @PostMapping("/products")
+    public Product createProduct(@RequestBody Product product) {
         Product productItem = Product.builder()
+                .partnerId(product.getPartnerId())
                 .productName(product.getProductName())
                 .productUploadDate(new Date().getTime())
                 .productPrice(product.getProductPrice())
@@ -50,8 +51,6 @@ public class ProductController {
                 .build();
 
         Product productResponse = productRepo.save(productItem);
-        partnerController.saveProduct(id,productItem);
-
         return productResponse;
     }
 }

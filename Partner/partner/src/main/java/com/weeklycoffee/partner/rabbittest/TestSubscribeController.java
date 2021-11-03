@@ -23,6 +23,7 @@ public class TestSubscribeController {
     public SubscribeRequest sendOrder(@RequestBody SubscribeRequest testSubReq) {
 
         SubscribeRequest toSubscribe = SubscribeRequest.builder()
+                .partnerId(testSubReq.getPartnerId())
                 .subscribeDate(testSubReq.getSubscribeDate())
                 .subscriberId(testSubReq.getSubscriberId())
                 .subscriberName(testSubReq.getSubscriberName())

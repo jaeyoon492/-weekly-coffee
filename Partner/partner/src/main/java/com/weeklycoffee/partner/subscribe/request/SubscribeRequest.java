@@ -13,6 +13,7 @@ import java.util.List;
 @Builder
 public class SubscribeRequest {
 
+    private long partnerId;
     private String subscribeDate;
     private int subscriberId;
     private String subscriberName;
