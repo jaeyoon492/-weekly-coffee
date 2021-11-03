@@ -1,4 +1,4 @@
-package com.weeklycoffee.partner.subscribe.request;
+package com.weeklycoffee.partner.subscribe.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

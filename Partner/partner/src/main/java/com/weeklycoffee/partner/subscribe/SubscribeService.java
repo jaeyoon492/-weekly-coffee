@@ -2,7 +2,7 @@ package com.weeklycoffee.partner.subscribe;
 
 import com.weeklycoffee.partner.product.Product;
 
-import com.weeklycoffee.partner.subscribe.request.SubscribeRequest;
+import com.weeklycoffee.partner.subscribe.response.SubscribeRequest;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

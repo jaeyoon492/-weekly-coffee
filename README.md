@@ -111,3 +111,31 @@ Member 1 : RegistrationForm 1 = OneToOne (단방향)
 </div>
 </details>
 
+# 2021년 11월 3일
+커밋 링크입니다.<br>
+ https://github.com/jaeyoon492/-weekly-coffee/commit/4687ea14cc3184afa7eb364656cc9e3f62c24ba5<br>
+
+<details>
+<summary>여기를 눌러주세요</summary>
+<div markdown="1">       
+
+## 백엔드
+1. 데이터 연관관계 수정 ( 필요없는 관계 삭제 )
+2. PartnerRespons클래스(Dto) 추가
+3. PartnerConnect메서드 구현 (접속하면 상위 제품 4개만 조회 해주는 페이징 메서드)
+4. Member - Partner OneToOne 관계맵핑 (구현중)
+
+### 관련 트러블 슈팅
+1.  https://www.notion.so/DDL-NULL-e6d4f18cdcf04bf0abdfc28d4d50dda1
+2. https://www.notion.so/Formula-582a874abab54f708e688cba67435e44
+
+
+### 관련 참고자료
+- https://www-swpro-com.tistory.com/24<br>
+- https://sundries-in-myidea.tistory.com/91<br>
+- https://mycup.tistory.com/223<br>
+- https://greatlaboratory.dev/spring/jpa-03/<br>
+- https://mycup.tistory.com/223<br>
+
+</div>
+</details>

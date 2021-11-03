@@ -2,6 +2,7 @@ package com.weeklycoffee.partner.partner;
 
 import com.weeklycoffee.partner.member.Member;
 import com.weeklycoffee.partner.product.Product;
+import com.weeklycoffee.partner.subscribe.Subscribe;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -20,6 +21,8 @@ public class PartnerResponse {
     private long id;
     private List<Product> products;
 
+    private long memberId;
+
     private String businessRegistrationNumber;
     private String ceoName;
     private String companyName;
@@ -30,6 +33,7 @@ public class PartnerResponse {
 
     public PartnerResponse(Partner partner, List<Product> products) {
         this.id = partner.getId();
+        this.memberId = partner.getMemberId();
         this.products = products;
         this.businessRegistrationNumber = partner.getBusinessRegistrationNumber();
         this.ceoName = partner.getCeoName();

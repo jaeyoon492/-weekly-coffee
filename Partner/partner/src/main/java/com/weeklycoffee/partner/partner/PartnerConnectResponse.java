@@ -18,6 +18,7 @@ public class PartnerConnectResponse {
     private long id;
     private Page<Product> pages;
 
+    private long memberId;
     private String businessRegistrationNumber;
     private String ceoName;
     private String companyName;
@@ -28,6 +29,7 @@ public class PartnerConnectResponse {
 
     public PartnerConnectResponse(Partner partner, Page<Product> page){
         this.id = partner.getId();
+        this.memberId = partner.getMemberId();
         this.pages = page;
         this.businessRegistrationNumber = partner.getBusinessRegistrationNumber();
         this.ceoName = partner.getCeoName();

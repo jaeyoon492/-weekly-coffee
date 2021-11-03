@@ -35,6 +35,8 @@ public class QPartner extends EntityPathBase<Partner> {
 
     public final NumberPath<Long> id = createNumber("id", Long.class);
 
+    public final NumberPath<Long> memberId = createNumber("memberId", Long.class);
+
     public QPartner(String variable) {
         super(Partner.class, forVariable(variable));
     }

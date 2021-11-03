@@ -2,6 +2,8 @@ package com.weeklycoffee.partner.partner;
 
 import com.weeklycoffee.partner.product.Product;
 import com.weeklycoffee.partner.product.ProductRepository;
+import com.weeklycoffee.partner.subscribe.Subscribe;
+import com.weeklycoffee.partner.subscribe.SubscribeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -15,11 +17,13 @@ import java.util.Optional;
 public class PartnerController {
     private PartnerRepository partnerRepo;
     private ProductRepository productRepo;
+    private SubscribeRepository subscribeRepo;
 
     @Autowired
-    public PartnerController(PartnerRepository partnerRepo, ProductRepository productRepo) {
+    public PartnerController(PartnerRepository partnerRepo, ProductRepository productRepo, SubscribeRepository subscribeRepo) {
         this.partnerRepo = partnerRepo;
         this.productRepo = productRepo;
+        this.subscribeRepo = subscribeRepo;
     }
 
     @PostMapping("/partners")
@@ -48,9 +52,14 @@ public class PartnerController {
         return new PartnerConnectResponse(partner, products);
     }
 
-//    @GetMapping("/partners/{id}")
-//    public List<Partner> getPartners(){
-//        return partnerRepo.findAll();
-//    }
+    @GetMapping("/partner/subscribes/{id}")
+    public List<Subscribe> getSubscribesContainingPartnerId(@PathVariable long id) {
+        return subscribeRepo.findByPartnerId(id);
+    }
+
+    @GetMapping("/partners")
+    public List<Partner> getPartners() {
+        return partnerRepo.findAll();
+    }
 
 }

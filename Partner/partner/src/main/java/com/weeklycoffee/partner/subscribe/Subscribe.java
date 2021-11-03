@@ -17,11 +17,6 @@ public class Subscribe {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-
-    @OneToMany //단방향 <- List<subscribeDetail>
-    @JoinColumn(name = "subscribeId")
-    private List<SubscribeDetail> details;
-
     private long partnerId;
 
     private String subscribeDate;
@@ -34,4 +29,8 @@ public class Subscribe {
     private int totalPayment;
     private boolean orderCheck;
     private long createdTime;
+
+    @OneToMany //단방향 <- List<subscribeDetail>
+    @JoinColumn(name = "subscribeId")
+    private List<SubscribeDetail> details;
 }
