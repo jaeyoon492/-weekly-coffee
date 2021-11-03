@@ -1,6 +1,6 @@
-package com.weeklycoffee.partner.rabbitprovider;
+package com.weeklycoffee.partner.rabbittest;
 
-import com.weeklycoffee.partner.rabbitprovider.request.SubscribeRequest;
+import com.weeklycoffee.partner.rabbittest.request.SubscribeRequest;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

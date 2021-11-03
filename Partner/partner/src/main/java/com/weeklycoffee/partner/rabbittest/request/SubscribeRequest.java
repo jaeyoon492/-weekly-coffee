@@ -1,4 +1,4 @@
-package com.weeklycoffee.partner.rabbitprovider.request;
+package com.weeklycoffee.partner.rabbittest.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

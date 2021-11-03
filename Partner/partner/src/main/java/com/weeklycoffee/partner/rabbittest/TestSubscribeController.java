@@ -1,15 +1,12 @@
-package com.weeklycoffee.partner.rabbitprovider;
+package com.weeklycoffee.partner.rabbittest;
 
-import com.weeklycoffee.partner.product.Product;
-import com.weeklycoffee.partner.rabbitprovider.request.SubscribeRequest;
-import com.weeklycoffee.partner.subscribe.Subscribe;
+import com.weeklycoffee.partner.rabbittest.request.SubscribeRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @RestController
