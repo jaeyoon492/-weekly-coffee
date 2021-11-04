@@ -110,6 +110,7 @@ Member 1 : RegistrationForm 1 = OneToOne (단방향)
 
 </div>
 </details>
+<br>
 
 # 2021년 11월 3일
 커밋 링크입니다.<br>
@@ -137,5 +138,48 @@ Member 1 : RegistrationForm 1 = OneToOne (단방향)
 - https://greatlaboratory.dev/spring/jpa-03/<br>
 - https://mycup.tistory.com/223<br>
 
+</div>
+</details>
+<br>
+
+# 2021년 11월 4일
+커밋 링크입니다.<br>
+ - https://github.com/jaeyoon492/-weekly-coffee/commit/a93e077b6540f7bd164102c4c9a57546bb0aa499
+ - https://github.com/jaeyoon492/-weekly-coffee/commit/90052d2184bcbd5f3113531c426b4d3742458237
+ <br>
+
+
+<details>
+<summary>여기를 눌러주세요</summary>
+<div markdown="1">       
+
+## 백엔드
+1. 파트너 제품 조회 수정 (전체 조회 -> 페이징 조회)
+2. 파트너 주문 조회 수정 (전체 조회 -> 페이징 조회)
+3. 입점신청 메세지큐 연동 (파트너 -> 어드민)
+4. 입점승인 메세지큐 연동 (어드민 -> 파트너)
+5. 승인된 멤버에게 파트너 권한 부여 구현 ( 파트너 객체 전송 )
+6. 멤버와 파트너 관계 수정 (OneToOne 단방향 {부모 = 맴버})
+7. 파트너 객체가 전송되면 해당 멤버의 Id로 멤버를 찾아 수신한 파트너 객체와 결합( 파트너 권한 + true )
+8. Dto 추가구현
+
+
+### 관련 트러블 슈팅
+- OneToOne 관계때 겪은 어려움
+    1. https://www.notion.so/OneToOne-e911fa6e06554d74adb2b37a134dc7ea
+
+
+### 관련 참고자료
+- OneToOne 관련
+    - https://ict-nroo.tistory.com/126<br>
+    - https://greatlaboratory.dev/spring/jpa-03/<br>
+    - https://mycup.tistory.com/223<br>
+- JPA Query creation관련
+    - https://sundries-in-myidea.tistory.com/91<br>
+
+### 주요 키워드
+- 순환참조
+- FK
+- outer join
 </div>
 </details>

@@ -18,10 +18,10 @@ public class Member {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    private String name;
+    private boolean partnerState;
+
     @OneToOne
     @JoinColumn(name = "partnerId")
     private Partner partner;
-
-    private String name;
-    private boolean partnerState;
 }

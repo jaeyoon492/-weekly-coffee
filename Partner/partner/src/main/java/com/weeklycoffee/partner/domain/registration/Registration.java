@@ -22,11 +22,13 @@ public class Registration {
 
     private long memberId;
     private String businessRegistrationNumber;
+
     private String ceoName;
     private String companyIntroduce;
     private String companyAddress;
     private String companyContact;
     private String companyEmail;
+
     private String bank;
     private String bankAccount;
     private String registrationDate;

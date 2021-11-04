@@ -20,21 +20,18 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    private long partnerId;
-    
-    private String productName;
     private long productUploadDate;
+    private String productName;
     private int productPrice;
     private String productImageId;
     private int salesStatus;
-    private String foodType;
-    private String expirationData;
-    private String manufacturer;
-    private String manufacturingDate;
+
+    private long partnerId;
     private String companyName;
     private String companyIntroduce;
     private String companyAddress;
     private String companyContact;
+
     private String beanType;
     private String beanTag;
     private String processing;
@@ -44,4 +41,9 @@ public class Product {
     private String cupNote;
     private String roastingPoint;
     private String variety;
+
+    private String foodType;
+    private String expirationData;
+    private String manufacturer;
+    private String manufacturingDate;
 }
