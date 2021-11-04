@@ -1,4 +1,4 @@
-package com.weeklycoffee.partner.rabbittest.admin;
+package com.weeklycoffee.partner.rabbittest.admin.confirm;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;

@@ -1,4 +1,4 @@
-package com.weeklycoffee.partner.domain.registration;
+package com.weeklycoffee.partner.rabbittest.admin.confirm;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,15 +9,13 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class RegistrationRequest {
+public class PartnerConfirmRequest {
     private long memberId;
     private String businessRegistrationNumber;
     private String ceoName;
-    private String companyIntroduce;
-    private String companyAddress;
+    private String companyName;
     private String companyContact;
+    private String companyAddress;
+    private String companyIntroduce;
     private String companyEmail;
-    private String bank;
-    private String bankAccount;
-    private String registrationDate;
 }

@@ -19,9 +19,9 @@ public class MemberController {
         return repo.save(member);
     }
 
-    @GetMapping("/members/{id}")
-    public Member getMember(@PathVariable long id) {
-        Optional<Member> memberOptional = repo.findById(id);
+    @GetMapping("/members/{memberId}")
+    public Member getMember(@PathVariable long memberId) {
+        Optional<Member> memberOptional = repo.findById(memberId);
         Member member = memberOptional.get();
         return member;
     }

@@ -1,6 +1,7 @@
 package com.weeklycoffee.partner.domain.product;
 
-import com.weeklycoffee.partner.domain.partner.PartnerController;
+import com.weeklycoffee.partner.domain.partner.PartnerRepository;
+import com.weeklycoffee.partner.domain.product.dto.ProductRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -12,44 +13,43 @@ import java.util.Date;
 @RestController
 public class ProductController {
     private ProductRepository productRepo;
-    private PartnerController partnerController;
 
     @Autowired
-    public ProductController(ProductRepository productRepo,PartnerController partnerController) {
+    public ProductController(ProductRepository productRepo) {
         this.productRepo = productRepo;
-        this.partnerController = partnerController;
     }
 
     @Transactional(rollbackOn = Exception.class)
     @PostMapping("/products")
-    public Product createProduct(@RequestBody Product product) {
+    public Product createProduct(@RequestBody ProductRequest productReq) {
         Product productItem = Product.builder()
-                .partnerId(product.getPartnerId())
-                .productName(product.getProductName())
+                .partnerId(productReq.getPartnerId())
+                .productName(productReq.getProductName())
                 .productUploadDate(new Date().getTime())
-                .productPrice(product.getProductPrice())
-                .productImageId(product.getProductImageId())
+                .productPrice(productReq.getProductPrice())
+                .productImageId(productReq.getProductImageId())
                 .salesStatus(0)
-                .foodType(product.getFoodType())
-                .expirationData(product.getExpirationData())
-                .manufacturer(product.getManufacturer())
-                .manufacturingDate(product.getManufacturingDate())
-                .companyName(product.getCompanyName())
-                .companyIntroduce(product.getCompanyIntroduce())
-                .companyAddress(product.getCompanyAddress())
-                .companyContact(product.getCompanyContact())
-                .beanType(product.getBeanType())
-                .beanTag(product.getBeanTag())
-                .processing(product.getProcessing())
-                .country(product.getCountry())
-                .region(product.getRegion())
-                .farm(product.getFarm())
-                .cupNote(product.getCupNote())
-                .roastingPoint(product.getRoastingPoint())
-                .variety(product.getVariety())
+                .foodType(productReq.getFoodType())
+                .expirationData(productReq.getExpirationData())
+                .manufacturer(productReq.getManufacturer())
+                .manufacturingDate(productReq.getManufacturingDate())
+                .companyName(productReq.getCompanyName())
+                .companyIntroduce(productReq.getCompanyIntroduce())
+                .companyAddress(productReq.getCompanyAddress())
+                .companyContact(productReq.getCompanyContact())
+                .beanType(productReq.getBeanType())
+                .beanTag(productReq.getBeanTag())
+                .processing(productReq.getProcessing())
+                .country(productReq.getCountry())
+                .region(productReq.getRegion())
+                .farm(productReq.getFarm())
+                .cupNote(productReq.getCupNote())
+                .roastingPoint(productReq.getRoastingPoint())
+                .variety(productReq.getVariety())
                 .build();
 
         Product productResponse = productRepo.save(productItem);
         return productResponse;
     }
+
 }

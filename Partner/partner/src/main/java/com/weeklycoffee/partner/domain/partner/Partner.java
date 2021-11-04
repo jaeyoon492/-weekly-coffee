@@ -23,11 +23,7 @@ public class Partner {
 //    @Formula("(SELECT p FROM product p WHERE p.partner_id = id LIMIT 4)")
 //    private List<Product> products;
 
-    @OneToOne
-    @JoinColumn(name = "memberId")
-    @JsonIgnore
-    private Member member;
-
+    private long memberId;
     private String businessRegistrationNumber;
     private String ceoName;
     private String companyName;

@@ -1,5 +1,6 @@
-package com.weeklycoffee.partner.rabbittest.admin;
+package com.weeklycoffee.partner.rabbittest.admin.confirm;
 
+import com.weeklycoffee.partner.rabbittest.admin.confirm.PartnerConfirmRequest;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

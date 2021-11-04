@@ -1,5 +1,6 @@
 package com.weeklycoffee.partner.domain.subscribe;
 
+import com.weeklycoffee.partner.domain.subscribe.subscribeDetail.SubscribeDetail;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

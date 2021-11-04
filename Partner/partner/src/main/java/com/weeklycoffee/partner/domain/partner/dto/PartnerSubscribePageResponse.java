@@ -1,6 +1,8 @@
-package com.weeklycoffee.partner.domain.partner;
+package com.weeklycoffee.partner.domain.partner.dto;
 
+import com.weeklycoffee.partner.domain.partner.Partner;
 import com.weeklycoffee.partner.domain.product.Product;
+import com.weeklycoffee.partner.domain.subscribe.Subscribe;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -11,9 +13,9 @@ import org.springframework.data.domain.Page;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class PartnerConnectResponse {
+public class PartnerSubscribePageResponse {
     private long id;
-    private Page<Product> pages;
+    private Page<Subscribe> pages;
 
     private long memberId;
     private String businessRegistrationNumber;
@@ -23,10 +25,10 @@ public class PartnerConnectResponse {
     private String companyAddress;
     private String companyIntroduce;
     private String companyEmail;
-
-    public PartnerConnectResponse(Partner partner, Page<Product> page){
+    
+    public PartnerSubscribePageResponse(Partner partner, Page<Subscribe> page){
         this.id = partner.getId();
-        this.memberId = partner.getMember().getId();
+        this.memberId = partner.getMemberId();
         this.pages = page;
         this.businessRegistrationNumber = partner.getBusinessRegistrationNumber();
         this.ceoName = partner.getCeoName();

@@ -1,6 +1,5 @@
-package com.weeklycoffee.partner.rabbittest.admin;
+package com.weeklycoffee.partner.rabbittest.admin.registration;
 
-import com.weeklycoffee.partner.rabbittest.admin.RegistrationResponse;
 import com.weeklycoffee.partner.domain.registration.Registration;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Service;
