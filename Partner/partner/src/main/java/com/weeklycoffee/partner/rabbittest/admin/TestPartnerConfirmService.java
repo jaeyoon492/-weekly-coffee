@@ -1,0 +1,20 @@
+package com.weeklycoffee.partner.rabbittest.admin;
+
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+@Service
+public class TestPartnerConfirmService {
+
+    private RabbitTemplate rabbit;
+
+    @Autowired
+    public TestPartnerConfirmService(RabbitTemplate rabbit){
+        this.rabbit = rabbit;
+    }
+
+    public void sendPartnerRequest(PartnerConfirmRequest testRequest){
+        rabbit.convertAndSend("admin.partner.send",testRequest);
+    }
+}
