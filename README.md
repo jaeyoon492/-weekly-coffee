@@ -183,3 +183,37 @@ Member 1 : RegistrationForm 1 = OneToOne (단방향)
 - outer join
 </div>
 </details>
+
+
+# 2021년 11월 5일
+커밋 링크입니다.<br>
+ - https://github.com/jaeyoon492/-weekly-coffee/commit/944563fc880f86d840c9b74142ca3e513e5c548e
+ <br>
+
+
+<details>
+<summary>여기를 눌러주세요</summary>
+<div markdown="1">       
+
+## 백엔드
+1. image데이터를 S3에 저장하기 위해 file업로드 기능을 구현
+
+## 프론트엔드
+1. Next.js 화면 이동 구현 [ 주문관리, 제품목록, 홈, 제품등록 ]
+2. 제품목록 화면 react-bootstrap으로 퍼블리싱
+
+
+### 관련 트러블 슈팅
+- 멀티파트 파일 업로드 용량제한 문제
+    1. https://www.notion.so/260ce3046dd147bca8d8ebe5359e5e6c
+
+
+### 관련 참고자료
+- 파일 업로드 관련
+    1. https://artiiicy.tistory.com/8
+    
+
+### 주요 키워드
+- multipart.MaxUploadSizeExceededException
+</div>
+</details>
