@@ -1,6 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
 import profileReducer from "./modules/profile";
 import alertReducer from "./modules/alert";
+import progressReducer from "./modules/progress";
 
 // 최상위 사가
 import rootSaga from "../middleware";
@@ -12,6 +13,7 @@ export const store = configureStore({
   reducer: {
     profile: profileReducer,
     alert: alertReducer,
+    progress: progressReducer,
   },
 
   middleware: [sagaMiddleware],

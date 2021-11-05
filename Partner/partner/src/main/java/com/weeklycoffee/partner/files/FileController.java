@@ -49,7 +49,7 @@ public class FileController {
                 metadata
         ).withCannedAcl(CannedAccessControlList.PublicRead);
 
-        // 3. 객체 업로드
+        // 객체 업로드
         PutObjectResult result = client.putObject(req);
         System.out.println(result.getETag());
 
@@ -68,9 +68,6 @@ public class FileController {
         System.out.println("Delete Complete: " + objectKey);
     }
 
-    // OTP(One Time Password): secret + unique + time
-    // 예) dalkhfnaslkdfw9123asdf + jaeyoon492 + 1600234023040
-    // object key 해시 생성
     private String getObjectKey(String filename) {
         String secret = "1q2w3e4r";
         long timestamp = new Date().getTime(); // 밀리세컨드 unix epoch time

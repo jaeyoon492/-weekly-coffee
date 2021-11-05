@@ -4,6 +4,7 @@ import type { AppProps } from "next/app";
 
 import { Provider } from "react-redux";
 import { store } from "../provider";
+import Layout from "../components/layout";
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (

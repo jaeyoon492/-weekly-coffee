@@ -1,18 +1,11 @@
 import type { NextPage } from 'next'
-import Head from 'next/head'
-import Sidebar from "../components/about/sidebar";
-import AppBar from "../components/appbar";
+import { useRouter } from "next/dist/client/router";
 
 const Home: NextPage = () => {
   return (
-    <div>
-      <main>
-        <header>
-          <AppBar />
-        </header>
-        <Sidebar />
-      </main>
-    </div>
+    <section>
+      <h1>접속 첫화면</h1>
+    </section>
   );
 };
 
