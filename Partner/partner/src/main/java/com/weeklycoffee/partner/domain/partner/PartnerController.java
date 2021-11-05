@@ -17,9 +17,9 @@ import java.util.Optional;
 
 @RestController
 public class PartnerController {
-    private PartnerRepository partnerRepo;
-    private ProductRepository productRepo;
-    private SubscribeRepository subscribeRepo;
+    private final PartnerRepository partnerRepo;
+    private final ProductRepository productRepo;
+    private final SubscribeRepository subscribeRepo;
 
     @Autowired
     public PartnerController(PartnerRepository partnerRepo, ProductRepository productRepo, SubscribeRepository subscribeRepo) {

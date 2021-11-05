@@ -23,7 +23,7 @@ public class Product {
     private long productUploadDate;
     private String productName;
     private int productPrice;
-    private String productImageId;
+    private String productImageUrl;
     private int salesStatus;
 
     private long partnerId;

@@ -17,7 +17,7 @@ public class ProductRequest {
     private String productName;
     private long productUploadDate;
     private int productPrice;
-    private String productImageId;
+    private String productImageUrl;
     private int salesStatus;
     private String foodType;
     private String expirationData;

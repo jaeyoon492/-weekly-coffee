@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class TestPartnerConfirmService {
 
-    private RabbitTemplate rabbit;
+    private final RabbitTemplate rabbit;
 
     @Autowired
     public TestPartnerConfirmService(RabbitTemplate rabbit){

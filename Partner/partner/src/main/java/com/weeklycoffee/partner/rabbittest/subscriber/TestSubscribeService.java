@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class TestSubscribeService {
-    private RabbitTemplate rabbit;
+    private final RabbitTemplate rabbit;
 
     @Autowired
     public TestSubscribeService(RabbitTemplate rabbit){

@@ -23,8 +23,8 @@ public class SubscribeService {
         saveSubscribe(subscribe);
     }
     
-    private SubscribeRepository subscribeRepo;
-    private SubscribeDetailRepository subscribeDetailRepo;
+    private final SubscribeRepository subscribeRepo;
+    private final SubscribeDetailRepository subscribeDetailRepo;
 
     @Autowired
     public SubscribeService(SubscribeRepository subscribeRepo, SubscribeDetailRepository subscribeDetailRepository) {

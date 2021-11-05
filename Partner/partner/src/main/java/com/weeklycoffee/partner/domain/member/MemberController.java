@@ -7,7 +7,7 @@ import java.util.Optional;
 
 @RestController
 public class MemberController {
-    private MemberRepository repo;
+    private final MemberRepository repo;
 
     @Autowired
     public MemberController(MemberRepository repo) {

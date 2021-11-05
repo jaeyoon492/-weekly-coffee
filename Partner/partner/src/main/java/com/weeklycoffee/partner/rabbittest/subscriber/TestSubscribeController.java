@@ -11,7 +11,7 @@ import java.util.List;
 @RestController
 public class TestSubscribeController {
 
-    private TestSubscribeService service;
+    private final TestSubscribeService service;
 
     @Autowired
     public TestSubscribeController(TestSubscribeService service) {

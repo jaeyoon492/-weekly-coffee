@@ -11,8 +11,8 @@ import java.util.Optional;
 
 @Service
 public class PartnerService {
-    private PartnerRepository partnerRepo;
-    private MemberRepository memberRepo;
+    private final PartnerRepository partnerRepo;
+    private final MemberRepository memberRepo;
 
     @Autowired
     public PartnerService(PartnerRepository partnerRepo, MemberRepository memberRepo) {

@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class TestPartnerConfirmController {
 
-   private TestPartnerConfirmService service;
+   private final TestPartnerConfirmService service;
 
    @Autowired
    public TestPartnerConfirmController(TestPartnerConfirmService service){

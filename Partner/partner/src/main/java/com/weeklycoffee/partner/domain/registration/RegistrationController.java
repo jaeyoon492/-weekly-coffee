@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 public class RegistrationController {
 
-    private RegistrationRepository repo;
-    private RegistrationService service;
+    private final RegistrationRepository repo;
+    private final RegistrationService service;
 
     @Autowired
     public RegistrationController(RegistrationRepository repo, RegistrationService service) {
