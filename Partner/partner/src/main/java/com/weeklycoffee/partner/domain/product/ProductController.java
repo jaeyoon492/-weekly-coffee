@@ -32,7 +32,7 @@ public class ProductController {
                 .productUploadDate(new Date().getTime())
                 .productPrice(productReq.getProductPrice())
                 .productImageUrl(productReq.getProductImageUrl())
-                .salesStatus(1)
+                .salesStatus(0)
                 .foodType(productReq.getFoodType())
                 .expirationData(productReq.getExpirationData())
                 .manufacturer(productReq.getManufacturer())
