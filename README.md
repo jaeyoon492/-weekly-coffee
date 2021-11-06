@@ -217,3 +217,51 @@ Member 1 : RegistrationForm 1 = OneToOne (단방향)
 - multipart.MaxUploadSizeExceededException
 </div>
 </details>
+
+
+# 2021년 11월 6일
+커밋 링크입니다.<br>
+ - https://github.com/jaeyoon492/-weekly-coffee/commit/3f3aa8144703554a62adc1b1c1a3af236010f768
+ <br>
+
+
+<details>
+<summary>여기를 눌러주세요</summary>
+<div markdown="1">       
+
+## 백엔드
+1. 어드민 담당 개발자에게 사정이 생겨 admin서비스의 입점승인 기능을  기존에 테스트로 구현했던 부분을 수정하여 입접신청 요청에 자동으로 승인하도록 변경 구현했습니다.
+<br>
+
+### 해당 경로 입니다.
+- Partner/partner/src/main/java/com/weeklycoffee/partner/rabbittest/admin/registration/AdminRegistrationService.java
+
+
+## 프론트엔드
+1. 입점신청 화면 테이블 구현
+2. 리덕스로 상태관리 구현
+    - 기능별 리덕스 슬라이스 환경구성 완료
+    - partner, subscribe, member, registration...
+3. Material UI 라이브러리의 DashBoard템플릿으로 기존 대쉬보드 형태에서 바꿔주었습니다.
+4. Redux-Saga를 사용하기위해 Root-Saga 초기환경 구성을 하였습니다.
+5. Redux-Saga로 백엔드와 통신중 일어나는 사이드이펙트를 처리하였습니다.
+6. 입점신청 프론트엔드 <-> 백엔드 연동 완료
+
+### 관련 트러블 슈팅
+- Next.js에 Material Ui 설치시 몇가지 설치안되는 것들이 존재했습니다.
+
+
+### 관련 참고자료
+- CSS 선택자 관련
+    1. https://code.tutsplus.com/ko/tutorials/the-30-css-selectors-you-must-memorize--net-16048
+
+- Material UI 사이트
+    1. https://mui.com/
+    
+- Next.js 개발환경, 배포환경 세팅시 .env 관련
+    1. https://medium.com/@qsx314/2-next-js-%EC%84%B8%ED%8C%85%ED%95%98%EA%B8%B0-env-483e14958752
+
+### 주요 키워드
+- UI 라이브러리, Redux, Redux-Saga, .env, ActionCreate함수, reducer, saga
+</div>
+</details>

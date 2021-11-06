@@ -5,6 +5,7 @@ import { AppDispatch, RootState } from "../../provider";
 import { RegistrationItem } from "../../provider/modules/registration";
 import { requestAddRegistration } from "../../middleware/modules/registration";
 import { useRouter } from "next/dist/client/router";
+import DashboardContent from "../../components/material/Dashboard";
 
 const Registration = () => {
   const companyNameInput = useRef<HTMLInputElement>(null);
@@ -64,8 +65,8 @@ const Registration = () => {
 
   return (
     <>
-      <Layout>
-        <article style={{ width: "90%" }} className="mx-auto mt-4">
+      <DashboardContent>
+        <article style={{ width: "85%" }} className="mx-auto mt-4">
           <section>
             <h1 className="">입점신청</h1>
             <div className=" justify-content-md-center w-75  mt-4">
@@ -197,7 +198,7 @@ const Registration = () => {
             </div>
           </section>
         </article>
-      </Layout>
+      </DashboardContent>
     </>
   );
 };

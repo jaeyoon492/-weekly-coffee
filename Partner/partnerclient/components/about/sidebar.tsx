@@ -10,9 +10,6 @@ export default function Sidebar() {
       <Head>
         <title>파트너메인</title>
       </Head>
-      <div className="mx-auto">
-        <Profile />
-      </div>
       <Link href="/registration">
         <a>입점신청</a>
       </Link>

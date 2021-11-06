@@ -1,0 +1,26 @@
+.main {
+    width: 100%;
+    /* height: calc(100vh - 64px); */
+    overflow: auto;
+  }
+  
+  .main > section {
+    padding: 32px;
+  }
+  
+  .article {
+    width: 100%;
+    margin: 0px auto;
+  }
+
+  .input {
+    margin: 32px 0;
+    text-decoration: none;
+    background: white;
+    border-radius: 4px;
+    border: 1px solid #eaeaea;
+    font-size: 14px;
+    padding: 8px 16px;
+    height: 28px;
+  }
+  

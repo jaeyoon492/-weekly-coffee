@@ -1,6 +1,7 @@
 import React, { useRef } from "react";
 import { useSelector } from "react-redux";
 import Layout from "../../../components/layout";
+import DashboardContent from "../../../components/material/Dashboard";
 import { RootState } from "../../../provider";
 
 const ProductCreate = () => {
@@ -34,11 +35,11 @@ const ProductCreate = () => {
 
   return (
     <>
-      <Layout>
-        <article style={{ width: "90%" }} className="mx-auto mt-4">
+      <DashboardContent>
+        <article style={{ width: "85%" }} className="mx-auto mt-4">
           <section>
             <h1 className="">제품 등록</h1>
-            <div className="d-flex justify-content-md-center mt-4">
+            <div className="justify-content-md-center w-75  mt-4">
               <form>
                 <table className="table">
                   <tbody>
@@ -273,7 +274,7 @@ const ProductCreate = () => {
             </div>
           </section>
         </article>
-      </Layout>
+      </DashboardContent>
     </>
   );
 };

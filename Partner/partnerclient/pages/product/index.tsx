@@ -1,6 +1,6 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import Layout from "../../components/layout";
+import DashboardContent from "../../components/material/Dashboard";
 import { RootState } from "../../provider";
 
 const ProductItem = () => {
@@ -41,7 +41,7 @@ const ProductItem = () => {
 
 const ProductList = () => {
   return (
-    <Layout>
+    <DashboardContent>
       <article style={{ width: "90%" }} className="mx-auto mt-4">
         <section>
           <h1 className="">제품 목록</h1>
@@ -64,7 +64,7 @@ const ProductList = () => {
           </div>
         </section>
       </article>
-    </Layout>
+    </DashboardContent>
   );
 };
 
