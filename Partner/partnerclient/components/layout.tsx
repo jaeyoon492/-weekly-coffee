@@ -22,7 +22,7 @@ export default function Layout({ children }: LayoutProps) {
         <header>
           <AppBar />
         </header>
-        <div style={{ height: "700px" }} className="d-flex">
+        <div style={{ height: "800px" }} className="d-flex">
           <Sidebar />
           <main className={styles.main}>
             {children}
@@ -30,6 +30,7 @@ export default function Layout({ children }: LayoutProps) {
             <AlertStack />
           </main>
         </div>
+        <footer>푸터요</footer>
       </article>
     </>
   );

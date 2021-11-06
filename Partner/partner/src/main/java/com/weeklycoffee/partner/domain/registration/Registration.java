@@ -28,6 +28,7 @@ public class Registration {
     private String companyAddress;
     private String companyContact;
     private String companyEmail;
+    private String companyName;
 
     private String bank;
     private String bankAccount;

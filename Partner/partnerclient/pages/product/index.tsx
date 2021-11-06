@@ -1,271 +1,70 @@
-import Link from "next/link";
 import React from "react";
-import { Button, Table } from "react-bootstrap";
-import styeld from "styled-components";
+import { useSelector } from "react-redux";
 import Layout from "../../components/layout";
+import { RootState } from "../../provider";
+
+const ProductItem = () => {
+  const product = useSelector((state: RootState) => state.product);
+  return (
+    <>
+      {product.map((item, index) => (
+        <tr>
+          <td>{index}</td>
+          <td>{item.productName}</td>
+          <td>{item.productPrice}</td>
+          <td>{item.productImageId}</td>
+          <td>
+            <button className="btn btn-primary">
+              <i className="bi bi-plus" />
+              판매개시
+            </button>
+            <button className="btn btn-primary">
+              <i className="bi bi-plus" />
+              판매중단
+            </button>
+          </td>
+          <td>
+            <button className="btn btn-primary">
+              <i className="bi bi-plus" />
+              수정
+            </button>
+            <button className="btn btn-primary">
+              <i className="bi bi-plus" />
+              삭제
+            </button>
+          </td>
+        </tr>
+      ))}
+    </>
+  );
+};
 
 const ProductList = () => {
   return (
-    <>
-      <Layout>
-        <article style={{ width: "90%" }} className="mx-auto mt-4">
-          <section>
-            <h1 className="">제품 목록</h1>
-            <div className="d-flex justify-content-md-center mt-4">
-              <Table striped bordered>
-                <thead>
-                  <tr>
-                    <th>#</th>
-                    <th>고객님 성함</th>
-                    <th>고객님 전화번호</th>
-                    <th>고객님 ID</th>
-                    <th>날짜</th>
-                    <th>시간</th>
-                    <th>작업</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>1</td>
-                    <td>박진석</td>
-                    <td>010-4462-0529</td>
-                    <td>pjsjja458</td>
-                    <td>2021-11-06</td>
-                    <td>18:00</td>
-                    <td style={{ width: "130px" }}></td>
-                  </tr>
-                  <tr>
-                    <td>1</td>
-                    <td>박진석</td>
-                    <td>010-4462-0529</td>
-                    <td>pjsjja458</td>
-                    <td>2021-11-06</td>
-                    <td>18:00</td>
-                    <td style={{ width: "130px" }}></td>
-                  </tr>
-                  <tr>
-                    <td>1</td>
-                    <td>박진석</td>
-                    <td>010-4462-0529</td>
-                    <td>pjsjja458</td>
-                    <td>2021-11-06</td>
-                    <td>18:00</td>
-                    <td style={{ width: "130px" }}></td>
-                  </tr>
-                  <tr>
-                    <td>1</td>
-                    <td>박진석</td>
-                    <td>010-4462-0529</td>
-                    <td>pjsjja458</td>
-                    <td>2021-11-06</td>
-                    <td>18:00</td>
-                    <td style={{ width: "130px" }}></td>
-                  </tr>
-                  <tr>
-                    <td>1</td>
-                    <td>박진석</td>
-                    <td>010-4462-0529</td>
-                    <td>pjsjja458</td>
-                    <td>2021-11-06</td>
-                    <td>18:00</td>
-                    <td style={{ width: "130px" }}></td>
-                  </tr>
-                  <tr>
-                    <td>1</td>
-                    <td>박진석</td>
-                    <td>010-4462-0529</td>
-                    <td>pjsjja458</td>
-                    <td>2021-11-06</td>
-                    <td>18:00</td>
-                    <td style={{ width: "130px" }}></td>
-                  </tr>
-                  <tr>
-                    <td>1</td>
-                    <td>박진석</td>
-                    <td>010-4462-0529</td>
-                    <td>pjsjja458</td>
-                    <td>2021-11-06</td>
-                    <td>18:00</td>
-                    <td style={{ width: "130px" }}></td>
-                  </tr>
-                  <tr>
-                    <td>1</td>
-                    <td>박진석</td>
-                    <td>010-4462-0529</td>
-                    <td>pjsjja458</td>
-                    <td>2021-11-06</td>
-                    <td>18:00</td>
-                    <td style={{ width: "130px" }}></td>
-                  </tr>
-                  <tr>
-                    <td>1</td>
-                    <td>박진석</td>
-                    <td>010-4462-0529</td>
-                    <td>pjsjja458</td>
-                    <td>2021-11-06</td>
-                    <td>18:00</td>
-                    <td style={{ width: "130px" }}></td>
-                  </tr>
-                  <tr>
-                    <td>1</td>
-                    <td>박진석</td>
-                    <td>010-4462-0529</td>
-                    <td>pjsjja458</td>
-                    <td>2021-11-06</td>
-                    <td>18:00</td>
-                    <td style={{ width: "130px" }}></td>
-                  </tr>
-                  <tr>
-                    <td>1</td>
-                    <td>박진석</td>
-                    <td>010-4462-0529</td>
-                    <td>pjsjja458</td>
-                    <td>2021-11-06</td>
-                    <td>18:00</td>
-                    <td style={{ width: "130px" }}></td>
-                  </tr>
-                  <tr>
-                    <td>1</td>
-                    <td>박진석</td>
-                    <td>010-4462-0529</td>
-                    <td>pjsjja458</td>
-                    <td>2021-11-06</td>
-                    <td>18:00</td>
-                    <td style={{ width: "130px" }}></td>
-                  </tr>
-                  <tr>
-                    <td>1</td>
-                    <td>박진석</td>
-                    <td>010-4462-0529</td>
-                    <td>pjsjja458</td>
-                    <td>2021-11-06</td>
-                    <td>18:00</td>
-                    <td style={{ width: "130px" }}></td>
-                  </tr>
-                  <tr>
-                    <td>1</td>
-                    <td>박진석</td>
-                    <td>010-4462-0529</td>
-                    <td>pjsjja458</td>
-                    <td>2021-11-06</td>
-                    <td>18:00</td>
-                    <td style={{ width: "130px" }}></td>
-                  </tr>
-                  <tr>
-                    <td>1</td>
-                    <td>박진석</td>
-                    <td>010-4462-0529</td>
-                    <td>pjsjja458</td>
-                    <td>2021-11-06</td>
-                    <td>18:00</td>
-                    <td style={{ width: "130px" }}></td>
-                  </tr>
-                  <tr>
-                    <td>1</td>
-                    <td>박진석</td>
-                    <td>010-4462-0529</td>
-                    <td>pjsjja458</td>
-                    <td>2021-11-06</td>
-                    <td>18:00</td>
-                    <td style={{ width: "130px" }}></td>
-                  </tr>
-                  <tr>
-                    <td>1</td>
-                    <td>박진석</td>
-                    <td>010-4462-0529</td>
-                    <td>pjsjja458</td>
-                    <td>2021-11-06</td>
-                    <td>18:00</td>
-                    <td style={{ width: "130px" }}></td>
-                  </tr>
-                  <tr>
-                    <td>1</td>
-                    <td>박진석</td>
-                    <td>010-4462-0529</td>
-                    <td>pjsjja458</td>
-                    <td>2021-11-06</td>
-                    <td>18:00</td>
-                    <td style={{ width: "130px" }}></td>
-                  </tr>
-                  <tr>
-                    <td>1</td>
-                    <td>박진석</td>
-                    <td>010-4462-0529</td>
-                    <td>pjsjja458</td>
-                    <td>2021-11-06</td>
-                    <td>18:00</td>
-                    <td style={{ width: "130px" }}></td>
-                  </tr>
-                  <tr>
-                    <td>1</td>
-                    <td>박진석</td>
-                    <td>010-4462-0529</td>
-                    <td>pjsjja458</td>
-                    <td>2021-11-06</td>
-                    <td>18:00</td>
-                    <td style={{ width: "130px" }}></td>
-                  </tr>
-                  <tr>
-                    <td>1</td>
-                    <td>박진석</td>
-                    <td>010-4462-0529</td>
-                    <td>pjsjja458</td>
-                    <td>2021-11-06</td>
-                    <td>18:00</td>
-                    <td style={{ width: "130px" }}></td>
-                  </tr>
-                  <tr>
-                    <td>1</td>
-                    <td>박진석</td>
-                    <td>010-4462-0529</td>
-                    <td>pjsjja458</td>
-                    <td>2021-11-06</td>
-                    <td>18:00</td>
-                    <td style={{ width: "130px" }}></td>
-                  </tr>
-                  <tr>
-                    <td>1</td>
-                    <td>박진석</td>
-                    <td>010-4462-0529</td>
-                    <td>pjsjja458</td>
-                    <td>2021-11-06</td>
-                    <td>18:00</td>
-                    <td style={{ width: "130px" }}></td>
-                  </tr>
-                  <tr>
-                    <td>1</td>
-                    <td>박진석</td>
-                    <td>010-4462-0529</td>
-                    <td>pjsjja458</td>
-                    <td>2021-11-06</td>
-                    <td>18:00</td>
-                    <td style={{ width: "130px" }}></td>
-                  </tr>
-                  <tr>
-                    <td>1</td>
-                    <td>박진석</td>
-                    <td>010-4462-0529</td>
-                    <td>pjsjja458</td>
-                    <td>2021-11-06</td>
-                    <td>18:00</td>
-                    <td style={{ width: "130px" }}></td>
-                  </tr>
-                  <tr>
-                    <td>1</td>
-                    <td>박진석</td>
-                    <td>010-4462-0529</td>
-                    <td>pjsjja458</td>
-                    <td>2021-11-06</td>
-                    <td>18:00</td>
-                    <td style={{ width: "130px" }}></td>
-                  </tr>
-                </tbody>
-              </Table>
-            </div>
-          </section>
-        </article>
-      </Layout>
-    </>
+    <Layout>
+      <article style={{ width: "90%" }} className="mx-auto mt-4">
+        <section>
+          <h1 className="">제품 목록</h1>
+          <div className="d-flex justify-content-md-center mt-4">
+            <table className="table  table-striped">
+              <thead>
+                <tr>
+                  <th scope="col">No</th>
+                  <th scope="col">제품명</th>
+                  <th scope="col">단가</th>
+                  <th scope="col">제품사진</th>
+                  <th scope="col">판매상태</th>
+                  <th scope="col">기능</th>
+                </tr>
+              </thead>
+              <tbody>
+                <ProductItem />
+              </tbody>
+            </table>
+          </div>
+        </section>
+      </article>
+    </Layout>
   );
 };
 

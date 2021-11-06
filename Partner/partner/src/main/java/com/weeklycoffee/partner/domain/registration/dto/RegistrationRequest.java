@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 @Builder
 public class RegistrationRequest {
     private long memberId;
+    private String companyName;
     private String businessRegistrationNumber;
     private String ceoName;
     private String companyIntroduce;

@@ -1,11 +1,14 @@
 import type { NextPage } from 'next'
 import { useRouter } from "next/dist/client/router";
+import Layout from "../components/layout";
 
 const Home: NextPage = () => {
   return (
-    <section>
-      <h1>접속 첫화면</h1>
-    </section>
+    <Layout>
+      <section>
+        <h1>접속 첫화면</h1>
+      </section>
+    </Layout>
   );
 };
 

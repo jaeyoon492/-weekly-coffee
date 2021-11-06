@@ -13,7 +13,10 @@ export default function Sidebar() {
       <div className="mx-auto">
         <Profile />
       </div>
-      <Link href="/product/create">
+      <Link href="/registration">
+        <a>입점신청</a>
+      </Link>
+      <Link href="/product/edit/create">
         <a>제품등록</a>
       </Link>
       <Link href="/product">

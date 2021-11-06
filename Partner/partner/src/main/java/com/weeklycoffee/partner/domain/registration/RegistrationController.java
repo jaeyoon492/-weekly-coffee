@@ -16,11 +16,12 @@ public class RegistrationController {
         this.service = service;
     }
 
-    @PostMapping("/registration/{memberId}")
-    public Registration createRegistrationForm(@RequestBody RegistrationRequest registrationRequest, @PathVariable long memberId) {
+    @PostMapping("/registration")
+    public Registration createRegistrationForm(@RequestBody RegistrationRequest registrationRequest) {
 
         Registration registration = Registration.builder()
-                .memberId(memberId)
+                .memberId(registrationRequest.getMemberId())
+                .companyName(registrationRequest.getCompanyName())
                 .businessRegistrationNumber(registrationRequest.getBusinessRegistrationNumber())
                 .ceoName(registrationRequest.getCeoName())
                 .companyIntroduce(registrationRequest.getCompanyIntroduce())

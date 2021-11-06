@@ -15,6 +15,7 @@ public class RegistrationResponse {
     private long memberId;
     private String businessRegistrationNumber;
     private String ceoName;
+    private String companyName;
     private String companyIntroduce;
     private String companyAddress;
     private String companyContact;
