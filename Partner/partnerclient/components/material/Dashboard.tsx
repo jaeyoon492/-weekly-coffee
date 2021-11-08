@@ -17,10 +17,13 @@ import Link from "@mui/material/Link";
 import MenuIcon from "@mui/icons-material/Menu";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import NotificationsIcon from "@mui/icons-material/Notifications";
-import { mainListItems } from "./listItems";
-import styles from "./layout.module.css";
+import { mainListItems, notPartnerListItems } from "./listItems";
+import styles from "./main.module.css";
 import Progress from "../progress";
 import AlertStack from "../alert/alertStack";
+import { useSelector } from "react-redux";
+import { RootState } from "../../provider";
+import { margin } from "@mui/system";
 
 const drawerWidth: number = 240;
 
@@ -72,7 +75,18 @@ const Drawer = styled(MuiDrawer, {
   },
 }));
 
-const mdTheme = createTheme();
+const mdTheme = createTheme({
+  palette: {
+    primary: {
+      main: "#357a38",
+      contrastText: "#fff",
+    },
+    secondary: {
+      main: "#f44336",
+      contrastText: "#000",
+    },
+  },
+});
 
 interface DashboardProps {
   children: React.ReactNode;
@@ -84,9 +98,17 @@ export default function DashboardContent({ children }: DashboardProps) {
     setOpen(!open);
   };
 
+  const isPartner = useSelector(
+    (state: RootState) => state.member.partnerState
+  );
+
   return (
     <ThemeProvider theme={mdTheme}>
-      <Box sx={{ display: "flex" }}>
+      <Box
+        sx={{
+          display: "flex",
+        }}
+      >
         <CssBaseline />
         <AppBar position="absolute" open={open}>
           <Toolbar
@@ -106,17 +128,21 @@ export default function DashboardContent({ children }: DashboardProps) {
             >
               <MenuIcon />
             </IconButton>
+
             <Typography
               component="h1"
-              variant="h6"
+              variant="h5"
               color="inherit"
               noWrap
               sx={{ flexGrow: 1 }}
             >
-              파트너서비스
+              <Link href="/">
+                <span className="text-light">파트너서비스</span>
+              </Link>
             </Typography>
+
             <IconButton color="inherit">
-              <Badge badgeContent={4} color="secondary">
+              <Badge badgeContent={2} color="secondary">
                 <NotificationsIcon />
               </Badge>
             </IconButton>
@@ -129,15 +155,27 @@ export default function DashboardContent({ children }: DashboardProps) {
               alignItems: "center",
               justifyContent: "flex-end",
               px: [1],
+              backgroundColor: "#4caf50",
             }}
           >
             <IconButton onClick={toggleDrawer}>
-              <ChevronLeftIcon />
+              <ChevronLeftIcon fontSize="large" htmlColor="#fff" />
             </IconButton>
           </Toolbar>
-          <Divider />
-          <List>{mainListItems}</List>
-          <Divider />
+          {isPartner && (
+            <>
+              <Divider />
+              <List>{mainListItems}</List>
+              <Divider />
+            </>
+          )}
+          {!isPartner && (
+            <>
+              <Divider />
+              <List>{notPartnerListItems}</List>
+              <Divider />
+            </>
+          )}
         </Drawer>
         <Box
           component="main"
@@ -153,11 +191,18 @@ export default function DashboardContent({ children }: DashboardProps) {
         >
           <Toolbar />
           <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-            <main className={styles.main}>
-              {children}
-              <Progress />
-              <AlertStack />
-            </main>
+            <Paper
+              sx={{
+                p: 8,
+                display: "flex",
+              }}
+            >
+              <main className={styles.main}>
+                {children}
+                <Progress />
+                <AlertStack />
+              </main>
+            </Paper>
           </Container>
         </Box>
       </Box>

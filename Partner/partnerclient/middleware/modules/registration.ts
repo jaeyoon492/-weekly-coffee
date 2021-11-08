@@ -5,7 +5,13 @@ import {
   RegistrationItem,
 } from "../../provider/modules/registration";
 import registrationReducer from "../../provider/modules/registration";
-import { call, put, select, takeEvery } from "@redux-saga/core/effects";
+import {
+  call,
+  put,
+  select,
+  takeEvery,
+  takeLatest,
+} from "@redux-saga/core/effects";
 import { endProgress, startProgress } from "../../provider/modules/progress";
 import {
   RegistrationRequest,
@@ -14,15 +20,15 @@ import {
 import { AxiosResponse } from "axios";
 import registrationApi from "../../api/registration";
 import { addAlert } from "../../provider/modules/alert";
-import { useSelector } from "react-redux";
 import { RootState } from "../../provider";
 
 export const requestAddRegistration = createAction<RegistrationItem>(
   `${registrationReducer.name}/requestAddRegistration`
 );
 
-function* addDataNext(action: PayloadAction<RegistrationItem>) {
-  yield console.log("--addDataNext--");
+function* addRegistrationDataNext(action: PayloadAction<RegistrationItem>) {
+  console.log("사이드 이펙트 시작");
+  yield console.log("--addRegistrationDataNext--");
   yield console.log(action);
 
   try {
@@ -35,6 +41,7 @@ function* addDataNext(action: PayloadAction<RegistrationItem>) {
     const memberId: number = yield select(
       (state: RootState) => state.member.memberId
     );
+    console.log(memberId);
 
     const registrationRequest: RegistrationRequest = {
       memberId: memberId,
@@ -60,29 +67,32 @@ function* addDataNext(action: PayloadAction<RegistrationItem>) {
     // spinner 사라지게 하기
     yield put(endProgress());
 
+    console.log(result.data);
+
     // ------ 2. redux state를 변경함
     // 백엔드에서 처리한 데이터 객체로 state를 변경할 payload 객체를 생성
-    const registration: RegistrationItem = {
-      companyName: result.data.companyName,
-      businessRegistrationNumber: result.data.businessRegistrationNumber,
-      ceoName: result.data.ceoName,
-      companyIntroduce: result.data.companyIntroduce,
-      companyAddress: result.data.companyAddress,
-      companyContact: result.data.companyContact,
-      companyEmail: result.data.companyEmail,
-      bank: result.data.bank,
-      bankAccount: result.data.bankAccount,
-      registrationDate: result.data.registrationDate,
-    };
-
-    yield put(addRegistration(registration));
+    if (result) {
+      const registration: RegistrationItem = {
+        registrationId: result.data.registrationId,
+        memberId: result.data.memberId,
+        companyName: result.data.companyName,
+        businessRegistrationNumber: result.data.businessRegistrationNumber,
+        ceoName: result.data.ceoName,
+        companyIntroduce: result.data.companyIntroduce,
+        companyAddress: result.data.companyAddress,
+        companyContact: result.data.companyContact,
+        companyEmail: result.data.companyEmail,
+        bank: result.data.bank,
+        bankAccount: result.data.bankAccount,
+        registrationDate: result.data.registrationDate,
+      };
+      yield put(addRegistration(registration));
+    }
 
     yield put(initialIsComplted());
   } catch (e: any) {
-    // 에러발생
-    // spinner 사라지게 하기
     yield put(endProgress());
-    // alert박스를 추가해줌
+
     yield put(
       addAlert({ id: nanoid(), variant: "danger", message: e.message })
     );
@@ -90,5 +100,5 @@ function* addDataNext(action: PayloadAction<RegistrationItem>) {
 }
 
 export default function* registrationSaga() {
-  yield takeEvery(requestAddRegistration, addDataNext);
+  yield takeLatest(requestAddRegistration, addRegistrationDataNext);
 }

@@ -13,7 +13,7 @@ import org.springframework.data.domain.Page;
 @NoArgsConstructor
 @Builder
 public class PartnerConnectResponse {
-    private long id;
+    private long partnerId;
     private Page<Product> pages;
 
     private long memberId;
@@ -26,7 +26,7 @@ public class PartnerConnectResponse {
     private String companyEmail;
 
     public PartnerConnectResponse(Partner partner, Page<Product> page){
-        this.id = partner.getId();
+        this.partnerId = partner.getPartnerId();
         this.memberId = partner.getMemberId();
         this.pages = page;
         this.businessRegistrationNumber = partner.getBusinessRegistrationNumber();

@@ -1,4 +1,6 @@
 import { fork } from "redux-saga/effects";
+import memberSaga from "./modules/member";
+import partnerSaga from "./modules/partner";
 import registrationSaga from "./modules/registration";
 
 // 최상위의 Saga(generator 함수)를 내보기함
@@ -9,4 +11,6 @@ export default function* rootSaga() {
   // 각각 하위사가가 다른 실행 컨텍스트에서 수행됨
   // yield fork(contactSaga);
   yield fork(registrationSaga);
+  yield fork(memberSaga);
+  yield fork(partnerSaga);
 }

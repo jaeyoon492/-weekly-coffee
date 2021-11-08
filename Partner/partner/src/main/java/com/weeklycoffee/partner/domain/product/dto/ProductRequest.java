@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 public class ProductRequest {
-    private long id;
+    private long productId;
 
     private long partnerId;
 

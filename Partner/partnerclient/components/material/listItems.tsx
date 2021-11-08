@@ -21,14 +21,6 @@ export const mainListItems = (
     </ListItem>
     <ListItem button>
       <ListItemIcon>
-        <AssignmentIcon />
-      </ListItemIcon>
-      <Link href="/registration">
-        <a>입점신청</a>
-      </Link>
-    </ListItem>
-    <ListItem button>
-      <ListItemIcon>
         <PointOfSaleIcon />
       </ListItemIcon>
       <Link href="/product/edit/create">
@@ -49,6 +41,19 @@ export const mainListItems = (
       </ListItemIcon>
       <Link href="/subscribe">
         <a className={styles.a}>주문관리</a>
+      </Link>
+    </ListItem>
+  </div>
+);
+
+export const notPartnerListItems = (
+  <div className={styles.div}>
+    <ListItem button>
+      <ListItemIcon>
+        <AssignmentIcon />
+      </ListItemIcon>
+      <Link href="/registration">
+        <a>입점신청</a>
       </Link>
     </ListItem>
   </div>

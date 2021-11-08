@@ -1,6 +1,8 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export interface RegistrationItem {
+  registrationId?: number;
+  memberId: number;
   companyName: string;
   businessRegistrationNumber: string;
   ceoName: string;
@@ -20,6 +22,7 @@ export interface RegistrationState {
 
 const initialState: RegistrationState = {
   data: {
+    memberId: 0,
     companyName: "",
     businessRegistrationNumber: "",
     ceoName: "",
@@ -41,7 +44,8 @@ export const registrationSlice = createSlice({
     addRegistration: (state, action: PayloadAction<RegistrationItem>) => {
       const registration = action.payload;
       if (registration) {
-        state.data.ceoName = registration.ceoName;
+        state.data.registrationId = registration.registrationId;
+        state.data.memberId = registration.memberId;
         state.data.businessRegistrationNumber =
           registration.businessRegistrationNumber;
         state.data.ceoName = registration.ceoName;

@@ -32,7 +32,7 @@ public class AdminRegistrationService {
     public Registration saveRegistration(RegistrationResponse testRegistration){
 
         Registration registration = Registration.builder()
-                .id(testRegistration.getId())
+                .registrationId(testRegistration.getRegistrationId())
                 .memberId(testRegistration.getMemberId())
                 .businessRegistrationNumber(testRegistration.getBusinessRegistrationNumber())
                 .ceoName(testRegistration.getCeoName())

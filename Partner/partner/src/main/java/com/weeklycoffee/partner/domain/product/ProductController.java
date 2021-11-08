@@ -27,6 +27,7 @@ public class ProductController {
     public Product createProduct(@RequestBody ProductRequest productReq) {
 
         Product productItem = Product.builder()
+                .productId(productReq.getProductId())
                 .partnerId(productReq.getPartnerId())
                 .productName(productReq.getProductName())
                 .productUploadDate(new Date().getTime())
@@ -53,6 +54,7 @@ public class ProductController {
                 .build();
 
         Product productResponse = productRepo.save(productItem);
+
         return productResponse;
     }
 

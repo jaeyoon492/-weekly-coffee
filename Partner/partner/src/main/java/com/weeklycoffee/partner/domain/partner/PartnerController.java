@@ -1,5 +1,6 @@
 package com.weeklycoffee.partner.domain.partner;
 
+import com.weeklycoffee.partner.domain.partner.dto.PartnerAllResponse;
 import com.weeklycoffee.partner.domain.partner.dto.PartnerConnectResponse;
 import com.weeklycoffee.partner.domain.partner.dto.PartnerSubscribePageResponse;
 import com.weeklycoffee.partner.domain.product.Product;
@@ -13,6 +14,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -66,6 +68,16 @@ public class PartnerController {
         Page<Subscribe> subscribePage = subscribeRepo.findByPartnerId(PageRequest.of(page, size, Sort.by("id").descending()), partnerId);
 
         return new PartnerSubscribePageResponse(partner, subscribePage);
+    }
+
+    @GetMapping("/partner/test/{partnerId}")
+    public PartnerAllResponse getPartnerAll(@PathVariable long partnerId){
+        Optional<Partner> partnerOptional = partnerRepo.findById(partnerId);
+        Partner partner = partnerOptional.get();
+
+        List<Subscribe> subscribes = subscribeRepo.findByPartnerId(Sort.by("id").descending(), partnerId);
+        List<Product> products = productRepo.findByPartnerId(Sort.by("id").descending(), partnerId);
+        return new PartnerAllResponse(partner, subscribes, products);
     }
 
     // (안씀)

@@ -14,6 +14,7 @@ import java.util.List;
 public class SubscribeResponse {
 
     private long partnerId;
+    private long subscribeId;
     private String subscribeDate;
     private int subscriberId;
     private String subscriberName;

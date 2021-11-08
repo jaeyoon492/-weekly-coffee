@@ -17,7 +17,7 @@ import javax.persistence.*;
 public class Partner {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private long partnerId;
 
 //    @ElementCollection(targetClass = String.class)
 //    @Formula("(SELECT p FROM product p WHERE p.partner_id = id LIMIT 4)")

@@ -18,7 +18,7 @@ import javax.persistence.Id;
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private long productId;
 
     private long productUploadDate;
     private String productName;

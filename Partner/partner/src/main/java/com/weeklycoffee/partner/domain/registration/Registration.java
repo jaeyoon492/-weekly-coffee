@@ -18,7 +18,7 @@ import javax.persistence.Id;
 public class Registration {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private long registrationId;
 
     private long memberId;
     private String businessRegistrationNumber;

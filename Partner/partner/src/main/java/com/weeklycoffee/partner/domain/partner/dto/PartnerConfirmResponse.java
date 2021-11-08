@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 public class PartnerConfirmResponse {
+    private long partnerId;
     private long memberId;
     private String businessRegistrationNumber;
     private String ceoName;

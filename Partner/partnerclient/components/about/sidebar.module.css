@@ -22,10 +22,6 @@
   transition: all 0.125s ease;
 }
 
-.nav > a:hover {
-  background-color: #eaeaea;
-}
-
 .input {
   margin: 32px 0;
   text-decoration: none;

@@ -10,16 +10,16 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 public class RegistrationResponse {
-    private long id;
+    private long registrationId;
 
     private long memberId;
     private String businessRegistrationNumber;
     private String ceoName;
-    private String companyName;
     private String companyIntroduce;
     private String companyAddress;
     private String companyContact;
     private String companyEmail;
+    private String companyName;
     private String bank;
     private String bankAccount;
     private String registrationDate;

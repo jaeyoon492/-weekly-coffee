@@ -1,6 +1,8 @@
 import axios from "axios";
 
 export interface RegistrationResponse {
+  registrationId: number;
+  memberId: number;
   companyName: string;
   businessRegistrationNumber: string;
   ceoName: string;

@@ -19,7 +19,7 @@ import javax.persistence.ManyToOne;
 @IdClass(SubscribeDetailId.class)
 public class SubscribeDetail {
     @Id
-    private long SubscribeId;
+    private long subscribeId;
 
     @Id
     private int seq;

@@ -37,6 +37,6 @@ public class RegistrationController {
         // 입력저장 할때는 dto를 쓰는데 메세지로 보낼때도 dto를 쓰는게 좋을까?
         service.sendRegistration(registration);
 
-        return null;
+        return registration;
     }
 }

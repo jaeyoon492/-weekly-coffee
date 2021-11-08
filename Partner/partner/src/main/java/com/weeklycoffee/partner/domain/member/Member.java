@@ -16,7 +16,7 @@ import javax.persistence.*;
 public class Member {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private long memberId;
 
     private String name;
     private boolean partnerState;

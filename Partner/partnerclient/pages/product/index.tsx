@@ -1,10 +1,16 @@
-import React from "react";
-import { useSelector } from "react-redux";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import DashboardContent from "../../components/material/Dashboard";
-import { RootState } from "../../provider";
+import { requestFetchMember } from "../../middleware/modules/member";
+import { AppDispatch, RootState } from "../../provider";
 
 const ProductItem = () => {
+  const dispatch = useDispatch<AppDispatch>();
   const product = useSelector((state: RootState) => state.product);
+  // useEffect(() => {
+  //   dispatch(requestFetchMember(1));
+  // }, []);
+
   return (
     <>
       {product.map((item, index) => (
@@ -12,7 +18,7 @@ const ProductItem = () => {
           <td>{index}</td>
           <td>{item.productName}</td>
           <td>{item.productPrice}</td>
-          <td>{item.productImageId}</td>
+          <td>{item.productImageUrl}</td>
           <td>
             <button className="btn btn-primary">
               <i className="bi bi-plus" />

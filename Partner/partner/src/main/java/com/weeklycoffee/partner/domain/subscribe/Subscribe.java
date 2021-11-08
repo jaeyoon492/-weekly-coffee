@@ -17,7 +17,7 @@ import java.util.List;
 public class Subscribe {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private long subscribeId;
     private long partnerId;
 
     private String subscribeDate;

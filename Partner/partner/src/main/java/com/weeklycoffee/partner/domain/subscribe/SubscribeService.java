@@ -23,8 +23,8 @@ public class SubscribeService {
         saveSubscribe(subscribe);
     }
     
-    private final SubscribeRepository subscribeRepo;
-    private final SubscribeDetailRepository subscribeDetailRepo;
+    private  SubscribeRepository subscribeRepo;
+    private  SubscribeDetailRepository subscribeDetailRepo;
 
     @Autowired
     public SubscribeService(SubscribeRepository subscribeRepo, SubscribeDetailRepository subscribeDetailRepository) {
@@ -41,6 +41,7 @@ public class SubscribeService {
         }
 
         Subscribe toSubscribe = Subscribe.builder()
+                .subscribeId(subRes.getSubscribeId())
                 .partnerId(subRes.getPartnerId())
                 .subscribeDate(subRes.getSubscribeDate())
                 .subscriberId(subRes.getSubscriberId())
@@ -59,10 +60,10 @@ public class SubscribeService {
         List<SubscribeDetail> toSubscribeDetail = new ArrayList<SubscribeDetail>();
         for (SubscribeResponse.SubscribeDetail reqDetail : subRes.getSubscribeDetails()) {
             SubscribeDetail detail = SubscribeDetail.builder()
-                    .SubscribeId(saveSubscribe.getId()) // 상위 레코드의 id값
+                    .subscribeId(saveSubscribe.getSubscribeId()) // 상위 레코드의 id값
                     .partnerId(reqDetail.getPartnerId())
                     .seq(subRes.getSubscribeDetails().indexOf(reqDetail) + 1) // 주문 제품 순번
-                    .product(Product.builder().id(reqDetail.getProductId()).build()) // 주문 제품
+                    .product(Product.builder().productId(reqDetail.getProductId()).build()) // 주문 제품
                     .productName(reqDetail.getProductName())
                     .productPrice(reqDetail.getProductPrice())
                     .beanAmount(reqDetail.getBeanAmount())
