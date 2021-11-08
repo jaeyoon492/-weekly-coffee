@@ -7,6 +7,10 @@ import { AppDispatch, RootState } from "../../provider";
 const Subscribe = () => {
   const dispatch = useDispatch<AppDispatch>();
 
+  // const memberId = useSelector((state: RootState) => state.member.memberId);
+
+  // console.log(memberId);
+
   // useEffect(() => {
   //   dispatch(requestFetchMember(1));
   // }, []);

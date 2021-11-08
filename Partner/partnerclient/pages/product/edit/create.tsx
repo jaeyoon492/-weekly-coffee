@@ -51,18 +51,18 @@ const ProductCreate = () => {
           productName: productNameInput.current
             ? productNameInput.current.value
             : "",
-            productPrice: productPriceInput.current
+          productPrice: productPriceInput.current
             ? +productPriceInput.current.value
             : 0,
-            productImageUrl: reader.result ? reader.result?.toString() : "",
-            foodType: foodTypeSelect.current ? foodTypeSelect.current.value : "",
-            expirationData: expirationDataInput.current
+          productImageUrl: reader.result ? reader.result?.toString() : "",
+          foodType: foodTypeSelect.current ? foodTypeSelect.current.value : "",
+          expirationData: expirationDataInput.current
             ? expirationDataInput.current.value
             : "",
-            manufacturer: manufacturerInput.current
+          manufacturer: manufacturerInput.current
             ? manufacturerInput.current.value
             : "",
-            manufacturingDate: manufacturingDateSelect.current
+          manufacturingDate: manufacturingDateSelect.current
             ? manufacturingDateSelect.current.value
             : "",
           companyName: partner.companyName,

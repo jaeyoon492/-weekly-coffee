@@ -265,3 +265,39 @@ Member 1 : RegistrationForm 1 = OneToOne (단방향)
 - UI 라이브러리, Redux, Redux-Saga, .env, ActionCreate함수, reducer, saga
 </div>
 </details>
+
+# 2021년 11월 7일
+커밋 링크입니다.<br>
+ - https://github.com/jaeyoon492/-weekly-coffee/commit/7e73c011270f0d86069e34481a25ea3d2ed70ff9
+ <br>
+
+
+<details>
+<summary>여기를 눌러주세요</summary>
+<div markdown="1">       
+
+## 백엔드
+1. 엔티티 필드 이름 변경, Ex: id -> productId 
+    - 어떤 id인지 헷갈리지 않도록 이름을 변경했습니다.
+2. 테스트용 파트너 상품, 주문 전체조회용 응답 클래스를 만들었습니다.
+<br>
+
+## 프론트엔드
+1. 입전신청 ~ 멤버의 파트너권한 부여 기능 구현을 마무리 했습니다.
+2. MemberApi 구현 memberSaga 연결
+3. PartnerApi 구현 partnerSaga 연결
+4. 파트너 권한이 있을때 파트너 권한이 없을때를 상태처리로 다르게 보이도록 하였습니다.
+5. Material UI로 대쉬보드 생상 변경및 main 화면에 css 추가
+
+### 관련 트러블 슈팅
+- useEffect 관련 이슈
+    - https://www.notion.so/State-Select-be93b1dc92254037a2cb082c65205e9c
+
+
+### 관련 참고자료
+
+
+### 주요 키워드
+- UI 라이브러리, Redux, Redux-Saga, Api
+</div>
+</details>
