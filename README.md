@@ -332,8 +332,8 @@ Member 1 : RegistrationForm 1 = OneToOne (단방향)
     - 사용하려면 조금더 시간이 필요 할 것 같습니다.
 
 ### 관련 트러블 슈팅
-- useEffect 관련 이슈 ( 현재 까지도 이 문제가 해결되지 않음 )
-    - https://www.notion.so/State-Select-be93b1dc92254037a2cb082c65205e9c
+- useEffect 관련, 인라인 수정시 state 바로 가져오기 문제
+    - https://www.notion.so/useEffect-8483feb1adf040419adfdbc9ff33c4ba
 
 
 ### 관련 참고자료
