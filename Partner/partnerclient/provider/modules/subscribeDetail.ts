@@ -2,11 +2,11 @@ import { createSlice } from "@reduxjs/toolkit";
 import { ProductItem } from "./product";
 
 export interface SubscribeDetail {
-  SubscribeId: number;
+  subscribeId: number;
 
   seq: number;
 
-  products: ProductItem[];
+  product: ProductItem[];
 
   partnerId: number;
   productName: string;
@@ -19,9 +19,9 @@ export interface SubscribeDetail {
 }
 
 const initialState: SubscribeDetail = {
-  SubscribeId: 0,
+  subscribeId: 0,
   seq: 0,
-  products: [],
+  product: [],
   partnerId: 0,
   productName: "",
   productPrice: 0,

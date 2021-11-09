@@ -9,10 +9,6 @@ const Complete = () => {
   const registration = useSelector((state: RootState) => state.registration);
   const dispatch = useDispatch<AppDispatch>();
 
-  useEffect(() => {
-    dispatch(requestFetchMember(1));
-  }, []);
-
   return (
     <div
       className="modal d-flex align-items-center"

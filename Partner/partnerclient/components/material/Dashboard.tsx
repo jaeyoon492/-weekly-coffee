@@ -13,7 +13,8 @@ import Badge from "@mui/material/Badge";
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
-import Link from "@mui/material/Link";
+// import Link from "@mui/material/Link";
+import Link from "next/link";
 import MenuIcon from "@mui/icons-material/Menu";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import NotificationsIcon from "@mui/icons-material/Notifications";
@@ -24,6 +25,7 @@ import AlertStack from "../alert/alertStack";
 import { useSelector } from "react-redux";
 import { RootState } from "../../provider";
 import { margin } from "@mui/system";
+import style from "./list.module.css";
 
 const drawerWidth: number = 240;
 
@@ -78,7 +80,7 @@ const Drawer = styled(MuiDrawer, {
 const mdTheme = createTheme({
   palette: {
     primary: {
-      main: "#357a38",
+      main: "#403726",
       contrastText: "#fff",
     },
     secondary: {
@@ -99,7 +101,7 @@ export default function DashboardContent({ children }: DashboardProps) {
   };
 
   const isPartner = useSelector(
-    (state: RootState) => state.member.partnerState
+    (state: RootState) => state.member.data.partnerState
   );
 
   return (
@@ -136,9 +138,7 @@ export default function DashboardContent({ children }: DashboardProps) {
               noWrap
               sx={{ flexGrow: 1 }}
             >
-              <Link href="/">
-                <span className="text-light">파트너서비스</span>
-              </Link>
+              <Link href="/"><span className={style.span}>파트너 서비스</span></Link>
             </Typography>
 
             <IconButton color="inherit">
@@ -155,7 +155,7 @@ export default function DashboardContent({ children }: DashboardProps) {
               alignItems: "center",
               justifyContent: "flex-end",
               px: [1],
-              backgroundColor: "#4caf50",
+              backgroundColor: "#403726ce",
             }}
           >
             <IconButton onClick={toggleDrawer}>

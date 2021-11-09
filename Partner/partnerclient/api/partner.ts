@@ -1,5 +1,5 @@
 import axios from "axios";
-import { ProductItem } from "../provider/modules/product";
+import { ProductResponse } from "../provider/modules/product";
 import { Subscribe } from "../provider/modules/subscribe";
 
 export interface PartnerResponse {
@@ -12,13 +12,15 @@ export interface PartnerResponse {
   companyAddress: string;
   companyIntroduce: string;
   companyEmail: string;
-  products: ProductItem[];
+  products: ProductResponse[];
   subscribes: Subscribe[];
 }
 
 const partnerApi = {
   fetch: (partnerId: number) =>
-    axios.get<PartnerResponse>(`http://localhost:8082/test/${partnerId}`),
+    axios.get<PartnerResponse>(
+      `http://localhost:8082/partner/test/${partnerId}`
+    ),
 };
 
 export default partnerApi;

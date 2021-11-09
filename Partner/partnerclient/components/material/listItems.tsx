@@ -40,7 +40,7 @@ export const mainListItems = (
         <StoreIcon />
       </ListItemIcon>
       <Link href="/subscribe">
-        <a className={styles.a}>주문관리</a>
+        <a>주문관리</a>
       </Link>
     </ListItem>
   </div>

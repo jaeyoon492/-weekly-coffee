@@ -5,26 +5,34 @@ export interface Member {
   memberId: number;
   name: string;
   partnerState: boolean;
-  partner: Partner;
+  partner?: Partner;
 }
 
-const initialState: Member = {
-  memberId: 0,
-  name: "",
-  partnerState: false,
-  partner: {
-    partnerId: 0,
+export interface MemberState {
+  data: Member;
+  isFetched: false;
+}
+
+const initialState: MemberState = {
+  data: {
     memberId: 0,
-    businessRegistrationNumber: "",
-    ceoName: "",
-    companyName: "",
-    companyContact: "",
-    companyAddress: "",
-    companyIntroduce: "",
-    companyEmail: "",
-    products: [],
-    subscribes: [],
+    name: "",
+    partnerState: false,
+    partner: {
+      partnerId: 0,
+      memberId: 0,
+      businessRegistrationNumber: "",
+      ceoName: "",
+      companyName: "",
+      companyContact: "",
+      companyAddress: "",
+      companyIntroduce: "",
+      companyEmail: "",
+      products: [],
+      subscribes: [],
+    },
   },
+  isFetched: false,
 };
 
 const memberSlice = createSlice({
@@ -34,10 +42,10 @@ const memberSlice = createSlice({
     fetchMember: (state, action: PayloadAction<Member>) => {
       const member = action.payload;
       if (member) {
-        state.memberId = member.memberId;
-        state.name = member.name;
-        state.partner = member.partner;
-        state.partnerState = member.partnerState;
+        state.data.memberId = member.memberId;
+        state.data.name = member.name;
+        state.data.partner = member.partner;
+        state.data.partnerState = member.partnerState;
       }
     },
   },

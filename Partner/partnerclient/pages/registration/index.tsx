@@ -19,7 +19,9 @@ const Registration = () => {
   const bankAccountInput = useRef<HTMLInputElement>(null);
   const registrationDateInput = useRef<HTMLInputElement>(null);
 
-  const memberId = useSelector((state: RootState) => state.member.memberId);
+  const memberId = useSelector(
+    (state: RootState) => state.member.data.memberId
+  );
 
   const isAddCompleted = useSelector(
     (state: RootState) => state.registration.isAddComplete
@@ -27,8 +29,17 @@ const Registration = () => {
   const dispatch = useDispatch<AppDispatch>();
   const router = useRouter();
 
-  useEffect(() => {
+  function memberFetch() {
     dispatch(requestFetchMember(1));
+  }
+
+  function start() {
+    console.log("제품등록 화면 멤버패치");
+    memberFetch();
+  }
+
+  useEffect(() => {
+    start();
   }, []);
 
   useEffect(() => {

@@ -4,7 +4,6 @@ import com.weeklycoffee.partner.domain.partner.dto.PartnerAllResponse;
 import com.weeklycoffee.partner.domain.partner.dto.PartnerConnectResponse;
 import com.weeklycoffee.partner.domain.partner.dto.PartnerSubscribePageResponse;
 import com.weeklycoffee.partner.domain.product.Product;
-import com.weeklycoffee.partner.domain.product.dto.ProductPageResponse;
 import com.weeklycoffee.partner.domain.product.ProductRepository;
 import com.weeklycoffee.partner.domain.subscribe.SubscribeRepository;
 import com.weeklycoffee.partner.domain.subscribe.Subscribe;
@@ -34,10 +33,13 @@ public class PartnerController {
     // 예) GET /partner/products/paging/{id}?page=0&size=10
     // 등록제품 페이징 조회
     @GetMapping("/partner/products/paging/{partnerId}")
-    public ProductPageResponse getSalesProducts(@PathVariable long partnerId, @RequestParam int size, @RequestParam int page) {
-        Page<Product> products = productRepo.findByPartnerId(PageRequest.of(page, size, Sort.by("id").descending()), partnerId);
+    public Page<Product> getSalesProducts(@PathVariable long partnerId, @RequestParam int size, @RequestParam int page) {
+        System.out.println(partnerId);
+        System.out.println(size);
+        System.out.println(page);
+//        productRepo.findByPartnerId(PageRequest.of(page, size, Sort.by("productId").descending()), partnerId);
 
-        return new ProductPageResponse(products);
+        return productRepo.findByPartnerId(PageRequest.of(page, size, Sort.by("productId").descending()), partnerId);
     }
 
     // 예) GET /partners/connect/{id}?page=0&size=4
@@ -47,7 +49,7 @@ public class PartnerController {
         Optional<Partner> partnerOptional = partnerRepo.findById(partnerId);
         Partner partner = partnerOptional.get();
 
-        Page<Product> products = productRepo.findByPartnerId(PageRequest.of(page, size, Sort.by("id").descending()), partnerId);
+        Page<Product> products = productRepo.findByPartnerId(PageRequest.of(page, size, Sort.by("productId").descending()), partnerId);
 
         return new PartnerConnectResponse(partner, products);
     }
@@ -65,18 +67,19 @@ public class PartnerController {
         Optional<Partner> partnerOptional = partnerRepo.findById(partnerId);
         Partner partner = partnerOptional.get();
 
-        Page<Subscribe> subscribePage = subscribeRepo.findByPartnerId(PageRequest.of(page, size, Sort.by("id").descending()), partnerId);
+        Page<Subscribe> subscribePage = subscribeRepo.findByPartnerId(PageRequest.of(page, size, Sort.by("subscribeId").descending()), partnerId);
 
         return new PartnerSubscribePageResponse(partner, subscribePage);
     }
 
     @GetMapping("/partner/test/{partnerId}")
-    public PartnerAllResponse getPartnerAll(@PathVariable long partnerId){
+    public PartnerAllResponse getPartnerAll(@PathVariable long partnerId) {
         Optional<Partner> partnerOptional = partnerRepo.findById(partnerId);
         Partner partner = partnerOptional.get();
 
-        List<Subscribe> subscribes = subscribeRepo.findByPartnerId(Sort.by("id").descending(), partnerId);
-        List<Product> products = productRepo.findByPartnerId(Sort.by("id").descending(), partnerId);
+        List<Subscribe> subscribes = subscribeRepo.findByPartnerId(Sort.by("subscribeId").descending(), partnerId);
+
+        List<Product> products = productRepo.findByPartnerId(Sort.by("productId").descending(), partnerId);
         return new PartnerAllResponse(partner, subscribes, products);
     }
 

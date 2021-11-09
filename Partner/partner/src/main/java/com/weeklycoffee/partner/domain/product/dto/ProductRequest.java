@@ -19,6 +19,8 @@ public class ProductRequest {
     private int productPrice;
     private String productImageUrl;
     private int salesStatus;
+    private String fileName;
+    private String fileType;
     private String foodType;
     private String expirationData;
     private String manufacturer;

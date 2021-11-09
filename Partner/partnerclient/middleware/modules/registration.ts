@@ -39,7 +39,7 @@ function* addRegistrationDataNext(action: PayloadAction<RegistrationItem>) {
     yield put(startProgress());
 
     const memberId: number = yield select(
-      (state: RootState) => state.member.memberId
+      (state: RootState) => state.member.data.memberId
     );
     console.log(memberId);
 
