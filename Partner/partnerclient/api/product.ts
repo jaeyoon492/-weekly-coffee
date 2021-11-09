@@ -13,6 +13,11 @@ const productApi = {
     axios.get<ProductPagingResponse>(
       `http://localhost:8082/partner/products/paging/${partnerId}?page=${page}&size=${size}`
     ),
+  modify: (productItem: ProductRequest) =>
+    axios.put<ProductResponse>(
+      `http://localhost:8082/product/modify`,
+      productItem
+    ),
 };
 //partner/products/paging/{partnerId}
 export default productApi;

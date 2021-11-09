@@ -4,12 +4,14 @@ import com.weeklycoffee.partner.domain.product.dto.ProductRequest;
 import com.weeklycoffee.partner.files.FileController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.transaction.Transactional;
 import java.io.IOException;
 import java.util.Date;
+import java.util.Optional;
 
 @RestController
 public class ProductController {
@@ -20,6 +22,17 @@ public class ProductController {
     public ProductController(ProductRepository productRepo, FileController fileController) {
         this.productRepo = productRepo;
         this.fileController = fileController;
+    }
+
+    @PutMapping("/product/modify")
+    public Product semiModifyProdudt(@RequestBody ProductRequest productRequest) {
+        Optional<Product> productOptional = productRepo.findById(productRequest.getProductId());
+        Product product = productOptional.get();
+
+        product.setProductName(productRequest.getProductName());
+        product.setProductPrice(productRequest.getProductPrice());
+
+        return productRepo.save(product);
     }
 
     @Transactional(rollbackOn = Exception.class)

@@ -1,9 +1,16 @@
-import { call, put, takeEvery } from "@redux-saga/core/effects";
+import {
+  call,
+  put,
+  select,
+  takeEvery,
+  takeLatest,
+} from "@redux-saga/core/effects";
 import { createAction, nanoid, PayloadAction } from "@reduxjs/toolkit";
 import { AxiosResponse } from "axios";
 import fileApi from "../../api/file";
 import productApi from "../../api/product";
 import { dataUrlToFile } from "../../lib/string";
+import { RootState } from "../../provider";
 import { addAlert } from "../../provider/modules/alert";
 import productReducer, {
   addProduct,
@@ -13,6 +20,8 @@ import productReducer, {
   ProductPagingResponse,
   ProductRequest,
   ProductResponse,
+  semiModify,
+  SemiModify,
 } from "../../provider/modules/product";
 import { endProgress, startProgress } from "../../provider/modules/progress";
 
@@ -28,6 +37,10 @@ export const requestAddProduct = createAction<ProductItem>(
 
 export const requestFetchProductsPaging = createAction<ProductPageRequest>(
   `${productReducer.name}/requestFetchProductsPaging`
+);
+
+export const requestSemiModify = createAction<SemiModify>(
+  `${productReducer.name}/requestSemiModify`
 );
 
 function* addDataNext(action: PayloadAction<ProductItem>) {
@@ -206,7 +219,90 @@ function* fetchProductPaging(action: PayloadAction<ProductPageRequest>) {
   }
 }
 
+function* modifyProductData(action: PayloadAction<SemiModify>) {
+  yield console.log("-- semiModyfy --");
+
+  const payloadItem = action.payload;
+
+  const product: ProductItem = yield select((state: RootState) =>
+    state.product.data.find((item) => item.productId === payloadItem.productId)
+  );
+
+  const productItem: ProductRequest = {
+    productId: product.productId,
+    partnerId: product.partnerId,
+    productName: payloadItem.productName,
+    productPrice: payloadItem.productPrice,
+    productImageUrl: product.productImageUrl,
+    fileName: product.fileName,
+    fileType: product.fileType,
+    foodType: product.foodType,
+    expirationData: product.expirationData,
+    manufacturer: product.manufacturer,
+    manufacturingDate: product.manufacturingDate,
+    companyName: product.companyName,
+    productUploadDate: new Date().getDate(),
+    companyIntroduce: product.companyIntroduce,
+    companyAddress: product.companyAddress,
+    companyContact: product.companyContact,
+    beanType: product.beanType,
+    beanTag: product.beanTag,
+    processing: product.processing,
+    country: product.country,
+    region: product.region,
+    farm: product.farm,
+    cupNote: product.cupNote,
+    roastingPoint: product.roastingPoint,
+    variety: product.variety,
+    salesStatus: 0,
+  };
+
+  yield put(startProgress());
+
+  const result: AxiosResponse<ProductResponse> = yield call(
+    productApi.modify,
+    productItem
+  );
+
+  yield put(endProgress());
+
+  const responseData = result.data;
+
+  const data: ProductItem = {
+    productId: responseData.productId,
+    partnerId: responseData.partnerId,
+    productName: responseData.productName,
+    productPrice: responseData.productPrice,
+    productImageUrl: responseData.productImageUrl,
+    fileName: responseData.fileName,
+    fileType: responseData.fileType,
+    foodType: responseData.foodType,
+    expirationData: responseData.expirationData,
+    manufacturer: responseData.manufacturer,
+    manufacturingDate: responseData.manufacturingDate,
+    companyName: responseData.companyName,
+    companyIntroduce: responseData.companyIntroduce,
+    companyAddress: responseData.companyAddress,
+    companyContact: responseData.companyContact,
+    beanType: responseData.beanType,
+    beanTag: responseData.beanTag,
+    processing: responseData.processing,
+    country: responseData.country,
+    region: responseData.region,
+    farm: responseData.farm,
+    cupNote: responseData.cupNote,
+    roastingPoint: responseData.roastingPoint,
+    variety: responseData.variety,
+    productUploadDate: responseData.productUploadDate,
+    salesStatus: responseData.salesStatus,
+    isEdit: true,
+  };
+
+  put(semiModify(data));
+}
+
 export default function* productSaga() {
   yield takeEvery(requestAddProduct, addDataNext);
   yield takeEvery(requestFetchProductsPaging, fetchProductPaging);
+  yield takeEvery(requestSemiModify, modifyProductData);
 }

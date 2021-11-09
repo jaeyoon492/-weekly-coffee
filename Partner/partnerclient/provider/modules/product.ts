@@ -117,6 +117,12 @@ export interface ProductState {
   isLast?: boolean;
 }
 
+export interface SemiModify {
+  productId: number;
+  productName: string;
+  productPrice: number;
+}
+
 const initialState: ProductState = {
   data: [],
   isFetched: false,
@@ -144,9 +150,38 @@ export const productSlice = createSlice({
 
       state.isFetched = true;
     },
+    editProduct: (state, action: PayloadAction<number>) => {
+      const data = state.data.find((item) => item.productId === action.payload);
+      if (data) {
+        data.isEdit = true;
+      }
+    },
+    editDone: (state, action: PayloadAction<number>) => {
+      const data = state.data.find((item) => item.productId === action.payload);
+      if (data) {
+        data.isEdit = false;
+      }
+    },
+    semiModify: (state, action: PayloadAction<ProductItem>) => {
+      const newData = action.payload;
+      const data = state.data.find(
+        (item) => item.productId === newData.productId
+      );
+      if (data) {
+        data.productName = newData.productName;
+        data.productPrice = newData.productPrice;
+        data.isEdit = false;
+      }
+    },
   },
 });
 
-export const { addProduct, initialPagedProduct } = productSlice.actions;
+export const {
+  addProduct,
+  initialPagedProduct,
+  editProduct,
+  semiModify,
+  editDone,
+} = productSlice.actions;
 
 export default productSlice.reducer;

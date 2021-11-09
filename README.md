@@ -301,3 +301,46 @@ Member 1 : RegistrationForm 1 = OneToOne (단방향)
 - UI 라이브러리, Redux, Redux-Saga, Api
 </div>
 </details>
+
+
+# 2021년 11월 8일
+커밋 링크입니다.<br>
+ - https://github.com/jaeyoon492/-weekly-coffee/commit/ef98547efaeb8667f90ae887f383b345353bd4a6
+ <br>
+
+
+<details>
+<summary>여기를 눌러주세요</summary>
+<div markdown="1">       
+
+## 백엔드
+1. 엔티티 필드 이름 변경, Ex: id -> productId 
+    - 어떤 id인지 헷갈리지 않도록 이름을 변경했습니다.
+2. 테스트용 파트너 상품, 주문 전체조회용 응답 클래스를 만들었습니다.
+<br>
+
+## 프론트엔드
+1. 제품목록 페이징처리 구현
+    - 판매 상품 조회용 Redux-Saga, Redux 구현
+    - 백엔드 연동 Api 구현
+    - 대쉬보드 색상 컨셉에 맞게 변경
+2. S3버켓에 폼데이터로 변환하여 파일을 업로드 할수 있도록 했습니다.
+    - 제품의 사진을 url을 가지고 서로 조회 할수 있습니다.
+3. Product부분 요청, 응답 타입 분리, 페이징 타입분리, State타입 추가
+
+4. 테스트용 위치정보 조회 Api 구현
+    - 사용하려면 조금더 시간이 필요 할 것 같습니다.
+
+### 관련 트러블 슈팅
+- useEffect 관련 이슈 ( 현재 까지도 이 문제가 해결되지 않음 )
+    - https://www.notion.so/State-Select-be93b1dc92254037a2cb082c65205e9c
+
+
+### 관련 참고자료
+- 주소 조회 API
+    - https://sso-feeling.tistory.com/506
+
+### 주요 키워드
+- Redux, Redux-Saga, Api
+</div>
+</details>
