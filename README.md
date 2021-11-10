@@ -222,7 +222,7 @@ Member 1 : RegistrationForm 1 = OneToOne (단방향)
 # 2021년 11월 6일
 커밋 링크입니다.<br>
  - https://github.com/jaeyoon492/-weekly-coffee/commit/3f3aa8144703554a62adc1b1c1a3af236010f768
- <br>
+ <br><br>
 
 
 <details>
@@ -269,7 +269,7 @@ Member 1 : RegistrationForm 1 = OneToOne (단방향)
 # 2021년 11월 7일
 커밋 링크입니다.<br>
  - https://github.com/jaeyoon492/-weekly-coffee/commit/7e73c011270f0d86069e34481a25ea3d2ed70ff9
- <br>
+ <br><br>
 
 
 <details>
@@ -303,10 +303,10 @@ Member 1 : RegistrationForm 1 = OneToOne (단방향)
 </details>
 
 
-# 2021년 11월 8일
+# 2021년 11월 9일
 커밋 링크입니다.<br>
  - https://github.com/jaeyoon492/-weekly-coffee/commit/ef98547efaeb8667f90ae887f383b345353bd4a6
- <br>
+ <br><br>
 
 
 <details>
@@ -345,3 +345,36 @@ Member 1 : RegistrationForm 1 = OneToOne (단방향)
 - Redux, Redux-Saga, Api
 </div>
 </details>
+<br>
+
+# 2021년 11월 10일
+커밋 링크입니다.<br>
+ - https://github.com/jaeyoon492/-weekly-coffee/commit/ef98547efaeb8667f90ae887f383b345353bd4a6
+ <br>
+
+
+<details>
+<summary>여기를 눌러주세요</summary>
+<div markdown="1">        
+
+## 백엔드
+1. 수정된 데이터를 저장하는 Put메소드를 구현했습니다.
+<br>
+
+## 프론트엔드
+1. 제품목록 수정, 저장 구현
+    - 수정 버튼을 누르면 제품명, 가격등을 바꿀수 있도록 구현했습니다.
+    - 저장 버튼을 누르면 수정한 데이터를 저장하도록 구현했습니다.
+
+2. 저장한 데이터를 dispatch 하여 redux-state에 보여주도록 하였습니다.
+
+### 관련 트러블 슈팅
+- 화면이 첫 로딩될때는 서버사이드 랜더링이라 state가 기본값으로 되는게 정상이었다.
+
+### 관련 참고자료
+
+
+### 주요 키워드
+- dispatch , yield, generated함수
+</div>
+</details><br>
