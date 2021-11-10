@@ -298,7 +298,7 @@ function* modifyProductData(action: PayloadAction<SemiModify>) {
     isEdit: true,
   };
 
-  put(semiModify(data));
+  yield put(semiModify(data));
 }
 
 export default function* productSaga() {

@@ -314,9 +314,10 @@ Member 1 : RegistrationForm 1 = OneToOne (단방향)
 <div markdown="1">       
 
 ## 백엔드
-1. 엔티티 필드 이름 변경, Ex: id -> productId 
-    - 어떤 id인지 헷갈리지 않도록 이름을 변경했습니다.
-2. 테스트용 파트너 상품, 주문 전체조회용 응답 클래스를 만들었습니다.
+1. ProductRequest 필드 타입 추가,
+    - 프론트의 ProductResponse에 필요한 데이터 타입이 지정되지 않은게 몇개 있어서 추가해주었습니다.
+2. 페이징용 Product 메소드 구현
+3. 수정용 modify 메서드 구현
 <br>
 
 ## 프론트엔드

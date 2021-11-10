@@ -1,6 +1,12 @@
 import { createAction, nanoid, PayloadAction } from "@reduxjs/toolkit";
 import { AxiosResponse } from "axios";
-import { call, put, takeEvery, takeLatest } from "@redux-saga/core/effects";
+import {
+  call,
+  put,
+  select,
+  takeEvery,
+  takeLatest,
+} from "@redux-saga/core/effects";
 import partnerReducer, {
   fetchPartner,
   Partner,
@@ -10,6 +16,7 @@ import api, { PartnerResponse } from "../../api/partner";
 import { initialIsComplted } from "../../provider/modules/registration";
 import { addAlert } from "../../provider/modules/alert";
 import { ProductItem, ProductPage } from "../../provider/modules/product";
+import { RootState } from "../../provider";
 
 export const requestFetchPartner = createAction<number>(
   `${partnerReducer.name}/requestFetchPartner`
@@ -21,14 +28,22 @@ function* fetchPartnerDataNext(action: PayloadAction<number>) {
   yield console.log(action.payload);
   const partnerId = action.payload;
 
-  //   yield put(startProgress());
+  const partner: number = yield select(
+    (state: RootState) => state.partner.data.partnerId
+  );
+
+  if (partner && partnerId !== 0) {
+    return;
+  }
+
+  yield put(startProgress());
 
   const result: AxiosResponse<PartnerResponse> = yield call(
     api.fetch,
     partnerId
   );
 
-  //   yield put(endProgress());
+  yield put(endProgress());
 
   if (result) {
     const data: Partner = {

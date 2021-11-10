@@ -18,162 +18,14 @@ import {
   SemiModify,
 } from "../../provider/modules/product";
 
-const ProductItem = () => {
+
+const ProductList = () => {
   const productNameInput = useRef<HTMLInputElement>(null);
   const productPriceInput = useRef<HTMLInputElement>(null);
   const tbodyRef = useRef<HTMLTableSectionElement>(null);
-
-  const dispatch = useDispatch<AppDispatch>();
-  const partnerId = useSelector(
-    (state: RootState) => state.member.data.partner?.partnerId
-  );
   const product = useSelector((state: RootState) => state.product);
   const partner = useSelector((state: RootState) => state.partner);
-
-  function memberFetch() {
-    dispatch(requestFetchMember(1));
-  }
-  function partnerFetch() {
-    if (partnerId) {
-      dispatch(requestFetchPartner(partnerId));
-    }
-
-    if (!partner.isProductFetched) {
-      const productPageSize = localStorage.getItem("product_page_size");
-
-      dispatch(
-        requestFetchProductsPaging({
-          partnerId: partner.data.partnerId,
-          page: 0,
-          size: productPageSize ? +productPageSize : product.pageSize,
-        })
-      );
-    }
-  }
-
-  function start() {
-    console.log("제품목록 화면 멤버패치");
-    memberFetch();
-    console.log("제품목록 화면 파트너 패치");
-    partnerFetch();
-  }
-  useEffect(() => {
-    start();
-  }, []);
-
-  const edit = (id: number) => {
-    const item = product.data.find((item) => item.productId === id);
-    console.log(item);
-    console.log(id);
-    if (item) {
-      dispatch(editProduct(id));
-    }
-  };
-
-  const save = async (id: number) => {
-    console.log(id);
-    const data: SemiModify = {
-      productId: id,
-      productName: productNameInput.current
-        ? productNameInput.current?.value
-        : "",
-      productPrice: productPriceInput.current
-        ? +productPriceInput.current.value
-        : 0,
-    };
-    console.log("수정 시작");
-    dispatch(requestSemiModify(data));
-    dispatch(editDone(id));
-    console.log("수정 끝");
-  };
-
-  return (
-    <>
-      {product.data.map((item) => (
-        <tbody
-          ref={tbodyRef}
-          className="align-middle text-center justify-content-md-center flex-column"
-        >
-          <tr key={item.productId}>
-            <td className="fs-5 fw-bolder">{item.productId}</td>
-            {!item.isEdit && (
-              <td className="fs-5 fw-bolder">{item.productName}</td>
-            )}
-            {item.isEdit && (
-              <td>
-                <input
-                  type="text"
-                  className="w-100"
-                  defaultValue={item.productName}
-                  ref={productNameInput}
-                />
-              </td>
-            )}
-            {!item.isEdit && (
-              <td className="fs-5 fw-bolder">
-                {new Intl.NumberFormat().format(item.productPrice)}원
-              </td>
-            )}
-            {item.isEdit && (
-              <td>
-                <input
-                  type="text"
-                  className="w-100"
-                  defaultValue={item.productPrice}
-                  ref={productPriceInput}
-                />
-              </td>
-            )}
-            <td>
-              <Image
-                src={item.productImageUrl}
-                className="card-img-top"
-                alt={item.productName}
-                layout="responsive"
-                objectFit="cover"
-                /* ------------------------------- */
-                width={50}
-                height={50}
-              />
-            </td>
-            <td className={styles.td}>
-              <button className="btn btn-success">개시</button>
-              <button className="btn btn-primary ms-2 ">중단</button>
-            </td>
-            <td className={styles.td}>
-              {!item.isEdit && (
-                <button
-                  className="btn btn-warning "
-                  onClick={() => {
-                    edit(item.productId);
-                  }}
-                >
-                  수정
-                </button>
-              )}
-              {item.isEdit && (
-                <button
-                  className="btn btn-secondary "
-                  onClick={() => {
-                    save(item.productId);
-                  }}
-                >
-                  저장
-                </button>
-              )}
-
-              <button className="btn btn-danger ms-2 ">삭제</button>
-            </td>
-          </tr>
-        </tbody>
-      ))}
-    </>
-  );
-};
-
-const ProductList = () => {
   const dispatch = useDispatch<AppDispatch>();
-  const product = useSelector((state: RootState) => state.product);
   const partnerId = useSelector(
     (state: RootState) => state.partner.data.partnerId
   );
@@ -188,6 +40,53 @@ const ProductList = () => {
         size: product.pageSize,
       })
     );
+  };
+
+  useEffect(() => {
+    if (partnerId && !partner.isProductFetched) {
+      const productPageSize = localStorage.getItem("product_page_size");
+
+      console.log("제품목록 패치");
+      dispatch(
+        requestFetchProductsPaging({
+          partnerId: partner.data.partnerId,
+          page: 0,
+          size: productPageSize ? +productPageSize : product.pageSize,
+        })
+      );
+    }
+  }, [dispatch, partnerId, partner]);
+
+  const edit = (id: number) => {
+    const item = product.data.find((item) => item.productId === id);
+    console.log(item);
+    console.log(id);
+    if (item) {
+      dispatch(editProduct(id));
+    }
+  };
+
+  const save = async (id: number, index: number) => {
+    console.log("id = " + id);
+    console.log("index = " + index);
+
+    const tr = tbodyRef.current?.querySelectorAll("tr")[index];
+    const inputArr = tr?.querySelectorAll("input");
+    console.log(inputArr);
+
+    // const data: SemiModify = {
+    //   productId: id,
+    //   productName: productNameInput.current
+    //     ? productNameInput.current?.value
+    //     : "",
+    //   productPrice: productPriceInput.current
+    //     ? +productPriceInput.current.value
+    //     : 0,
+    // };
+    // console.log("수정 시작");
+    // dispatch(requestSemiModify(data));
+    // // dispatch(editDone(id));
+    // console.log("수정 끝");
   };
 
   return (
@@ -207,7 +106,84 @@ const ProductList = () => {
                   <th scope="col fw-bolder">기능</th>
                 </tr>
               </thead>
-              <ProductItem />
+              <tbody
+                ref={tbodyRef}
+                className="align-middle text-center justify-content-md-center flex-column"
+              >
+                {product.data.map((item, index) => (
+                  <tr key={item.productId}>
+                    <td className="fs-5 fw-bolder">{item.productId}</td>
+                    {!item.isEdit && (
+                      <td className="fs-5 fw-bolder">{item.productName}</td>
+                    )}
+                    {item.isEdit && (
+                      <td>
+                        <input
+                          type="text"
+                          className="w-100"
+                          defaultValue={item.productName}
+                          ref={productNameInput}
+                        />
+                      </td>
+                    )}
+                    {!item.isEdit && (
+                      <td className="fs-5 fw-bolder">
+                        {new Intl.NumberFormat().format(item.productPrice)}원
+                      </td>
+                    )}
+                    {item.isEdit && (
+                      <td>
+                        <input
+                          type="text"
+                          className="w-100"
+                          defaultValue={item.productPrice}
+                          ref={productPriceInput}
+                        />
+                      </td>
+                    )}
+                    <td>
+                      <Image
+                        src={item.productImageUrl}
+                        className="card-img-top"
+                        alt={item.productName}
+                        layout="responsive"
+                        objectFit="cover"
+                        /* ------------------------------- */
+                        width={50}
+                        height={50}
+                      />
+                    </td>
+                    <td className={styles.td}>
+                      <button className="btn btn-success">개시</button>
+                      <button className="btn btn-primary ms-2 ">중단</button>
+                    </td>
+                    <td className={styles.td}>
+                      {!item.isEdit && (
+                        <button
+                          className="btn btn-warning "
+                          onClick={() => {
+                            edit(item.productId);
+                          }}
+                        >
+                          수정
+                        </button>
+                      )}
+                      {item.isEdit && (
+                        <button
+                          className="btn btn-secondary "
+                          onClick={() => {
+                            save(item.productId, index);
+                          }}
+                        >
+                          저장
+                        </button>
+                      )}
+
+                      <button className="btn btn-danger ms-2 ">삭제</button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
             </table>
           </div>
         </section>

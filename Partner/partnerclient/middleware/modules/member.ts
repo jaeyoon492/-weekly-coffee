@@ -9,6 +9,7 @@ import memberReducer, {
 import api from "../../api/member";
 import { addAlert } from "../../provider/modules/alert";
 import { RootState } from "../../provider";
+import { requestFetchPartner } from "./partner";
 
 export const requestFetchMember = createAction<number>(
   `${memberReducer.name}/requestFetchMember`
@@ -19,6 +20,14 @@ function* fetchMemberDataNext(action: PayloadAction<number>) {
   //     (state: RootState) => state.member.memberId
   //   );
   const memberId = action.payload;
+  const partnerId: number = yield select(
+    (state: RootState) => state.member.data.partner?.partnerId
+  );
+
+  if (partnerId !== 0) {
+    yield put(requestFetchPartner(partnerId));
+    return;
+  }
 
   try {
     const result: AxiosResponse<MemberResponse> = yield call(
