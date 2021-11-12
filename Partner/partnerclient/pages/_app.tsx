@@ -2,11 +2,10 @@ import '../styles/globals.css'
 import "../styles/bootstrap-custom.scss";
 import type { AppProps } from "next/app";
 
-import { Provider, useDispatch, useSelector } from "react-redux";
-import { AppDispatch, RootState, store } from "../provider";
+import { Provider } from "react-redux";
+import { store } from "../provider";
 
-import { useEffect } from "react";
-import { requestFetchMember } from "../middleware/modules/member";
+import React from "react";
 
 const MyApp = ({ Component, pageProps }: AppProps) => {
   return (

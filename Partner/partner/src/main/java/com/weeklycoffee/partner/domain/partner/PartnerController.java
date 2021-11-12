@@ -13,6 +13,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 import java.util.Optional;
 
@@ -63,23 +64,29 @@ public class PartnerController {
     // 파트너 주문목록 페이징 조회
     // GET /partner/subscribes/paging/{id}?page=0&size=4
     @GetMapping("/partner/subscribes/paging/{partnerId}")
-    public PartnerSubscribePageResponse getPagingSubscribesContainPartnerId(@PathVariable long partnerId, @RequestParam int size, @RequestParam int page) {
-        Optional<Partner> partnerOptional = partnerRepo.findById(partnerId);
-        Partner partner = partnerOptional.get();
+    public Page<Subscribe> getPagingSubscribesContainPartnerId(@PathVariable long partnerId, @RequestParam int size, @RequestParam int page) {
+        System.out.println(partnerId);
+        System.out.println(page);
+        System.out.println(size);
+//        Optional<Partner> partnerOptional = partnerRepo.findById(partnerId);
+//        Partner partner = partnerOptional.get();
 
-        Page<Subscribe> subscribePage = subscribeRepo.findByPartnerId(PageRequest.of(page, size, Sort.by("subscribeId").descending()), partnerId);
-
-        return new PartnerSubscribePageResponse(partner, subscribePage);
+        return subscribeRepo.findByPartnerId(PageRequest.of(page, size, Sort.by("subscribeId").descending()), partnerId);
     }
 
-    @GetMapping("/partner/test/{partnerId}")
-    public PartnerAllResponse getPartnerAll(@PathVariable long partnerId) {
+    @GetMapping("/partner/{partnerId}")
+    public PartnerAllResponse getPartnerAll(@PathVariable long partnerId, HttpServletResponse res) {
+
+        if(partnerId <= 0){
+            return null;
+        }
         Optional<Partner> partnerOptional = partnerRepo.findById(partnerId);
         Partner partner = partnerOptional.get();
 
         List<Subscribe> subscribes = subscribeRepo.findByPartnerId(Sort.by("subscribeId").descending(), partnerId);
 
         List<Product> products = productRepo.findByPartnerId(Sort.by("productId").descending(), partnerId);
+
         return new PartnerAllResponse(partner, subscribes, products);
     }
 

@@ -1,10 +1,4 @@
-import {
-  call,
-  put,
-  select,
-  takeEvery,
-  takeLatest,
-} from "@redux-saga/core/effects";
+import { call, put, select, takeEvery } from "@redux-saga/core/effects";
 import { createAction, nanoid, PayloadAction } from "@reduxjs/toolkit";
 import { AxiosResponse } from "axios";
 import fileApi from "../../api/file";
@@ -14,16 +8,22 @@ import { RootState } from "../../provider";
 import { addAlert } from "../../provider/modules/alert";
 import productReducer, {
   addProduct,
+  initialIsComplted,
   initialPagedProduct,
+  initialSalesState,
+  modifyProduct,
   ProductItem,
   ProductPage,
   ProductPagingResponse,
   ProductRequest,
   ProductResponse,
+  removeProduct,
+  SalesStatus,
   semiModify,
   SemiModify,
 } from "../../provider/modules/product";
 import { endProgress, startProgress } from "../../provider/modules/progress";
+import { requestFetchMember } from "./member";
 
 export interface ProductPageRequest {
   partnerId: number;
@@ -41,6 +41,18 @@ export const requestFetchProductsPaging = createAction<ProductPageRequest>(
 
 export const requestSemiModify = createAction<SemiModify>(
   `${productReducer.name}/requestSemiModify`
+);
+
+export const requestModifyProduct = createAction<ProductItem>(
+  `${productReducer.name}/requestModifyProduct`
+);
+
+export const requestDeleteProduct = createAction<number>(
+  `${productReducer.name}/requestDeleteProduct`
+);
+
+export const requestProductSalesChange = createAction<number>(
+  `${productReducer.name}/requestProductSalesOn`
 );
 
 function* addDataNext(action: PayloadAction<ProductItem>) {
@@ -68,6 +80,7 @@ function* addDataNext(action: PayloadAction<ProductItem>) {
       productName: payloadData.productName,
       productPrice: payloadData.productPrice,
       productImageUrl: fileUrl.data,
+      productInfo: payloadData.productInfo,
       fileName: payloadData.fileName,
       fileType: payloadData.fileType,
       foodType: payloadData.foodType,
@@ -105,6 +118,7 @@ function* addDataNext(action: PayloadAction<ProductItem>) {
       productName: responseData.productName,
       productPrice: responseData.productPrice,
       productImageUrl: responseData.productImageUrl,
+      productInfo: responseData.productInfo,
       fileName: responseData.fileName,
       fileType: responseData.fileType,
       foodType: responseData.foodType,
@@ -129,6 +143,8 @@ function* addDataNext(action: PayloadAction<ProductItem>) {
     };
 
     yield put(addProduct(data));
+
+    yield put(initialIsComplted());
 
     yield put(
       addAlert({ id: nanoid(), variant: "success", message: "저장되었습니다." })
@@ -164,7 +180,6 @@ function* fetchProductPaging(action: PayloadAction<ProductPageRequest>) {
       size
     );
 
-    console.log(result.data.content);
     yield put(endProgress());
 
     const productPage: ProductPage = {
@@ -176,6 +191,7 @@ function* fetchProductPaging(action: PayloadAction<ProductPageRequest>) {
             productName: item.productName,
             productPrice: item.productPrice,
             productImageUrl: item.productImageUrl,
+            productInfo: item.productInfo,
             fileName: item.fileName,
             fileType: item.fileType,
             foodType: item.foodType,
@@ -204,7 +220,7 @@ function* fetchProductPaging(action: PayloadAction<ProductPageRequest>) {
       totalPages: result.data.totalPages,
       page: result.data.number,
       pageSize: result.data.size,
-      isLast: result.data.last,
+      isLast: result.data.isLast,
     };
 
     yield put(initialPagedProduct(productPage));
@@ -234,6 +250,7 @@ function* modifyProductData(action: PayloadAction<SemiModify>) {
     productName: payloadItem.productName,
     productPrice: payloadItem.productPrice,
     productImageUrl: product.productImageUrl,
+    productInfo: product.productInfo,
     fileName: product.fileName,
     fileType: product.fileType,
     foodType: product.foodType,
@@ -254,7 +271,7 @@ function* modifyProductData(action: PayloadAction<SemiModify>) {
     cupNote: product.cupNote,
     roastingPoint: product.roastingPoint,
     variety: product.variety,
-    salesStatus: 0,
+    salesStatus: product.salesStatus,
   };
 
   yield put(startProgress());
@@ -274,6 +291,7 @@ function* modifyProductData(action: PayloadAction<SemiModify>) {
     productName: responseData.productName,
     productPrice: responseData.productPrice,
     productImageUrl: responseData.productImageUrl,
+    productInfo: responseData.productInfo,
     fileName: responseData.fileName,
     fileType: responseData.fileType,
     foodType: responseData.foodType,
@@ -301,8 +319,188 @@ function* modifyProductData(action: PayloadAction<SemiModify>) {
   yield put(semiModify(data));
 }
 
+function* deleteProductData(action: PayloadAction<number>) {
+  yield console.log("--removeData--");
+
+  const id = action.payload;
+
+  yield put(startProgress());
+
+  const productItem: ProductItem = yield select((state: RootState) =>
+    state.product.data.find((item) => item.productId === id)
+  );
+
+  const urlArr = productItem.productImageUrl.split("/");
+  const objectKey = urlArr[urlArr.length - 1];
+
+  yield call(fileApi.remove, objectKey);
+
+  const result: AxiosResponse<boolean> = yield call(productApi.remove, id);
+
+  yield put(endProgress());
+
+  if (result.data) {
+    yield put(removeProduct(id));
+    yield put(initialIsComplted());
+  } else {
+    yield put(
+      addAlert({
+        id: nanoid(),
+        variant: "danger",
+        message: "오류로 저장되지 않았습니다.",
+      })
+    );
+  }
+}
+
+function* modifyProductSalesState(action: PayloadAction<number>) {
+  yield console.log("--Product Sales On --");
+
+  const productId = action.payload;
+
+  try {
+    yield put(startProgress());
+    const result: AxiosResponse<number> = yield call(
+      productApi.salesChange,
+      productId
+    );
+    yield put(endProgress());
+
+    const status = result.data;
+    console.log(status);
+
+    const data: SalesStatus = {
+      productId,
+      status,
+    };
+
+    yield put(initialSalesState(data));
+  } catch (e: any) {
+    yield put(endProgress());
+
+    yield put(
+      addAlert({ id: nanoid(), variant: "danger", message: e.message })
+    );
+  }
+}
+
+function* modifyProductDataNext(action: PayloadAction<ProductItem>) {
+  yield console.log("-- 제품 상세 수정 --");
+
+  const productItem = action.payload;
+
+  yield put(startProgress());
+
+  let fileUrl = action.payload.productImageUrl;
+  if (productItem.productImageUrl.startsWith("data")) {
+    const productItemFile: ProductItem = yield select((state: RootState) =>
+      state.product.data.find(
+        (item) => item.productId === productItem.productId
+      )
+    );
+
+    const urlArr = productItemFile.productImageUrl.split("/");
+    const objectKey = urlArr[urlArr.length - 1];
+
+    yield call(fileApi.remove, objectKey);
+
+    const file: File = yield call(
+      dataUrlToFile,
+      productItem.productImageUrl,
+      productItem.fileName,
+      productItem.fileType
+    );
+
+    const formFile = new FormData();
+    formFile.set("file", file);
+
+    const fileResult: AxiosResponse<string> = yield call(
+      fileApi.upload,
+      formFile
+    );
+    fileUrl = fileResult.data;
+  }
+
+  const productRequestItem: ProductRequest = {
+    productId: productItem.productId,
+    partnerId: productItem.partnerId,
+    productName: productItem.productName,
+    productPrice: productItem.productPrice,
+    productImageUrl: fileUrl,
+    productInfo: productItem.productInfo,
+    fileName: productItem.fileName,
+    fileType: productItem.fileType,
+    foodType: productItem.foodType,
+    expirationData: productItem.expirationData,
+    manufacturer: productItem.manufacturer,
+    manufacturingDate: productItem.manufacturingDate,
+    companyName: productItem.companyName,
+    productUploadDate: new Date().getDate(),
+    companyIntroduce: productItem.companyIntroduce,
+    companyAddress: productItem.companyAddress,
+    companyContact: productItem.companyContact,
+    beanType: productItem.beanType,
+    beanTag: productItem.beanTag,
+    processing: productItem.processing,
+    country: productItem.country,
+    region: productItem.region,
+    farm: productItem.farm,
+    cupNote: productItem.cupNote,
+    roastingPoint: productItem.roastingPoint,
+    variety: productItem.variety,
+    salesStatus: productItem.salesStatus,
+  };
+
+  const result: AxiosResponse<ProductResponse> = yield call(
+    productApi.modifyItem,
+    productItem.productId,
+    productRequestItem
+  );
+
+  yield put(endProgress());
+
+  const responseData = result.data;
+
+  const data: ProductItem = {
+    productId: responseData.productId,
+    partnerId: responseData.partnerId,
+    productName: responseData.productName,
+    productPrice: responseData.productPrice,
+    productImageUrl: responseData.productImageUrl,
+    productInfo: responseData.productInfo,
+    fileName: responseData.fileName,
+    fileType: responseData.fileType,
+    foodType: responseData.foodType,
+    expirationData: responseData.expirationData,
+    manufacturer: responseData.manufacturer,
+    manufacturingDate: responseData.manufacturingDate,
+    companyName: responseData.companyName,
+    companyIntroduce: responseData.companyIntroduce,
+    companyAddress: responseData.companyAddress,
+    companyContact: responseData.companyContact,
+    beanType: responseData.beanType,
+    beanTag: responseData.beanTag,
+    processing: responseData.processing,
+    country: responseData.country,
+    region: responseData.region,
+    farm: responseData.farm,
+    cupNote: responseData.cupNote,
+    roastingPoint: responseData.roastingPoint,
+    variety: responseData.variety,
+    productUploadDate: responseData.productUploadDate,
+    salesStatus: responseData.salesStatus,
+    isEdit: productItem.isEdit,
+  };
+  yield put(modifyProduct(data));
+  yield put(initialIsComplted());
+  // yield put(requestFetchMember(1));
+}
+
 export default function* productSaga() {
   yield takeEvery(requestAddProduct, addDataNext);
   yield takeEvery(requestFetchProductsPaging, fetchProductPaging);
   yield takeEvery(requestSemiModify, modifyProductData);
+  yield takeEvery(requestDeleteProduct, deleteProductData);
+  yield takeEvery(requestProductSalesChange, modifyProductSalesState);
+  yield takeEvery(requestModifyProduct, modifyProductDataNext);
 }

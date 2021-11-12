@@ -27,9 +27,7 @@ export const requestAddRegistration = createAction<RegistrationItem>(
 );
 
 function* addRegistrationDataNext(action: PayloadAction<RegistrationItem>) {
-  console.log("사이드 이펙트 시작");
   yield console.log("--addRegistrationDataNext--");
-  yield console.log(action);
 
   try {
     // action의 payload로 넘어온 객체

@@ -5,7 +5,6 @@ import { RegistrationItem } from "../../provider/modules/registration";
 import { requestAddRegistration } from "../../middleware/modules/registration";
 import { useRouter } from "next/dist/client/router";
 import DashboardContent from "../../components/material/Dashboard";
-import { requestFetchMember } from "../../middleware/modules/member";
 
 const Registration = () => {
   const companyNameInput = useRef<HTMLInputElement>(null);
@@ -28,19 +27,6 @@ const Registration = () => {
   );
   const dispatch = useDispatch<AppDispatch>();
   const router = useRouter();
-
-  function memberFetch() {
-    dispatch(requestFetchMember(1));
-  }
-
-  function start() {
-    console.log("제품등록 화면 멤버패치");
-    memberFetch();
-  }
-
-  useEffect(() => {
-    start();
-  }, []);
 
   useEffect(() => {
     isAddCompleted && router.push("/registration/complete");
@@ -76,9 +62,7 @@ const Registration = () => {
         ? registrationDateInput.current.value
         : "",
     };
-    console.log("비동기 시작");
     dispatch(requestAddRegistration(item));
-    console.log("비동기 끝");
   };
 
   return (

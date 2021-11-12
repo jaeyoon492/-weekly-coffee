@@ -1,38 +1,33 @@
 import React, { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import DashboardContent from "../../components/material/Dashboard";
-import { requestFetchMember } from "../../middleware/modules/member";
 import { AppDispatch, RootState } from "../../provider";
 import Image from "next/image";
-import { requestFetchPartner } from "../../middleware/modules/partner";
+import Link from "next/link";
 import {
+  requestDeleteProduct,
   requestFetchProductsPaging,
+  requestProductSalesChange,
   requestSemiModify,
 } from "../../middleware/modules/product";
 import styles from "./product.module.css";
 import Pagination from "../../components/pagination";
-import { Edit } from "@mui/icons-material";
-import {
-  editDone,
-  editProduct,
-  SemiModify,
-} from "../../provider/modules/product";
-
+import { editProduct, SemiModify } from "../../provider/modules/product";
+import { useRouter } from "next/dist/client/router";
 
 const ProductList = () => {
   const productNameInput = useRef<HTMLInputElement>(null);
   const productPriceInput = useRef<HTMLInputElement>(null);
   const tbodyRef = useRef<HTMLTableSectionElement>(null);
-  const product = useSelector((state: RootState) => state.product);
   const partner = useSelector((state: RootState) => state.partner);
+  const product = useSelector((state: RootState) => state.product);
   const dispatch = useDispatch<AppDispatch>();
-  const partnerId = useSelector(
-    (state: RootState) => state.partner.data.partnerId
-  );
+  const partnerId = partner.data.partnerId;
+
+  const router = useRouter();
 
   const handlePageChanged = (page: number) => {
     console.log("--page: " + page);
-    // setCurrentPage(page);
     dispatch(
       requestFetchProductsPaging({
         partnerId,
@@ -43,7 +38,7 @@ const ProductList = () => {
   };
 
   useEffect(() => {
-    if (partnerId && !partner.isProductFetched) {
+    if (partner.data.partnerId > 0) {
       const productPageSize = localStorage.getItem("product_page_size");
 
       console.log("제품목록 패치");
@@ -55,46 +50,62 @@ const ProductList = () => {
         })
       );
     }
-  }, [dispatch, partnerId, partner]);
+  }, [dispatch, partner.data.partnerId]);
 
   const edit = (id: number) => {
     const item = product.data.find((item) => item.productId === id);
-    console.log(item);
-    console.log(id);
     if (item) {
       dispatch(editProduct(id));
     }
   };
 
-  const save = async (id: number, index: number) => {
-    console.log("id = " + id);
-    console.log("index = " + index);
+  const del = (id: number) => {
+    dispatch(requestDeleteProduct(id));
+  };
 
+  const save = (id: number, index: number) => {
     const tr = tbodyRef.current?.querySelectorAll("tr")[index];
-    const inputArr = tr?.querySelectorAll("input");
-    console.log(inputArr);
+    const inputList = tr?.querySelectorAll("input");
+    const inputArr = Array.prototype.slice.call(inputList);
+    const productName = inputArr[0].value;
+    const productPrice = inputArr[1].value;
 
-    // const data: SemiModify = {
-    //   productId: id,
-    //   productName: productNameInput.current
-    //     ? productNameInput.current?.value
-    //     : "",
-    //   productPrice: productPriceInput.current
-    //     ? +productPriceInput.current.value
-    //     : 0,
-    // };
-    // console.log("수정 시작");
-    // dispatch(requestSemiModify(data));
-    // // dispatch(editDone(id));
-    // console.log("수정 끝");
+    const data: SemiModify = {
+      productId: id,
+      productPrice: productPrice,
+      productName: productName,
+    };
+
+    if (data) {
+      dispatch(requestSemiModify(data));
+    }
+  };
+
+  const productSalesChange = (id: number) => {
+    const item = product.data.find((item) => item.productId === id);
+    if (item) {
+      console.log(item.salesStatus);
+      dispatch(requestProductSalesChange(id));
+    }
   };
 
   return (
     <DashboardContent>
       <article style={{ width: "90%" }} className="mx-auto">
         <section>
-          <h1 className="">제품 목록</h1>
-          <div className="d-flex justify-content-md-center mt-4">
+          <div className={styles.div}>
+            <h1 className="">제품 목록</h1>
+            <button
+              className="btn btn-primary"
+              onClick={() => {
+                router.push("/product/edit/create");
+              }}
+            >
+              제품 등록
+            </button>
+          </div>
+
+          <div className="d-flex justify-content-md-center mt-1">
             <table className="table  table-striped">
               <thead className=" align-items-center text-center">
                 <tr>
@@ -102,8 +113,9 @@ const ProductList = () => {
                   <th scope="col fw-bolder">제품명</th>
                   <th scope="col fw-bolder">단가</th>
                   <th scope="col fw-bolder">제품사진</th>
-                  <th scope="col fw-bolder">판매상태</th>
+                  <th scope="col fw-bolder">판매/중단</th>
                   <th scope="col fw-bolder">기능</th>
+                  <th scope="col fw-bolder">판매상태</th>
                 </tr>
               </thead>
               <tbody
@@ -112,9 +124,23 @@ const ProductList = () => {
               >
                 {product.data.map((item, index) => (
                   <tr key={item.productId}>
-                    <td className="fs-5 fw-bolder">{item.productId}</td>
+                    <td
+                      onClick={() => {
+                        router.push(`/product/detail/${item.productId}`);
+                      }}
+                      className="fs-5 fw-bolder"
+                    >
+                      {item.productId}
+                    </td>
                     {!item.isEdit && (
-                      <td className="fs-5 fw-bolder">{item.productName}</td>
+                      <td
+                        onClick={() => {
+                          router.push(`/product/detail/${item.productId}`);
+                        }}
+                        className="fs-5 fw-bolder"
+                      >
+                        {item.productName}
+                      </td>
                     )}
                     {item.isEdit && (
                       <td>
@@ -127,7 +153,12 @@ const ProductList = () => {
                       </td>
                     )}
                     {!item.isEdit && (
-                      <td className="fs-5 fw-bolder">
+                      <td
+                        className="fs-5 fw-bolder"
+                        onClick={() => {
+                          router.push(`/product/detail/${item.productId}`);
+                        }}
+                      >
                         {new Intl.NumberFormat().format(item.productPrice)}원
                       </td>
                     )}
@@ -141,7 +172,11 @@ const ProductList = () => {
                         />
                       </td>
                     )}
-                    <td>
+                    <td
+                      onClick={() => {
+                        router.push(`/product/detail/${item.productId}`);
+                      }}
+                    >
                       <Image
                         src={item.productImageUrl}
                         className="card-img-top"
@@ -153,10 +188,29 @@ const ProductList = () => {
                         height={50}
                       />
                     </td>
+
                     <td className={styles.td}>
-                      <button className="btn btn-success">개시</button>
-                      <button className="btn btn-primary ms-2 ">중단</button>
+                      {item.salesStatus === 0 ? (
+                        <button
+                          className="btn btn-success text-light"
+                          onClick={() => {
+                            productSalesChange(item.productId);
+                          }}
+                        >
+                          개시
+                        </button>
+                      ) : (
+                        <button
+                          className="btn btn-primary text-light"
+                          onClick={() => {
+                            productSalesChange(item.productId);
+                          }}
+                        >
+                          중단
+                        </button>
+                      )}
                     </td>
+
                     <td className={styles.td}>
                       {!item.isEdit && (
                         <button
@@ -179,7 +233,22 @@ const ProductList = () => {
                         </button>
                       )}
 
-                      <button className="btn btn-danger ms-2 ">삭제</button>
+                      <button
+                        className="btn btn-danger ms-2"
+                        onClick={() => {
+                          del(item.productId);
+                        }}
+                      >
+                        삭제
+                      </button>
+                    </td>
+                    <td
+                      className={styles.td}
+                      onClick={() => {
+                        router.push(`/product/detail/${item.productId}`);
+                      }}
+                    >
+                      {item.salesStatus === 0 ? <p>판매대기</p> : <p>판매중</p>}
                     </td>
                   </tr>
                 ))}

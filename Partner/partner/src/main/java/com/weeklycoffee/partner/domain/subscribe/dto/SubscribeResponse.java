@@ -19,7 +19,6 @@ public class SubscribeResponse {
     private int subscriberId;
     private String subscriberName;
     private String subscriberPhone;
-    private String cardNumber;
     private String location;
     private String deliveryMemo;
     private int totalPayment;
@@ -34,8 +33,7 @@ public class SubscribeResponse {
         private long partnerId;
 
         private String productName;
-        private String processing;
-        private String productImageId;
+        private String productImageUrl;
         private int beanAmount;
         private int term;
         private String groundPoint;

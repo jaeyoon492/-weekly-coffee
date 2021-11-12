@@ -23,7 +23,6 @@ public class SubscribeRequest {
     private String subscribeDate;
     private String subscriberName;
     private String subscriberPhone;
-    private String cardNumber;
     private String location;
     private String deliveryMemo;
     private List<SubscribeDetail> subscribeDetails;
@@ -37,7 +36,7 @@ public class SubscribeRequest {
         private long partnerId;
 
         private String productName;
-        private String productImageId;
+        private String productImageUrl;
         private int beanAmount;
         private int term;
         private String groundPoint;

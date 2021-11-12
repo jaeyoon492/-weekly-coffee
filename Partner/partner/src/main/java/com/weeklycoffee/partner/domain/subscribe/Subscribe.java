@@ -24,7 +24,6 @@ public class Subscribe {
     private int subscriberId;
     private String subscriberName;
     private String subscriberPhone;
-    private String cardNumber;
     private String location;
     private String deliveryMemo;
     private int totalPayment;

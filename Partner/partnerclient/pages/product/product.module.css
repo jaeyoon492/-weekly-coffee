@@ -3,3 +3,29 @@
     font-weight: bolder;
     border-radius: 10px;
 }
+
+.td > p {
+    font-size: large;
+    font-weight: bolder;
+    margin-top: 1rem;
+}
+
+.div > button {
+    font-size: medium;
+    font-weight: bolder;
+    border-radius: 10px;
+    border: solid wheat 1px;
+    height: 38px;
+    width: 13%;
+    margin-top: 30px;
+    margin-right: 22.5px;
+    color: whitesmoke;
+    background-color: rgb(153, 106, 18);
+}
+
+
+
+.div { 
+    display: flex;
+    justify-content: space-between;
+}

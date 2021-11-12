@@ -34,5 +34,5 @@ public class SubscribeDetail {
     private int term;
     private int orderQuantity;
     private String groundPoint;
-    private String productImageId;
+    private String productImageUrl;
 }

@@ -10,7 +10,7 @@ export interface Member {
 
 export interface MemberState {
   data: Member;
-  isFetched: false;
+  isFetched: boolean;
 }
 
 const initialState: MemberState = {
@@ -47,6 +47,7 @@ const memberSlice = createSlice({
         state.data.partner = member.partner;
         state.data.partnerState = member.partnerState;
       }
+      state.isFetched = true;
     },
   },
 });

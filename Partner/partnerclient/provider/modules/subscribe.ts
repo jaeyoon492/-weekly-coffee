@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { SubscribeDetail } from "./subscribeDetail";
 
 export interface Subscribe {
@@ -9,7 +9,6 @@ export interface Subscribe {
   subscriberId: number;
   subscriberName: string;
   subscriberPhone: string;
-  cardNumber: string;
   location: string;
   deliveryMemo: string;
   totalPayment: number;
@@ -19,28 +18,77 @@ export interface Subscribe {
   details: SubscribeDetail[];
 }
 
-const initialState: Subscribe = {
-  subscribeId: 0,
-  partnerId: 0,
-  subscribeDate: "",
-  subscriberId: 0,
-  subscriberName: "",
-  subscriberPhone: "",
-  cardNumber: "",
-  location: "",
-  deliveryMemo: "",
-  totalPayment: 0,
-  orderCheck: false,
-  createdTime: 0,
-  details: [],
+export interface SubScribePage {
+  data: Subscribe[];
+  totalElements: number;
+  totalPages: number;
+  page: number;
+  pageSize: number;
+  isLast: boolean;
+}
+
+export interface SubscribePageResponse {
+  content: SubscribeResponse[];
+  totalElements: number;
+  totalPages: number;
+  page: number;
+  pageSize: number;
+  isLast: boolean;
+}
+
+export interface SubscribeResponse {
+  subscribeId: number;
+  partnerId: number;
+
+  subscribeDate: string;
+  subscriberId: number;
+  subscriberName: string;
+  subscriberPhone: string;
+  location: string;
+  deliveryMemo: string;
+  totalPayment: number;
+  orderCheck: boolean;
+  createdTime: number;
+
+  details: SubscribeDetail[];
+}
+
+export interface SubscribeState {
+  data: Subscribe[];
+  isFetched: boolean;
+  totalElements?: number;
+  totalPages: number;
+  page: number;
+  pageSize: number;
+  isLast?: boolean;
+}
+
+const initialState: SubscribeState = {
+  data: [],
+  isFetched: false,
+  totalPages: 0,
+  page: 0,
+  pageSize: 1,
 };
 
 export const subscribeSlice = createSlice({
   name: "subscribe",
   initialState,
-  reducers: {},
+  reducers: {
+    initialNextSubscribe: (state, action: PayloadAction<SubScribePage>) => {
+      state.data = action.payload.data;
+
+      state.totalElements = action.payload.totalElements;
+      state.totalPages = action.payload.totalPages;
+      state.page = action.payload.page;
+      state.pageSize = action.payload.pageSize;
+      state.isLast = action.payload.isLast;
+
+      state.isFetched = true;
+    },
+  },
 });
 
-export const {} = subscribeSlice.actions;
+export const { initialNextSubscribe } = subscribeSlice.actions;
 
 export default subscribeSlice.reducer;

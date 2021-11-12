@@ -7,7 +7,6 @@ import { AppDispatch, RootState } from "../../provider";
 const Complete = () => {
   const router = useRouter();
   const registration = useSelector((state: RootState) => state.registration);
-  const dispatch = useDispatch<AppDispatch>();
 
   return (
     <div

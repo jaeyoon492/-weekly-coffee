@@ -1,32 +1,31 @@
-import React, { useEffect, useRef } from "react";
+import router from "next/dist/client/router";
+import React, { MutableRefObject, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import DashboardContent from "../../../components/material/Dashboard";
-import { requestFetchMember } from "../../../middleware/modules/member";
-import { requestFetchPartner } from "../../../middleware/modules/partner";
 import { requestAddProduct } from "../../../middleware/modules/product";
 
 import { AppDispatch, RootState } from "../../../provider";
-import member from "../../../provider/modules/member";
 import { ProductItem } from "../../../provider/modules/product";
 
 const ProductCreate = () => {
-  const productNameInput = useRef<HTMLInputElement>(null);
-  const productPriceInput = useRef<HTMLInputElement>(null);
-  const productDescText = useRef<HTMLTextAreaElement>(null);
-  const productImageInput = useRef<HTMLInputElement>(null);
-  const beanTypeSelect = useRef<HTMLSelectElement>(null);
-  const beanTagSelect = useRef<HTMLSelectElement>(null);
-  const processingSelect = useRef<HTMLSelectElement>(null);
-  const countryInput = useRef<HTMLInputElement>(null);
-  const regionInput = useRef<HTMLInputElement>(null);
-  const farmInput = useRef<HTMLInputElement>(null);
-  const cupNoteInput = useRef<HTMLInputElement>(null);
-  const roastionPointSelect = useRef<HTMLSelectElement>(null);
-  const varietyInput = useRef<HTMLInputElement>(null);
-  const foodTypeSelect = useRef<HTMLSelectElement>(null);
-  const manufacturerInput = useRef<HTMLInputElement>(null);
-  const manufacturingDateSelect = useRef<HTMLSelectElement>(null);
-  const expirationDataInput = useRef<HTMLInputElement>(null);
+  const productNameInput = useRef() as MutableRefObject<HTMLInputElement>;
+  const productPriceInput = useRef() as MutableRefObject<HTMLInputElement>;
+  const productDescText = useRef() as MutableRefObject<HTMLTextAreaElement>;
+  const productImageInput = useRef() as MutableRefObject<HTMLInputElement>;
+  const beanTypeSelect = useRef() as MutableRefObject<HTMLSelectElement>;
+  const beanTagSelect = useRef() as MutableRefObject<HTMLSelectElement>;
+  const processingSelect = useRef() as MutableRefObject<HTMLSelectElement>;
+  const countryInput = useRef() as MutableRefObject<HTMLInputElement>;
+  const regionInput = useRef() as MutableRefObject<HTMLInputElement>;
+  const farmInput = useRef() as MutableRefObject<HTMLInputElement>;
+  const cupNoteInput = useRef() as MutableRefObject<HTMLInputElement>;
+  const roastionPointSelect = useRef() as MutableRefObject<HTMLSelectElement>;
+  const varietyInput = useRef() as MutableRefObject<HTMLInputElement>;
+  const foodTypeSelect = useRef() as MutableRefObject<HTMLSelectElement>;
+  const manufacturerInput = useRef() as MutableRefObject<HTMLInputElement>;
+  const manufacturingDateSelect =
+    useRef() as MutableRefObject<HTMLSelectElement>;
+  const expirationDataInput = useRef() as MutableRefObject<HTMLInputElement>;
   const dispatch = useDispatch<AppDispatch>();
 
   const partner = useSelector((state: RootState) => state.partner);
@@ -34,30 +33,15 @@ const ProductCreate = () => {
   const partnerId = useSelector(
     (state: RootState) => state.member.data.partner?.partnerId
   );
+  const isAddCompleted = useSelector(
+    (state: RootState) => state.product.isAddCompleted
+  );
 
-  function memberFetch() {
-    dispatch(requestFetchMember(1));
-  }
-  function partnerFetch() {
-    if (partnerId) {
-      dispatch(requestFetchPartner(partnerId));
-    } else {
-      return;
-    }
-  }
-
-  function start() {
-    console.log("제품등록 화면 멤버패치");
-    memberFetch();
-    console.log("제품등록 화면 파트너 패치");
-    partnerFetch();
-  }
   useEffect(() => {
-    start();
-  }, []);
+    isAddCompleted && router.push("/product");
+  }, [isAddCompleted, router]);
 
   const handleAddClick = () => {
-    console.log("click!");
     if (productImageInput.current?.files?.length) {
       const imageFile = productImageInput.current.files[0];
       const reader = new FileReader();
@@ -67,47 +51,32 @@ const ProductCreate = () => {
             ? partner.data.products[0].productId + 1
             : 1,
           partnerId: partner.data.partnerId,
-          productName: productNameInput.current
-            ? productNameInput.current.value
-            : "",
-          productPrice: productPriceInput.current
-            ? +productPriceInput.current.value
-            : 0,
+          productName: productNameInput.current.value,
+          productPrice: +productPriceInput.current.value,
           productImageUrl: reader.result ? reader.result?.toString() : "",
+          productInfo: productDescText.current.value,
           fileName: imageFile.name,
           fileType: imageFile.type,
-          foodType: foodTypeSelect.current ? foodTypeSelect.current.value : "",
-          expirationData: expirationDataInput.current
-            ? expirationDataInput.current.value
-            : "",
-          manufacturer: manufacturerInput.current
-            ? manufacturerInput.current.value
-            : "",
-          manufacturingDate: manufacturingDateSelect.current
-            ? manufacturingDateSelect.current.value
-            : "",
+          foodType: foodTypeSelect.current.value,
+          expirationData: expirationDataInput.current.value,
+          manufacturer: manufacturerInput.current.value,
+          manufacturingDate: manufacturingDateSelect.current.value,
           companyName: partner.data.companyName,
           companyIntroduce: partner.data.companyIntroduce,
           companyAddress: partner.data.companyAddress,
           companyContact: partner.data.companyContact,
-          beanType: beanTypeSelect.current ? beanTypeSelect.current.value : "",
-          beanTag: beanTagSelect.current ? beanTagSelect.current.value : "",
-          processing: processingSelect.current
-            ? processingSelect.current.value
-            : "",
-          country: countryInput.current ? countryInput.current.value : "",
-          region: regionInput.current ? regionInput.current.value : "",
-          farm: farmInput.current ? farmInput.current.value : "",
-          cupNote: cupNoteInput.current ? cupNoteInput.current.value : "",
-          roastingPoint: roastionPointSelect.current
-            ? roastionPointSelect.current.value
-            : "",
-          variety: varietyInput.current ? varietyInput.current.value : "",
+          beanType: beanTypeSelect.current.value,
+          beanTag: beanTagSelect.current.value,
+          processing: processingSelect.current.value,
+          country: countryInput.current.value,
+          region: regionInput.current.value,
+          farm: farmInput.current.value,
+          cupNote: cupNoteInput.current.value,
+          roastingPoint: roastionPointSelect.current.value,
+          variety: varietyInput.current.value,
+          salesStatus: 0,
         };
-        console.log("드가자");
-        console.log(partnerId);
         dispatch(requestAddProduct(data));
-        console.log("드갔다");
       };
       reader.readAsDataURL(imageFile);
     }
@@ -379,7 +348,12 @@ const ProductCreate = () => {
                 </table>
               </form>
               <div>
-                <button className="btn btn-secondary float-start">
+                <button
+                  className="btn btn-secondary float-start"
+                  onClick={() => {
+                    router.push("/product");
+                  }}
+                >
                   <i className="bi bi-grid-3x3-gap me-1"></i>
                   목록
                 </button>

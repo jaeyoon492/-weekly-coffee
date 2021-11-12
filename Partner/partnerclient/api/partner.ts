@@ -18,9 +18,8 @@ export interface PartnerResponse {
 
 const partnerApi = {
   fetch: (partnerId: number) =>
-    axios.get<PartnerResponse>(
-      `http://localhost:8082/partner/test/${partnerId}`
-    ),
+    axios.get<PartnerResponse>(`http://localhost:8082/partner/${partnerId}`),
 };
+
 
 export default partnerApi;

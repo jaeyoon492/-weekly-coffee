@@ -18,6 +18,7 @@ public class ProductRequest {
     private long productUploadDate;
     private int productPrice;
     private String productImageUrl;
+    private String productInfo;
     private int salesStatus;
     private String fileName;
     private String fileType;

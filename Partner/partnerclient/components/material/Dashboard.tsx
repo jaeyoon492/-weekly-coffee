@@ -1,4 +1,4 @@
-import * as React from "react";
+import React from "react";
 import { styled, createTheme, ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import MuiDrawer from "@mui/material/Drawer";
@@ -13,7 +13,6 @@ import Badge from "@mui/material/Badge";
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
-// import Link from "@mui/material/Link";
 import Link from "next/link";
 import MenuIcon from "@mui/icons-material/Menu";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
@@ -22,10 +21,13 @@ import { mainListItems, notPartnerListItems } from "./listItems";
 import styles from "./main.module.css";
 import Progress from "../progress";
 import AlertStack from "../alert/alertStack";
-import { useSelector } from "react-redux";
-import { RootState } from "../../provider";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "../../provider";
 import { margin } from "@mui/system";
 import style from "./list.module.css";
+import { requestFetchMember } from "../../middleware/modules/member";
+import { requestFetchPartner } from "../../middleware/modules/partner";
+import { useEffect } from "react";
 
 const drawerWidth: number = 240;
 
@@ -95,6 +97,8 @@ interface DashboardProps {
 }
 
 export default function DashboardContent({ children }: DashboardProps) {
+  const dispatch = useDispatch<AppDispatch>();
+
   const [open, setOpen] = React.useState(true);
   const toggleDrawer = () => {
     setOpen(!open);
@@ -103,6 +107,15 @@ export default function DashboardContent({ children }: DashboardProps) {
   const isPartner = useSelector(
     (state: RootState) => state.member.data.partnerState
   );
+
+  function memberFetch() {
+    console.log("초기화면 멤버패치");
+    dispatch(requestFetchMember(1));
+  }
+
+  useEffect(() => {
+    memberFetch();
+  }, []);
 
   return (
     <ThemeProvider theme={mdTheme}>
@@ -138,7 +151,9 @@ export default function DashboardContent({ children }: DashboardProps) {
               noWrap
               sx={{ flexGrow: 1 }}
             >
-              <Link href="/"><span className={style.span}>파트너 서비스</span></Link>
+              <Link href="/">
+                <span className={style.span}>파트너 서비스</span>
+              </Link>
             </Typography>
 
             <IconButton color="inherit">

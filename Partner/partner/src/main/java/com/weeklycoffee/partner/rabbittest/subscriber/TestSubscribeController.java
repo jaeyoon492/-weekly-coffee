@@ -27,7 +27,6 @@ public class TestSubscribeController {
                 .subscriberId(testSubReq.getSubscriberId())
                 .subscriberName(testSubReq.getSubscriberName())
                 .subscriberPhone(testSubReq.getSubscriberPhone())
-                .cardNumber(testSubReq.getCardNumber())
                 .location(testSubReq.getLocation())
                 .deliveryMemo(testSubReq.getDeliveryMemo())
                 .build();
@@ -43,7 +42,7 @@ public class TestSubscribeController {
                     .term(reqDetail.getTerm())
                     .orderQuantity(reqDetail.getOrderQuantity())
                     .groundPoint(reqDetail.getGroundPoint())
-                    .productImageId(reqDetail.getProductImageId())
+                    .productImageUrl(reqDetail.getProductImageUrl())
                     .build();
             list.add(detail);
         }

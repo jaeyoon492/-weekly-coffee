@@ -47,7 +47,6 @@ public class SubscribeService {
                 .subscriberId(subRes.getSubscriberId())
                 .subscriberName(subRes.getSubscriberName())
                 .subscriberPhone(subRes.getSubscriberPhone())
-                .cardNumber(subRes.getCardNumber())
                 .location(subRes.getLocation())
                 .deliveryMemo(subRes.getDeliveryMemo())
                 .totalPayment(total)
@@ -70,7 +69,7 @@ public class SubscribeService {
                     .term(reqDetail.getTerm())
                     .orderQuantity(reqDetail.getOrderQuantity())
                     .groundPoint(reqDetail.getGroundPoint())
-                    .productImageId(reqDetail.getProductImageId())
+                    .productImageUrl(reqDetail.getProductImageUrl())
                     .build();
             toSubscribeDetail.add(detail);
         }

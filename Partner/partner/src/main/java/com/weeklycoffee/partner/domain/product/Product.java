@@ -23,6 +23,7 @@ public class Product {
     private String productName;
     private int productPrice;
     private String productImageUrl;
+    private String productInfo;
     private String foodType;
     private String expirationData;
     private String manufacturer;

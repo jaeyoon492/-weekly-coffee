@@ -1,12 +1,6 @@
 import { createAction, nanoid, PayloadAction } from "@reduxjs/toolkit";
 import { AxiosResponse } from "axios";
-import {
-  call,
-  put,
-  select,
-  takeEvery,
-  takeLatest,
-} from "@redux-saga/core/effects";
+import { call, put, takeLatest } from "@redux-saga/core/effects";
 import partnerReducer, {
   fetchPartner,
   Partner,
@@ -15,8 +9,6 @@ import { endProgress, startProgress } from "../../provider/modules/progress";
 import api, { PartnerResponse } from "../../api/partner";
 import { initialIsComplted } from "../../provider/modules/registration";
 import { addAlert } from "../../provider/modules/alert";
-import { ProductItem, ProductPage } from "../../provider/modules/product";
-import { RootState } from "../../provider";
 
 export const requestFetchPartner = createAction<number>(
   `${partnerReducer.name}/requestFetchPartner`
@@ -25,44 +17,57 @@ export const requestFetchPartner = createAction<number>(
 function* fetchPartnerDataNext(action: PayloadAction<number>) {
   yield console.log("-- fetchPartner --");
 
-  yield console.log(action.payload);
   const partnerId = action.payload;
 
-  const partner: number = yield select(
-    (state: RootState) => state.partner.data.partnerId
-  );
+  try {
+    yield put(startProgress());
 
-  if (partner && partnerId !== 0) {
-    return;
+    const result: AxiosResponse<PartnerResponse> = yield call(
+      api.fetch,
+      partnerId
+    );
+
+    if (result.data.partnerId === 0) {
+      yield put(endProgress());
+      yield put(
+        addAlert({
+          id: nanoid(),
+          variant: "danger",
+          message: "조회된 파트너가 없습니다.",
+        })
+      );
+      return;
+    }
+
+    yield put(endProgress());
+
+    if (result.data.partnerId > 0) {
+      const data: Partner = {
+        partnerId: result.data.partnerId,
+        memberId: result.data.memberId,
+        businessRegistrationNumber: result.data.businessRegistrationNumber,
+        ceoName: result.data.ceoName,
+        companyName: result.data.companyName,
+        companyContact: result.data.companyContact,
+        companyAddress: result.data.companyAddress,
+        companyIntroduce: result.data.companyIntroduce,
+        companyEmail: result.data.companyEmail,
+        products: result.data.products,
+        subscribes: result.data.subscribes,
+      };
+      yield put(fetchPartner(data));
+    }
+
+    yield put(initialIsComplted());
+  } catch (e: any) {
+    // 에러발생
+    // spinner 사라지게 하기
+    yield put(endProgress());
+    // alert박스를 추가해줌
+    yield put(
+      addAlert({ id: nanoid(), variant: "danger", message: e.message })
+    );
   }
-
-  yield put(startProgress());
-
-  const result: AxiosResponse<PartnerResponse> = yield call(
-    api.fetch,
-    partnerId
-  );
-
-  yield put(endProgress());
-
-  if (result) {
-    const data: Partner = {
-      partnerId: result.data.partnerId,
-      memberId: result.data.memberId,
-      businessRegistrationNumber: result.data.businessRegistrationNumber,
-      ceoName: result.data.ceoName,
-      companyName: result.data.companyName,
-      companyContact: result.data.companyContact,
-      companyAddress: result.data.companyAddress,
-      companyIntroduce: result.data.companyIntroduce,
-      companyEmail: result.data.companyEmail,
-      products: result.data.products,
-      subscribes: result.data.subscribes,
-    };
-    yield put(fetchPartner(data));
-  }
-
-  yield put(initialIsComplted());
 }
 
 export default function* partnerSaga() {
