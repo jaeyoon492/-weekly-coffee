@@ -427,10 +427,12 @@ Member 1 : RegistrationForm 1 = OneToOne (단방향)
 
 ## 백엔드
 1. 제품의 아이디가 동일하면 db에서 다른 파트너여도 update가 되어 제품데이터의 중복을 없애고자 복합키를 사용해 중복을 없앴습니다.
+
 2. 물건 등록시 메세지큐로 SubscribeService로 데이터를 전송 하도록 했습니다.
 
+3. ServerSentEvent를 통해 주문이 들어오면 실시간으로 화면에 나오는 주문알리미를 구현 했습니다.
 
-2. 1번의 여파로 생긴 에러들을 수정했습니다. 
+4. 1번의 여파로 생긴 에러들을 수정했습니다. 
     1. typeMismatchException = > { 기존 아이디 : long ~>  현재 아이디 : ProductId : { productId, partnerId } }
     2. 프론트또한 마찬가지로 Api의 매개변수를 수정해주었습니다. { number ⇒ Product }
     3. Axios의 delete 메소드에 매개변수로 객체가 들어가지 않아 put 메소드를 사용하였습니다.
