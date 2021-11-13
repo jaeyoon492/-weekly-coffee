@@ -98,5 +98,5 @@ function* addRegistrationDataNext(action: PayloadAction<RegistrationItem>) {
 }
 
 export default function* registrationSaga() {
-  yield takeLatest(requestAddRegistration, addRegistrationDataNext);
+  yield takeEvery(requestAddRegistration, addRegistrationDataNext);
 }

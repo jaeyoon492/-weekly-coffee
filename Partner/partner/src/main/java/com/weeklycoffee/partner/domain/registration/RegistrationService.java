@@ -5,6 +5,9 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class RegistrationService {
+
+
+
     RabbitTemplate rabbit;
 
     private RegistrationService(RabbitTemplate rabbit) {
@@ -14,4 +17,5 @@ public class RegistrationService {
     public void sendRegistration(Registration registration) {
         rabbit.convertAndSend("partner.registration.send", registration);
     }
+
 }

@@ -19,7 +19,7 @@ export const requestFetchMember = createAction<number>(
   `${memberReducer.name}/requestFetchMember`
 );
 
-export const requestRefreshFetchAll = createAction<number>(
+export const requestRefreshFetchAll = createAction(
   `${memberReducer.name}/requestRefreshFetchAll`
 );
 

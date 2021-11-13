@@ -13,8 +13,6 @@ import { AxiosResponse } from "axios";
 import { call } from "redux-saga/effects";
 import subScribeApi from "../../api/subscribe";
 import { addAlert } from "../../provider/modules/alert";
-import product from "../../provider/modules/product";
-import { SubscribeDetail } from "../../provider/modules/subscribeDetail";
 
 export interface SubscribePageRequest {
   partnerId: number;
@@ -45,7 +43,7 @@ function* fetchNextData(action: PayloadAction<SubscribePageRequest>) {
       size
     );
 
-    // console.log(result.data);
+    console.log(result.data);
 
     yield put(endProgress());
 
@@ -68,11 +66,11 @@ function* fetchNextData(action: PayloadAction<SubscribePageRequest>) {
             details: item.details,
           } as Subscribe)
       ),
+      isLast: result.data.last,
+      page: result.data.number,
+      pageSize: result.data.size,
       totalElements: result.data.totalElements,
       totalPages: result.data.totalPages,
-      page: result.data.page,
-      pageSize: result.data.pageSize,
-      isLast: result.data.isLast,
     };
 
     console.log(subscribePage);

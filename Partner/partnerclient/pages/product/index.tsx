@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from "react-redux";
 import DashboardContent from "../../components/material/Dashboard";
 import { AppDispatch, RootState } from "../../provider";
 import Image from "next/image";
-import Link from "next/link";
 import {
   requestDeleteProduct,
   requestFetchProductsPaging,

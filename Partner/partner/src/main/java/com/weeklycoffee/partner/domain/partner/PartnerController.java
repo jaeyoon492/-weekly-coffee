@@ -68,26 +68,23 @@ public class PartnerController {
         System.out.println(partnerId);
         System.out.println(page);
         System.out.println(size);
-//        Optional<Partner> partnerOptional = partnerRepo.findById(partnerId);
-//        Partner partner = partnerOptional.get();
 
         return subscribeRepo.findByPartnerId(PageRequest.of(page, size, Sort.by("subscribeId").descending()), partnerId);
     }
 
     @GetMapping("/partner/{partnerId}")
-    public PartnerAllResponse getPartnerAll(@PathVariable long partnerId, HttpServletResponse res) {
+    public PartnerAllResponse getPartnerAll(@PathVariable long partnerId) {
 
-        if(partnerId <= 0){
+        if (partnerId <= 0) {
             return null;
         }
         Optional<Partner> partnerOptional = partnerRepo.findById(partnerId);
         Partner partner = partnerOptional.get();
 
-        List<Subscribe> subscribes = subscribeRepo.findByPartnerId(Sort.by("subscribeId").descending(), partnerId);
+        List<Product> products = productRepo.findByPartnerConnect(partnerId);
+        List<Subscribe> subscribes = subscribeRepo.findByPartnerConnect(partnerId);
 
-        List<Product> products = productRepo.findByPartnerId(Sort.by("productId").descending(), partnerId);
-
-        return new PartnerAllResponse(partner, subscribes, products);
+        return new PartnerAllResponse(partner,subscribes, products);
     }
 
     // (안씀)

@@ -18,6 +18,14 @@ export interface Subscribe {
   details: SubscribeDetail[];
 }
 
+export interface SubscribeMessage {
+  subscribeId: number;
+  partnerId: number;
+  orderCheck: boolean;
+  subscribeDate: string;
+  totalPayment: number;
+}
+
 export interface SubScribePage {
   data: Subscribe[];
   totalElements: number;
@@ -31,9 +39,9 @@ export interface SubscribePageResponse {
   content: SubscribeResponse[];
   totalElements: number;
   totalPages: number;
-  page: number;
-  pageSize: number;
-  isLast: boolean;
+  size: number;
+  number: number;
+  last: boolean;
 }
 
 export interface SubscribeResponse {
@@ -55,6 +63,7 @@ export interface SubscribeResponse {
 
 export interface SubscribeState {
   data: Subscribe[];
+  message: SubscribeMessage[];
   isFetched: boolean;
   totalElements?: number;
   totalPages: number;
@@ -65,10 +74,11 @@ export interface SubscribeState {
 
 const initialState: SubscribeState = {
   data: [],
+  message: [],
   isFetched: false,
   totalPages: 0,
   page: 0,
-  pageSize: 1,
+  pageSize: 10,
 };
 
 export const subscribeSlice = createSlice({
@@ -76,7 +86,7 @@ export const subscribeSlice = createSlice({
   initialState,
   reducers: {
     initialNextSubscribe: (state, action: PayloadAction<SubScribePage>) => {
-      state.data = action.payload.data;
+      state.data = state.data.concat(action.payload.data);
 
       state.totalElements = action.payload.totalElements;
       state.totalPages = action.payload.totalPages;
@@ -86,9 +96,21 @@ export const subscribeSlice = createSlice({
 
       state.isFetched = true;
     },
+
+    receiveSubscribeEvent: (state, action: PayloadAction<SubscribeMessage>) => {
+      state.message.unshift(action.payload);
+    },
+
+    checkSubscribe: (state, action: PayloadAction<number>) => {
+      state.message.splice(
+        state.message.findIndex((item) => item.subscribeId === action.payload),
+        1
+      );
+    },
   },
 });
 
-export const { initialNextSubscribe } = subscribeSlice.actions;
+export const { initialNextSubscribe, receiveSubscribeEvent, checkSubscribe } =
+  subscribeSlice.actions;
 
 export default subscribeSlice.reducer;

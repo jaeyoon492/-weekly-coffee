@@ -1,5 +1,5 @@
 import { useRouter } from "next/dist/client/router";
-import React, { useEffect, useRef, useState } from "react";
+import React, { MutableRefObject, useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import DashboardContent from "../../../components/material/Dashboard";
 import { AppDispatch, RootState } from "../../../provider";
@@ -8,23 +8,24 @@ import { ProductItem } from "../../../provider/modules/product";
 import { requestModifyProduct } from "../../../middleware/modules/product";
 
 const Products = () => {
-  const productNameInput = useRef<HTMLInputElement>(null);
-  const productPriceInput = useRef<HTMLInputElement>(null);
-  const productDescText = useRef<HTMLTextAreaElement>(null);
-  const productImageInput = useRef<HTMLInputElement>(null);
-  const beanTypeSelect = useRef<HTMLSelectElement>(null);
-  const beanTagSelect = useRef<HTMLSelectElement>(null);
-  const processingSelect = useRef<HTMLSelectElement>(null);
-  const countryInput = useRef<HTMLInputElement>(null);
-  const regionInput = useRef<HTMLInputElement>(null);
-  const farmInput = useRef<HTMLInputElement>(null);
-  const cupNoteInput = useRef<HTMLInputElement>(null);
-  const roastionPointSelect = useRef<HTMLSelectElement>(null);
-  const varietyInput = useRef<HTMLInputElement>(null);
-  const foodTypeSelect = useRef<HTMLSelectElement>(null);
-  const manufacturerInput = useRef<HTMLInputElement>(null);
-  const manufacturingDateSelect = useRef<HTMLSelectElement>(null);
-  const expirationDataInput = useRef<HTMLInputElement>(null);
+  const productNameInput = useRef() as MutableRefObject<HTMLInputElement>;
+  const productPriceInput = useRef() as MutableRefObject<HTMLInputElement>;
+  const productDescText = useRef() as MutableRefObject<HTMLTextAreaElement>;
+  const productImageInput = useRef() as MutableRefObject<HTMLInputElement>;
+  const beanTypeSelect = useRef() as MutableRefObject<HTMLSelectElement>;
+  const beanTagSelect = useRef() as MutableRefObject<HTMLSelectElement>;
+  const processingSelect = useRef() as MutableRefObject<HTMLSelectElement>;
+  const countryInput = useRef() as MutableRefObject<HTMLInputElement>;
+  const regionInput = useRef() as MutableRefObject<HTMLInputElement>;
+  const farmInput = useRef() as MutableRefObject<HTMLInputElement>;
+  const cupNoteInput = useRef() as MutableRefObject<HTMLInputElement>;
+  const roastionPointSelect = useRef() as MutableRefObject<HTMLSelectElement>;
+  const varietyInput = useRef() as MutableRefObject<HTMLInputElement>;
+  const foodTypeSelect = useRef() as MutableRefObject<HTMLSelectElement>;
+  const manufacturerInput = useRef() as MutableRefObject<HTMLInputElement>;
+  const manufacturingDateSelect =
+    useRef() as MutableRefObject<HTMLSelectElement>;
+  const expirationDataInput = useRef() as MutableRefObject<HTMLInputElement>;
   const dispatch = useDispatch<AppDispatch>();
   const router = useRouter();
 
@@ -34,6 +35,9 @@ const Products = () => {
     state.product.data.find((item) => item.productId === +id)
   );
   const product = useSelector((state: RootState) => state.product);
+  const [image, setImage] = useState(
+    productItem && productItem.productImageUrl
+  );
 
   const [isEdit, setIsEdit] = useState(false);
 
@@ -55,37 +59,37 @@ const Products = () => {
     dispatch(requestModifyProduct(item));
   };
 
+  const changeImg = () => {
+    if (productImageInput.current?.files?.length) {
+      const imageFile = productImageInput.current.files[0];
+      const reader = new FileReader();
+
+      reader.onload = () => {
+        setImage(reader.result ? reader.result?.toString() : "");
+      };
+
+      reader.readAsDataURL(imageFile);
+    }
+  };
+
   const saveClick = () => {
-    const productName = productNameInput ? productNameInput.current?.value : "";
-    const productPrice = productPriceInput
-      ? productPriceInput.current?.value
-      : 0;
-    const productInfo = productDescText ? productDescText.current?.value : "";
-    const foodType = foodTypeSelect ? foodTypeSelect.current?.value : "";
-    const expirationData = expirationDataInput
-      ? expirationDataInput.current?.value
-      : "";
-    const manufacturer = manufacturerInput
-      ? manufacturerInput.current?.value
-      : "";
-    const manufacturingDate = manufacturingDateSelect
-      ? manufacturingDateSelect.current?.value
-      : "";
-    const beanType = beanTypeSelect.current
-      ? beanTypeSelect.current?.value
-      : "";
-    const beanTag = beanTagSelect.current ? beanTagSelect.current?.value : "";
-    const processing = processingSelect.current
-      ? processingSelect.current?.value
-      : "";
-    const country = countryInput.current ? countryInput.current?.value : "";
-    const region = regionInput.current ? regionInput.current?.value : "";
-    const farm = farmInput.current ? farmInput.current?.value : "";
-    const cupNote = cupNoteInput.current ? cupNoteInput.current?.value : "";
-    const roastingPoint = roastionPointSelect.current
-      ? roastionPointSelect.current?.value
-      : "";
-    const variety = varietyInput.current ? varietyInput.current?.value : "";
+    const productName = productNameInput.current.value;
+    const productPrice = productPriceInput.current.value;
+
+    const productInfo = productDescText.current.value;
+    const foodType = foodTypeSelect.current.value;
+    const expirationData = expirationDataInput.current.value;
+    const manufacturer = manufacturerInput.current.value;
+    const manufacturingDate = manufacturingDateSelect.current.value;
+    const beanType = beanTypeSelect.current.value;
+    const beanTag = beanTagSelect.current.value;
+    const processing = processingSelect.current.value;
+    const country = countryInput.current.value;
+    const region = regionInput.current.value;
+    const farm = farmInput.current.value;
+    const cupNote = cupNoteInput.current.value;
+    const roastingPoint = roastionPointSelect.current.value;
+    const variety = varietyInput.current.value;
 
     if (productImageInput.current?.files?.length) {
       const imageFile = productImageInput.current.files[0];
@@ -95,16 +99,16 @@ const Products = () => {
         if (productItem) {
           const item = { ...productItem };
 
-          item.productName = productName ? productName : "";
-          item.productPrice = productPrice ? +productPrice : 0;
+          item.productName = productName;
+          item.productPrice = +productPrice;
           item.productImageUrl = reader.result ? reader.result?.toString() : "";
-          item.productInfo = productInfo ? productInfo : "";
+          item.productInfo = productInfo;
           item.fileName = imageFile.name;
           item.fileType = imageFile.type;
-          item.foodType = foodType ? foodType : "";
-          item.expirationData = expirationData ? expirationData : "";
-          item.manufacturer = manufacturer ? manufacturer : "";
-          item.manufacturingDate = manufacturingDate ? manufacturingDate : "";
+          item.foodType = foodType;
+          item.expirationData = expirationData;
+          item.manufacturer = manufacturer;
+          item.manufacturingDate = manufacturingDate;
           item.companyIntroduce = productItem.companyIntroduce
             ? productItem.companyIntroduce
             : "";
@@ -114,58 +118,86 @@ const Products = () => {
           item.companyContact = productItem.companyContact
             ? productItem.companyContact
             : "";
-          item.beanType = beanType ? beanType : "";
-          item.beanTag = beanTag ? beanTag : "";
-          item.processing = processing ? processing : "";
-          item.country = country ? country : "";
-          item.region = region ? region : "";
-          item.farm = farm ? farm : "";
-          item.cupNote = cupNote ? cupNote : "";
-          item.roastingPoint = roastingPoint ? roastingPoint : "";
-          item.variety = variety ? variety : "";
+          item.beanType = beanType;
+          item.beanTag = beanTag;
+          item.processing = processing;
+          item.country = country;
+          item.region = region;
+          item.farm = farm;
+          item.cupNote = cupNote;
+          item.roastingPoint = roastingPoint;
+          item.variety = variety;
 
           console.log(item);
           save(item);
         }
       };
       reader.readAsDataURL(imageFile);
+      setIsEdit(false);
+    } else {
+      if (productItem) {
+        const item = { ...productItem };
+
+        item.productName = productName;
+        item.productPrice = +productPrice;
+        item.productInfo = productInfo;
+        item.foodType = foodType;
+        item.expirationData = expirationData;
+        item.manufacturer = manufacturer;
+        item.manufacturingDate = manufacturingDate;
+        item.companyIntroduce = productItem.companyIntroduce
+          ? productItem.companyIntroduce
+          : "";
+        item.companyAddress = productItem.companyAddress
+          ? productItem.companyAddress
+          : "";
+        item.companyContact = productItem.companyContact
+          ? productItem.companyContact
+          : "";
+        item.beanType = beanType;
+        item.beanTag = beanTag;
+        item.processing = processing;
+        item.country = country;
+        item.region = region;
+        item.farm = farm;
+        item.cupNote = cupNote;
+        item.roastingPoint = roastingPoint;
+        item.variety = variety;
+
+        console.log(item);
+        save(item);
+      }
+      setIsEdit(false);
     }
-    setIsEdit(false);
   };
 
   return (
     <DashboardContent>
       <article style={{ width: "85%" }} className="mx-auto ps-5">
         <section>
-          <h1 className="">제품 상세</h1>
-          <table>
-            <tbody>
-              <tr>
-                <td className={styles.td}>
-                  {isEdit === false ? (
-                    <button
-                      className="btn btn-warning "
-                      onClick={() => {
-                        edit();
-                      }}
-                    >
-                      수정
-                    </button>
-                  ) : (
-                    <button
-                      className="btn btn-secondary "
-                      onClick={() => {
-                        edit();
-                      }}
-                    >
-                      취소
-                    </button>
-                  )}
-                </td>
-              </tr>
-            </tbody>
-          </table>
-          <div className="justify-content-md-center w-75  mt-4">
+          <div className="justify-content-md-center w-75">
+            <div className={`${styles.div}`}>
+              <h1 className="mb-3">제품 상세</h1>
+              {isEdit === false ? (
+                <button
+                  className="btn btn-warning"
+                  onClick={() => {
+                    edit();
+                  }}
+                >
+                  수정
+                </button>
+              ) : (
+                <button
+                  className="btn btn-secondary"
+                  onClick={() => {
+                    edit();
+                  }}
+                >
+                  취소
+                </button>
+              )}
+            </div>
             <form className="ps-5">
               <table
                 className="table"
@@ -295,7 +327,7 @@ const Products = () => {
                           defaultValue={
                             productItem
                               ? productItem?.productInfo
-                              : productDescText.current?.value
+                              : productDescText.current.value
                           }
                         ></textarea>
                       </td>
@@ -303,11 +335,24 @@ const Products = () => {
                     <tr>
                       <th>상품사진</th>
                       <td>
+                        <img
+                          style={{ width: "400px", height: "400px" }}
+                          src={image}
+                          alt={productItem && productItem?.productName}
+                        />
+                      </td>
+                    </tr>
+                    <tr>
+                      <th>사진선택</th>
+                      <td>
                         <input
                           className="form-control"
                           type="file"
                           accept="image/*"
                           ref={productImageInput}
+                          onChange={() => {
+                            changeImg();
+                          }}
                         />
                       </td>
                     </tr>
@@ -331,7 +376,7 @@ const Products = () => {
                           defaultValue={
                             productItem
                               ? productItem?.beanType
-                              : beanTypeSelect.current?.value
+                              : beanTypeSelect.current.value
                           }
                         >
                           <option value="--" disabled>
@@ -352,7 +397,7 @@ const Products = () => {
                           defaultValue={
                             productItem
                               ? productItem?.beanTag
-                              : beanTagSelect.current?.value
+                              : beanTagSelect.current.value
                           }
                         >
                           <option value="--" disabled>
@@ -377,7 +422,7 @@ const Products = () => {
                           defaultValue={
                             productItem
                               ? productItem?.processing
-                              : processingSelect.current?.value
+                              : processingSelect.current.value
                           }
                         >
                           <option value="--" disabled>
@@ -402,7 +447,7 @@ const Products = () => {
                           defaultValue={
                             productItem
                               ? productItem?.country
-                              : countryInput.current?.value
+                              : countryInput.current.value
                           }
                         />
                       </td>
@@ -417,7 +462,7 @@ const Products = () => {
                           defaultValue={
                             productItem
                               ? productItem?.region
-                              : regionInput.current?.value
+                              : regionInput.current.value
                           }
                         />
                       </td>
@@ -432,7 +477,7 @@ const Products = () => {
                           defaultValue={
                             productItem
                               ? productItem?.farm
-                              : farmInput.current?.value
+                              : farmInput.current.value
                           }
                         />
                       </td>
@@ -447,7 +492,7 @@ const Products = () => {
                           defaultValue={
                             productItem
                               ? productItem?.cupNote
-                              : cupNoteInput.current?.value
+                              : cupNoteInput.current.value
                           }
                         />
                       </td>
@@ -462,7 +507,7 @@ const Products = () => {
                           defaultValue={
                             productItem
                               ? productItem?.roastingPoint
-                              : roastionPointSelect.current?.value
+                              : roastionPointSelect.current.value
                           }
                         >
                           <option value="--" disabled>
@@ -486,7 +531,7 @@ const Products = () => {
                           defaultValue={
                             productItem
                               ? productItem?.variety
-                              : varietyInput.current?.value
+                              : varietyInput.current.value
                           }
                         />
                       </td>
@@ -501,7 +546,7 @@ const Products = () => {
                           defaultValue={
                             productItem
                               ? productItem?.foodType
-                              : foodTypeSelect.current?.value
+                              : foodTypeSelect.current.value
                           }
                         >
                           <option value="--" disabled>
@@ -521,7 +566,7 @@ const Products = () => {
                           defaultValue={
                             productItem
                               ? productItem.companyName
-                              : manufacturerInput.current?.value
+                              : manufacturerInput.current.value
                           }
                         />
                       </td>
@@ -536,7 +581,7 @@ const Products = () => {
                           defaultValue={
                             productItem
                               ? productItem?.manufacturingDate
-                              : manufacturingDateSelect.current?.value
+                              : manufacturingDateSelect.current.value
                           }
                         >
                           <option value="--" disabled>
@@ -558,7 +603,7 @@ const Products = () => {
                           defaultValue={
                             productItem
                               ? productItem?.expirationData
-                              : expirationDataInput.current?.value
+                              : expirationDataInput.current.value
                           }
                         />
                       </td>
@@ -567,18 +612,18 @@ const Products = () => {
                 )}
               </table>
             </form>
-            <div>
-              <button
-                className="btn btn-secondary float-start"
-                onClick={() => {
-                  saveClick();
-                  // router.push("/product");
-                }}
-              >
-                <i className="bi bi-grid-3x3-gap me-1"></i>
-                저장
-              </button>
-            </div>
+            {isEdit === true && (
+              <div className={`${styles.div} d-flex flex-row-reverse`}>
+                <button
+                  className="btn btn-secondary"
+                  onClick={() => {
+                    saveClick();
+                  }}
+                >
+                  저장
+                </button>
+              </div>
+            )}
           </div>
         </section>
       </article>

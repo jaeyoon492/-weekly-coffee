@@ -1,4 +1,10 @@
-import { call, put, select, takeEvery } from "@redux-saga/core/effects";
+import {
+  call,
+  put,
+  select,
+  takeEvery,
+  takeLatest,
+} from "@redux-saga/core/effects";
 import { createAction, nanoid, PayloadAction } from "@reduxjs/toolkit";
 import { AxiosResponse } from "axios";
 import fileApi from "../../api/file";
@@ -103,6 +109,8 @@ function* addDataNext(action: PayloadAction<ProductItem>) {
       variety: payloadData.variety,
       salesStatus: 0,
     };
+
+    console.log(productItem);
 
     const result: AxiosResponse<ProductResponse> = yield call(
       productApi.add,
@@ -456,9 +464,7 @@ function* modifyProductDataNext(action: PayloadAction<ProductItem>) {
     productItem.productId,
     productRequestItem
   );
-
   yield put(endProgress());
-
   const responseData = result.data;
 
   const data: ProductItem = {
@@ -493,14 +499,13 @@ function* modifyProductDataNext(action: PayloadAction<ProductItem>) {
   };
   yield put(modifyProduct(data));
   yield put(initialIsComplted());
-  // yield put(requestFetchMember(1));
 }
 
 export default function* productSaga() {
   yield takeEvery(requestAddProduct, addDataNext);
-  yield takeEvery(requestFetchProductsPaging, fetchProductPaging);
-  yield takeEvery(requestSemiModify, modifyProductData);
-  yield takeEvery(requestDeleteProduct, deleteProductData);
+  yield takeLatest(requestFetchProductsPaging, fetchProductPaging);
+  yield takeLatest(requestSemiModify, modifyProductData);
+  yield takeLatest(requestDeleteProduct, deleteProductData);
   yield takeEvery(requestProductSalesChange, modifyProductSalesState);
-  yield takeEvery(requestModifyProduct, modifyProductDataNext);
+  yield takeLatest(requestModifyProduct, modifyProductDataNext);
 }

@@ -53,5 +53,7 @@ public class PartnerService {
 
         memberRepo.save(member);
     }
+
+
 }
 

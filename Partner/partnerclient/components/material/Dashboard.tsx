@@ -11,7 +11,6 @@ import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
 import Badge from "@mui/material/Badge";
 import Container from "@mui/material/Container";
-import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
 import Link from "next/link";
 import MenuIcon from "@mui/icons-material/Menu";
@@ -25,7 +24,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../provider";
 import { margin } from "@mui/system";
 import style from "./list.module.css";
-import { requestFetchMember } from "../../middleware/modules/member";
+import {
+  requestFetchMember,
+  requestRefreshFetchAll,
+} from "../../middleware/modules/member";
 import { requestFetchPartner } from "../../middleware/modules/partner";
 import { useEffect } from "react";
 
@@ -33,6 +35,24 @@ const drawerWidth: number = 240;
 
 interface AppBarProps extends MuiAppBarProps {
   open?: boolean;
+}
+
+function Copyright(props: any) {
+  return (
+    <Typography
+      variant="body2"
+      color="text.secondary"
+      align="center"
+      {...props}
+    >
+      {"Copyright © "}
+      <Link href="https://www.notion.so/JUGAN-COFFEE-HOME-11c388513ab74fd4bda5e6478c22abc8">
+        Your Website
+      </Link>{" "}
+      {new Date().getFullYear()}
+      {"."}
+    </Typography>
+  );
 }
 
 const AppBar = styled(MuiAppBar, {
@@ -98,6 +118,9 @@ interface DashboardProps {
 
 export default function DashboardContent({ children }: DashboardProps) {
   const dispatch = useDispatch<AppDispatch>();
+  const memberFetched = useSelector(
+    (state: RootState) => state.member.isFetched
+  );
 
   const [open, setOpen] = React.useState(true);
   const toggleDrawer = () => {
@@ -108,13 +131,12 @@ export default function DashboardContent({ children }: DashboardProps) {
     (state: RootState) => state.member.data.partnerState
   );
 
-  function memberFetch() {
+  useEffect(() => {
     console.log("초기화면 멤버패치");
     dispatch(requestFetchMember(1));
-  }
-
-  useEffect(() => {
-    memberFetch();
+    if (memberFetched) {
+      dispatch(requestRefreshFetchAll());
+    }
   }, []);
 
   return (
@@ -218,6 +240,7 @@ export default function DashboardContent({ children }: DashboardProps) {
                 <AlertStack />
               </main>
             </Paper>
+            <Copyright sx={{ pt: 4 }} />
           </Container>
         </Box>
       </Box>

@@ -3,7 +3,7 @@ import React, { MutableRefObject, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import DashboardContent from "../../../components/material/Dashboard";
 import { requestAddProduct } from "../../../middleware/modules/product";
-
+import styles from "../product.module.css";
 import { AppDispatch, RootState } from "../../../provider";
 import { ProductItem } from "../../../provider/modules/product";
 
@@ -37,11 +37,14 @@ const ProductCreate = () => {
     (state: RootState) => state.product.isAddCompleted
   );
 
+  console.log(partner.data);
+
   useEffect(() => {
     isAddCompleted && router.push("/product");
   }, [isAddCompleted, router]);
 
   const handleAddClick = () => {
+    console.log("hi");
     if (productImageInput.current?.files?.length) {
       const imageFile = productImageInput.current.files[0];
       const reader = new FileReader();
@@ -76,6 +79,7 @@ const ProductCreate = () => {
           variety: varietyInput.current.value,
           salesStatus: 0,
         };
+        console.log(data);
         dispatch(requestAddProduct(data));
       };
       reader.readAsDataURL(imageFile);
@@ -346,27 +350,27 @@ const ProductCreate = () => {
                     </tr>
                   </tbody>
                 </table>
+                <div>
+                  <button
+                    type="button"
+                    className={`${styles.button} btn btn-secondary border float-start`}
+                    onClick={() => {
+                      router.push("/product");
+                    }}
+                  >
+                    목록
+                  </button>
+                  <button
+                    type="button"
+                    className={`${styles.button} btn btn-primary float-end`}
+                    onClick={() => {
+                      handleAddClick();
+                    }}
+                  >
+                    저장
+                  </button>
+                </div>
               </form>
-              <div>
-                <button
-                  className="btn btn-secondary float-start"
-                  onClick={() => {
-                    router.push("/product");
-                  }}
-                >
-                  <i className="bi bi-grid-3x3-gap me-1"></i>
-                  목록
-                </button>
-                <button
-                  className="btn btn-primary float-end"
-                  onClick={() => {
-                    handleAddClick();
-                  }}
-                >
-                  <i className="bi bi-check" />
-                  저장
-                </button>
-              </div>
             </div>
           </section>
         </article>

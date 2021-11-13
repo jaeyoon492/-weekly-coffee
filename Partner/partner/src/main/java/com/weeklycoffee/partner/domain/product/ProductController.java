@@ -1,6 +1,7 @@
 package com.weeklycoffee.partner.domain.product;
 
 import com.weeklycoffee.partner.domain.product.dto.ProductRequest;
+import com.weeklycoffee.partner.domain.product.dto.ProductSalesSendRequest;
 import com.weeklycoffee.partner.files.FileController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -14,12 +15,12 @@ import java.util.Optional;
 @RestController
 public class ProductController {
     private ProductRepository productRepo;
-    private FileController fileController;
+    private ProductService productService;
 
     @Autowired
-    public ProductController(ProductRepository productRepo, FileController fileController) {
+    public ProductController(ProductRepository productRepo, ProductService productService) {
         this.productRepo = productRepo;
-        this.fileController = fileController;
+        this.productService = productService;
     }
 
     @PutMapping(value = "/product/modify")
@@ -34,11 +35,11 @@ public class ProductController {
     }
 
     @PutMapping(value = "/product/modified/{id}")
-    public Product ModifyProductItem(@RequestBody ProductRequest productRequest, @PathVariable long id , HttpServletResponse res) {
+    public Product ModifyProductItem(@RequestBody ProductRequest productRequest, @PathVariable long id, HttpServletResponse res) {
         Optional<Product> productOptional = productRepo.findById(id);
         Product product = productOptional.get();
 
-        if(productOptional.isEmpty()){
+        if (productOptional.isEmpty()) {
             res.setStatus(HttpServletResponse.SC_NOT_FOUND);
             return null;
         }
@@ -76,9 +77,11 @@ public class ProductController {
         return productRepo.save(product);
     }
 
-    @Transactional(rollbackOn = Exception.class)
+//    @Transactional(rollbackOn = Exception.class)
     @PostMapping(value = "/products")
     public Product createProduct(@RequestBody ProductRequest productRequest) {
+
+        System.out.println("프로덕트 리퀘스트" + productRequest);
 
         Product productItem = Product.builder()
                 .productId(productRequest.getProductId())
@@ -110,7 +113,13 @@ public class ProductController {
                 .variety(productRequest.getVariety())
                 .build();
 
+        System.out.println("프로덕트 아이템" + productItem);
+
         Product productResponse = productRepo.save(productItem);
+
+        System.out.println("프로덕트 저장후" + productResponse);
+
+        productService.sendProduct(productResponse);
 
         return productResponse;
     }
@@ -144,6 +153,9 @@ public class ProductController {
             product.setSalesStatus(0);
         }
         productRepo.save(product);
+
+        productService.sendProductSales(new ProductSalesSendRequest(product.getProductId(), product.getSalesStatus()));
+
         return product.getSalesStatus();
     }
 
