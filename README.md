@@ -378,3 +378,40 @@ Member 1 : RegistrationForm 1 = OneToOne (단방향)
 - dispatch , yield, generated함수
 </div>
 </details><br>
+
+
+
+
+
+
+# 2021년 11월 12일
+커밋 링크입니다.<br>
+ - https://github.com/jaeyoon492/-weekly-coffee/commit/28a0454b9318b05eb66866136255a9233e64d429
+ <br>
+
+
+<details>
+<summary>여기를 눌러주세요</summary>
+<div markdown="1">
+
+## 프론트엔드
+1. 제품목록 수정, 저장 리펙터링
+    - 제품 목록에서 수정 버튼을 누르면 인라인 수정모드가 아닌 상세 수정화면으로 넘어가던 버그를 수정했습니다.
+
+2. 주문목록 구현
+    - 주문이 들어오면 주문목록 화면에서 주문데이터를 보여줄수 있도록 구현했습니다.
+
+3. 주문목록 더보기 처리 구현
+    - 주문목록은 카드 리스트 형태여서 페이징보다 더보기 버튼을 누르면 다음 데이터를 불러오도록 구현했습니다.
+
+### 관련 트러블 슈팅
+- 제품 수정시 processing의 state만 수정이 안되는 버그 발견
+- useRef() 기본값 null처리 안하고 사용하기
+
+- 관련 이슈 트러블 슈팅입니다.
+    - https://www.notion.so/useRef-null-processing-state-a0ef467cb82a40879e8e398ee8a8271e
+
+
+### 주요 키워드
+</div>
+</details><br>
