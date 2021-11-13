@@ -427,6 +427,8 @@ Member 1 : RegistrationForm 1 = OneToOne (단방향)
 
 ## 백엔드
 1. 제품의 아이디가 동일하면 db에서 다른 파트너여도 update가 되어 제품데이터의 중복을 없애고자 복합키를 사용해 중복을 없앴습니다.
+2. 물건 등록시 메세지큐로 SubscribeService로 데이터를 전송 하도록 했습니다.
+
 
 2. 1번의 여파로 생긴 에러들을 수정했습니다. 
     1. typeMismatchException = > { 기존 아이디 : long ~>  현재 아이디 : ProductId : { productId, partnerId } }
