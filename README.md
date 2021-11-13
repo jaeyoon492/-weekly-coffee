@@ -415,3 +415,41 @@ Member 1 : RegistrationForm 1 = OneToOne (단방향)
 ### 주요 키워드
 </div>
 </details><br>
+
+# 2021년 11월 13일
+커밋 링크입니다.<br>
+ - https://github.com/jaeyoon492/-weekly-coffee/commit/ce3d40eef0c14dbdf16ff569b45852aab0c52b1d
+ <br>
+
+<details>
+<summary>여기를 눌러주세요</summary>
+<div markdown="1">
+
+## 백엔드
+1. 제품의 아이디가 동일하면 db에서 다른 파트너여도 update가 되어 제품데이터의 중복을 없애고자 복합키를 사용해 중복을 없앴습니다.
+
+2. 1번의 여파로 생긴 에러들을 수정했습니다. 
+    1. typeMismatchException = > { 기존 아이디 : long ~>  현재 아이디 : ProductId : { productId, partnerId } }
+    2. 프론트또한 마찬가지로 Api의 매개변수를 수정해주었습니다. { number ⇒ Product }
+    3. Axios의 delete 메소드에 매개변수로 객체가 들어가지 않아 put 메소드를 사용하였습니다.
+    4. api의 Path를 통해 변수를 넘길때 객체 타입을 넘길수 없어  ProductId가 필요한 부분을 { 요청바디 }에 넣어 보낼수 있도록 하였습니다.
+
+
+## 프론트엔드
+1. 메인 대쉬보드의 그리드 화면을 구현하고 , 주문알리미 기능을 만들었습니다.
+    1. 그리드 화면은 materialUI의 grid와 paper를 사용했고, 주문알리미 기능은 ServerSentEvent 방식을 통해 구현했습니다.
+
+### 관련 트러블 슈팅
+- 버튼 클릭시 아무 함수도 안걸었는데 새로고침이 되는 상황
+- 1번 파트너와 2번 파트너를 준비한뒤 각각 제품을       넣었을때 1번 파트너의 제품이 사라짐
+
+- 관련 이슈 트러블 슈팅입니다.
+    - https://www.notion.so/pk-UPDATE-da9e521aac194bd68c6fcad342b32306
+
+- 관련 참고 자료 입니다.
+    - https://devhoma.tistory.com/90
+
+
+### 주요 키워드
+</div>
+</details><br>
