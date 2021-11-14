@@ -3,11 +3,8 @@ import { ProductItem } from "./product";
 
 export interface SubscribeDetail {
   subscribeId: number;
-
   seq: number;
-
   product: ProductItem[];
-
   partnerId: number;
   productName: string;
   productPrice: number;

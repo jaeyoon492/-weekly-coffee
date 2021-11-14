@@ -6,10 +6,7 @@ interface AlertItem {
   message: string;
 }
 
-const initialState: AlertItem[] = [
-  // { id: nanoid(), variant: "success", message: "수정되었습니다." },
-  // { id: nanoid(), variant: "danger", message: "오류입니다." },
-];
+const initialState: AlertItem[] = [];
 
 const alertSlice = createSlice({
   name: "alert",

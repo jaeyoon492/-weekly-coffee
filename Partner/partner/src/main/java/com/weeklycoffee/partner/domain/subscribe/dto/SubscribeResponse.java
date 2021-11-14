@@ -29,7 +29,7 @@ public class SubscribeResponse {
     @AllArgsConstructor
     @Builder
     public static class SubscribeDetail {
-        private int productId;
+        private long productId;
         private long partnerId;
 
         private String productName;

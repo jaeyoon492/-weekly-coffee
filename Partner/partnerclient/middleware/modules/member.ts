@@ -5,13 +5,14 @@ import { MemberResponse } from "../../api/member";
 import memberReducer, {
   fetchMember,
   Member,
+  MemberState,
 } from "../../provider/modules/member";
 import api from "../../api/member";
 import { addAlert } from "../../provider/modules/alert";
 import { RootState } from "../../provider";
 import { requestFetchPartner } from "./partner";
 import { endProgress, startProgress } from "../../provider/modules/progress";
-import { Partner } from "../../provider/modules/partner";
+import partner, { Partner, PartnerState } from "../../provider/modules/partner";
 import { ProductItem, ProductState } from "../../provider/modules/product";
 import { requestFetchProductsPaging } from "./product";
 
@@ -25,6 +26,10 @@ export const requestRefreshFetchAll = createAction(
 
 function* fetchMemberDataNext(action: PayloadAction<number>) {
   const memberId = action.payload;
+
+  const partner: PartnerState = yield select(
+    (state: RootState) => state.partner
+  );
 
   try {
     yield put(startProgress());
@@ -49,7 +54,7 @@ function* fetchMemberDataNext(action: PayloadAction<number>) {
     const serializedState = sessionStorage.getItem("partner_id");
     if (serializedState === null) {
       return undefined;
-    } else {
+    } else if (partner.isFetched === false) {
       yield put(requestFetchPartner(+JSON.parse(serializedState)));
     }
   } catch (e: any) {

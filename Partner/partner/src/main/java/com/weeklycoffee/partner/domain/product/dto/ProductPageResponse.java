@@ -6,14 +6,15 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
 @Builder
-public class ProductSalesSendRequest {
-    private long partnerId;
-    private long productId;
-    private int salesStatus;
+@NoArgsConstructor
+@AllArgsConstructor
+public class ProductPageResponse {
+
+    private boolean isLast;
+    private long totalElements;
+    private List<Product> content;
 }
-
-

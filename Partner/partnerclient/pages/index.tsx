@@ -9,6 +9,8 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../provider";
 import { nanoid } from "@reduxjs/toolkit";
+import styleConnect from "../styles/connect.module.css";
+import Image from "next/image";
 import {
   checkSubscribe,
   receiveSubscribeEvent,
@@ -16,6 +18,10 @@ import {
 } from "../provider/modules/subscribe";
 import { Alert } from "react-bootstrap";
 import { useRouter } from "next/dist/client/router";
+import axios from "axios";
+import product, { ProductCachePageResponse } from "../provider/modules/product";
+import partner from "../provider/modules/partner";
+import { requestProductCachePage } from "../middleware/modules/product";
 
 const Home: NextPage = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -23,6 +29,19 @@ const Home: NextPage = () => {
     (state: RootState) => state.subscribe.message
   );
   const router = useRouter();
+  const partner = useSelector((state: RootState) => state.partner.data);
+  const productIsFetched = useSelector(
+    (state: RootState) => state.product.isChcheFetch
+  );
+  const productCache = useSelector(
+    (state: RootState) => state.product.chche && state.product.chche
+  );
+
+  useEffect(() => {
+    if (partner.companyName !== "" && productIsFetched === false) {
+      dispatch(requestProductCachePage(partner.companyName));
+    }
+  }, [partner, productIsFetched]);
 
   useEffect(() => {
     let clientId = sessionStorage.getItem("event-client-id");
@@ -142,8 +161,44 @@ const Home: NextPage = () => {
                   display: "flex",
                   flexDirection: "column",
                   height: 300,
+                  overflow: "auto",
                 }}
-              ></Paper>
+              >
+                <div className="d-flex flex-wrap">
+                  {productCache &&
+                    productCache.map((item, index) => (
+                      <div
+                        key={`photo-item-${index}`}
+                        className="card"
+                        style={{
+                          width: "calc((100% - 3rem) / 4)",
+                          marginLeft: index % 4 === 0 ? "0" : "1rem",
+                          marginTop: index > 3 ? "1rem" : "0",
+                        }}
+                      >
+                        <div
+                          style={{ cursor: "pointer" }}
+                          onClick={() => {
+                            router.push(`/product/detail/${item.productId}`);
+                          }}
+                        >
+                          <Image
+                            src={item.productImageUrl}
+                            className="card-img-top"
+                            alt={item.productName}
+                            layout="responsive"
+                            objectFit="cover"
+                            width={220}
+                            height={150}
+                          />
+                          <div className="card-body">
+                            <h5 className="card-title">{item.productName}</h5>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                </div>
+              </Paper>
             </Grid>
           </Grid>
         </Container>
@@ -151,5 +206,6 @@ const Home: NextPage = () => {
     </>
   );
 };
+
 
 export default Home;

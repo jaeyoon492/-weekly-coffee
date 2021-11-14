@@ -5,9 +5,11 @@ import com.weeklycoffee.partner.domain.partner.dto.PartnerConnectResponse;
 import com.weeklycoffee.partner.domain.partner.dto.PartnerSubscribePageResponse;
 import com.weeklycoffee.partner.domain.product.Product;
 import com.weeklycoffee.partner.domain.product.ProductRepository;
+import com.weeklycoffee.partner.domain.product.dto.ProductPageResponse;
 import com.weeklycoffee.partner.domain.subscribe.SubscribeRepository;
 import com.weeklycoffee.partner.domain.subscribe.Subscribe;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -38,13 +40,13 @@ public class PartnerController {
         System.out.println(partnerId);
         System.out.println(size);
         System.out.println(page);
-//        productRepo.findByPartnerId(PageRequest.of(page, size, Sort.by("productId").descending()), partnerId);
 
         return productRepo.findByPartnerId(PageRequest.of(page, size, Sort.by("productId").descending()), partnerId);
     }
 
-    // 예) GET /partners/connect/{id}?page=0&size=4
-    // 접속시 등록한 제품 최신순 4개 조회
+
+    // 예) GET /partners/connect/{id}?page=0&size=10
+    // 접속시 등록한 제품 최신순 10개 조회
     @GetMapping("/partner/connect/{partnerId}")
     public PartnerConnectResponse getPartnerConnect(@PathVariable long partnerId, @RequestParam int size, @RequestParam int page) {
         Optional<Partner> partnerOptional = partnerRepo.findById(partnerId);
@@ -54,12 +56,6 @@ public class PartnerController {
 
         return new PartnerConnectResponse(partner, products);
     }
-
-    // 파트너 주문 전체 조회 ( 안씀 )
-//    @GetMapping("/partner/subscribes/{id}")
-//    public List<Subscribe> getSubscribesContainPartnerId(@PathVariable long id) {
-//        return subscribeRepo.findByPartnerId(id);
-//    }
 
     // 파트너 주문목록 페이징 조회
     // GET /partner/subscribes/paging/{id}?page=0&size=4
@@ -86,11 +82,5 @@ public class PartnerController {
 
         return new PartnerAllResponse(partner,subscribes, products);
     }
-
-    // (안씀)
-//    @GetMapping("/partners")
-//    public List<Partner> getPartners() {
-//        return partnerRepo.findAll();
-//    }
 
 }

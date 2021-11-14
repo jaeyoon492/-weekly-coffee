@@ -5,7 +5,6 @@ import {
   Subscribe,
   SubScribePage,
   SubscribePageResponse,
-  SubscribeResponse,
 } from "../../provider/modules/subscribe";
 import subscribeReducer from "../../provider/modules/subscribe";
 import { endProgress, startProgress } from "../../provider/modules/progress";

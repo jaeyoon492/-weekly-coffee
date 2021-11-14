@@ -1,0 +1,20 @@
+
+.div {
+    display: flex;
+    flex-direction: row;
+    width: 1000px;
+    height: 300px;
+    white-space: nowrap;
+    overflow-x: scroll;
+}
+
+.card {
+    width: 15rem;
+    border-radius: 10px;
+    border: solid burlywood 2px;
+}
+
+.img {
+    width: 230px;
+    height: 200px;
+}

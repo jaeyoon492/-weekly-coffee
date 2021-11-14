@@ -9,26 +9,22 @@ import List from "@mui/material/List";
 import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
-import Badge from "@mui/material/Badge";
 import Container from "@mui/material/Container";
 import Paper from "@mui/material/Paper";
 import Link from "next/link";
 import MenuIcon from "@mui/icons-material/Menu";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
-import NotificationsIcon from "@mui/icons-material/Notifications";
 import { mainListItems, notPartnerListItems } from "./listItems";
 import styles from "./main.module.css";
 import Progress from "../progress";
 import AlertStack from "../alert/alertStack";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../provider";
-import { margin } from "@mui/system";
 import style from "./list.module.css";
 import {
   requestFetchMember,
   requestRefreshFetchAll,
 } from "../../middleware/modules/member";
-import { requestFetchPartner } from "../../middleware/modules/partner";
 import { useEffect } from "react";
 
 const drawerWidth: number = 240;
@@ -132,9 +128,10 @@ export default function DashboardContent({ children }: DashboardProps) {
   );
 
   useEffect(() => {
-    console.log("초기화면 멤버패치");
-    dispatch(requestFetchMember(1));
-    if (memberFetched) {
+    if (memberFetched === false) {
+      dispatch(requestFetchMember(1));
+    }
+    if (memberFetched === true) {
       dispatch(requestRefreshFetchAll());
     }
   }, []);
@@ -177,12 +174,6 @@ export default function DashboardContent({ children }: DashboardProps) {
                 <span className={style.span}>파트너 서비스</span>
               </Link>
             </Typography>
-
-            <IconButton color="inherit">
-              <Badge badgeContent={2} color="secondary">
-                <NotificationsIcon />
-              </Badge>
-            </IconButton>
           </Toolbar>
         </AppBar>
         <Drawer variant="permanent" open={open}>

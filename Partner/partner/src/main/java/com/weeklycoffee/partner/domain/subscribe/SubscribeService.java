@@ -1,5 +1,6 @@
 package com.weeklycoffee.partner.domain.subscribe;
 
+
 import com.weeklycoffee.partner.domain.subscribe.dto.SubscribeMessage;
 import com.weeklycoffee.partner.domain.subscribe.dto.SubscribeResponse;
 import com.weeklycoffee.partner.domain.product.Product;

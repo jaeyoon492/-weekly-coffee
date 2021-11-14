@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { Button, Card } from "react-bootstrap";
+import React, { useEffect } from "react";
+import { Card } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import DashboardContent from "../../components/material/Dashboard";
 import { getTimeString } from "../../lib/string";
@@ -13,7 +13,7 @@ const Subscribe = () => {
   const partner = useSelector((state: RootState) => state.partner);
 
   useEffect(() => {
-    if (partner.data.partnerId > 0 && !subscribe.isFetched) {
+    if (partner.data.partnerId > 0 && subscribe.isFetched === false) {
       const subscribePageSize = localStorage.getItem("subscribe_page_size");
 
       console.log("주문 정보 조회");

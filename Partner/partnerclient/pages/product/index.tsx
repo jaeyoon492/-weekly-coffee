@@ -37,7 +37,7 @@ const ProductList = () => {
   };
 
   useEffect(() => {
-    if (partner.data.partnerId > 0) {
+    if (partner.data.partnerId > 0 && product.isFetched === false) {
       const productPageSize = localStorage.getItem("product_page_size");
 
       console.log("제품목록 패치");
@@ -82,9 +82,11 @@ const ProductList = () => {
 
   const productSalesChange = (id: number) => {
     const item = product.data.find((item) => item.productId === id);
+    console.log(item);
     if (item) {
-      console.log(item.salesStatus);
-      dispatch(requestProductSalesChange(id));
+      const productId = item.productId;
+      const partnerId = item.partnerId;
+      dispatch(requestProductSalesChange({productId,partnerId}));
     }
   };
 
@@ -266,6 +268,6 @@ const ProductList = () => {
       </article>
     </DashboardContent>
   );
-};
+};;
 
 export default ProductList;

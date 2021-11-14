@@ -60,10 +60,7 @@ function* fetchPartnerDataNext(action: PayloadAction<number>) {
 
     yield put(initialIsComplted());
   } catch (e: any) {
-    // 에러발생
-    // spinner 사라지게 하기
     yield put(endProgress());
-    // alert박스를 추가해줌
     yield put(
       addAlert({ id: nanoid(), variant: "danger", message: e.message })
     );

@@ -8,16 +8,18 @@ import {
 import { createAction, nanoid, PayloadAction } from "@reduxjs/toolkit";
 import { AxiosResponse } from "axios";
 import fileApi from "../../api/file";
-import productApi from "../../api/product";
+import productApi, { ProductId } from "../../api/product";
 import { dataUrlToFile } from "../../lib/string";
 import { RootState } from "../../provider";
 import { addAlert } from "../../provider/modules/alert";
 import productReducer, {
   addProduct,
+  initialCacheProduct,
   initialIsComplted,
   initialPagedProduct,
   initialSalesState,
   modifyProduct,
+  ProductCachePageResponse,
   ProductItem,
   ProductPage,
   ProductPagingResponse,
@@ -29,7 +31,6 @@ import productReducer, {
   SemiModify,
 } from "../../provider/modules/product";
 import { endProgress, startProgress } from "../../provider/modules/progress";
-import { requestFetchMember } from "./member";
 
 export interface ProductPageRequest {
   partnerId: number;
@@ -57,8 +58,12 @@ export const requestDeleteProduct = createAction<number>(
   `${productReducer.name}/requestDeleteProduct`
 );
 
-export const requestProductSalesChange = createAction<number>(
+export const requestProductSalesChange = createAction<ProductId>(
   `${productReducer.name}/requestProductSalesOn`
+);
+
+export const requestProductCachePage = createAction<string>(
+  `${productReducer.name}/requestProductCachePage`
 );
 
 function* addDataNext(action: PayloadAction<ProductItem>) {
@@ -71,7 +76,7 @@ function* addDataNext(action: PayloadAction<ProductItem>) {
     const fileName = payloadData.fileName;
     const fileType = payloadData.fileType;
 
-    //   yield put(startProgress());
+    yield put(startProgress());
 
     const file: File = yield call(dataUrlToFile, photoItem, fileName, fileType);
 
@@ -117,7 +122,7 @@ function* addDataNext(action: PayloadAction<ProductItem>) {
       productItem
     );
 
-    // yield put(endProgress());
+    yield put(endProgress());
     const responseData = result.data;
 
     const data: ProductItem = {
@@ -340,10 +345,15 @@ function* deleteProductData(action: PayloadAction<number>) {
 
   const urlArr = productItem.productImageUrl.split("/");
   const objectKey = urlArr[urlArr.length - 1];
+  const productId = productItem.productId;
+  const partnerId = productItem.partnerId;
 
   yield call(fileApi.remove, objectKey);
 
-  const result: AxiosResponse<boolean> = yield call(productApi.remove, id);
+  const result: AxiosResponse<boolean> = yield call(productApi.remove, {
+    productId,
+    partnerId,
+  });
 
   yield put(endProgress());
 
@@ -361,7 +371,7 @@ function* deleteProductData(action: PayloadAction<number>) {
   }
 }
 
-function* modifyProductSalesState(action: PayloadAction<number>) {
+function* modifyProductSalesState(action: PayloadAction<ProductId>) {
   yield console.log("--Product Sales On --");
 
   const productId = action.payload;
@@ -378,7 +388,7 @@ function* modifyProductSalesState(action: PayloadAction<number>) {
     console.log(status);
 
     const data: SalesStatus = {
-      productId,
+      productId: productId.productId,
       status,
     };
 
@@ -461,7 +471,6 @@ function* modifyProductDataNext(action: PayloadAction<ProductItem>) {
 
   const result: AxiosResponse<ProductResponse> = yield call(
     productApi.modifyItem,
-    productItem.productId,
     productRequestItem
   );
   yield put(endProgress());
@@ -501,6 +510,60 @@ function* modifyProductDataNext(action: PayloadAction<ProductItem>) {
   yield put(initialIsComplted());
 }
 
+function* fetchConnectData(action: PayloadAction<string>) {
+  console.log("--fetchConnect--");
+
+  const companyName = action.payload;
+
+  const result: AxiosResponse<ProductCachePageResponse> = yield call(
+    productApi.getProductCache,
+    companyName
+  );
+
+  const productpage: ProductPage = {
+    data: result.data.content.map(
+      (item) =>
+        ({
+          productId: item.productId,
+          partnerId: item.partnerId,
+          productName: item.productName,
+          productPrice: item.productPrice,
+          productImageUrl: item.productImageUrl,
+          productInfo: item.productInfo,
+          fileName: item.fileName,
+          fileType: item.fileType,
+          foodType: item.foodType,
+          expirationData: item.expirationData,
+          manufacturer: item.manufacturer,
+          manufacturingDate: item.manufacturingDate,
+          companyName: item.companyName,
+          companyIntroduce: item.companyIntroduce,
+          companyAddress: item.companyAddress,
+          companyContact: item.companyContact,
+          beanType: item.beanType,
+          beanTag: item.beanTag,
+          processing: item.processing,
+          country: item.country,
+          region: item.region,
+          farm: item.farm,
+          cupNote: item.cupNote,
+          roastingPoint: item.roastingPoint,
+          variety: item.variety,
+          productUploadDate: item.productUploadDate,
+          salesStatus: item.salesStatus,
+          isEdit: false,
+        } as ProductItem)
+    ),
+    totalElements: result.data.totalElements,
+    isLast: result.data.isLast,
+    totalPages: 0,
+    page: 0,
+    pageSize: 0,
+  };
+
+  yield put(initialCacheProduct(productpage));
+}
+
 export default function* productSaga() {
   yield takeEvery(requestAddProduct, addDataNext);
   yield takeLatest(requestFetchProductsPaging, fetchProductPaging);
@@ -508,4 +571,5 @@ export default function* productSaga() {
   yield takeLatest(requestDeleteProduct, deleteProductData);
   yield takeEvery(requestProductSalesChange, modifyProductSalesState);
   yield takeLatest(requestModifyProduct, modifyProductDataNext);
+  yield takeLatest(requestProductCachePage, fetchConnectData);
 }

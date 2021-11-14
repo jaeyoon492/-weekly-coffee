@@ -1,6 +1,6 @@
 import React from "react";
 import { useRef, useState } from "react";
-import { useDispatch, useSelector } from "react-redux"; // redux state를 조회할 수 있는 함수
+import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../provider/index";
 import { saveProfile } from "../../provider/modules/profile";
 
@@ -9,12 +9,11 @@ import style from "../profile/profile.module.scss";
 const Profile = () => {
   const profile = useSelector((state: RootState) => state.profile);
 
-  //redux dispatcher action을 전달하는 함수를 생성
   const dispatch = useDispatch<AppDispatch>();
 
-  const [isShow, setIsShow] = useState(false); // 프로필 상세보기 제어
-  const [isEdit, setIsEdit] = useState(false); // 수정모드 제어
-  const [url, setUrl] = useState<string | undefined>(profile.image); // 이미지 url
+  const [isShow, setIsShow] = useState(false);
+  const [isEdit, setIsEdit] = useState(false);
+  const [url, setUrl] = useState<string | undefined>(profile.image);
 
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -32,35 +31,18 @@ const Profile = () => {
   };
 
   const handleSave = () => {
-    // local(component) state 처리
-    // setProfile({ image: url, username: inputRef.current?.value });
-
-    //global(redux) state 처리
-
-    // action creator의 반환 객체로 dispatch하는 방법
-    // dispatch(액션 함수 (페이로드))
-    // 액션함수(페이로드) => 액션객체 {type, payload}
     const action = saveProfile({
       image: url,
       username: inputRef.current?.value,
     });
     dispatch(action);
 
-    // action 객체를 바로 dispatch로 반환하는 방법
-    // dispatch(액션 객체)
-    // dispatch({
-    //   type: "profile/saveProfile",
-    //   payload: { image: url, username: inputRef.current?.value },
-    // });
-
     setIsEdit(false);
   };
 
   return (
     <>
-      {/* profile 영역 */}
       <div className="dropdown mx-auto">
-        {/* 앱바 프로필 */}
         <div
           style={{ cursor: "pointer" }}
           className="d-flex flex-column align-items-center"
@@ -74,24 +56,20 @@ const Profile = () => {
           ></div>
           <div className={`${style.username}`}>{profile.username}</div>
         </div>
-        {/* 프로필 상세보기 */}
         {isShow && (
           <div
             className="dropdown-menu d-flex flex-column align-items-center"
             style={{ right: "-30px" }}
           >
-            {/* 보기 모드 */}
             {!isEdit && (
               <>
                 <div
-                  // 스타일변수명["클래스명"]
                   className={`${style["thumb-large"]}`}
                   style={{ backgroundImage: `url(${profile.image})` }}
                 ></div>
                 <p>{profile.username}</p>
               </>
             )}
-            {/* 수정 모드 */}
             {isEdit && (
               <>
                 <div
@@ -114,9 +92,7 @@ const Profile = () => {
               </>
             )}
 
-            {/* 하단 링크버튼 */}
             <div className="d-flex">
-              {/* 보기모드 */}
               {!isEdit && (
                 <>
                   <a
@@ -141,7 +117,6 @@ const Profile = () => {
                   </a>
                 </>
               )}
-              {/* 수정모드 */}
               {isEdit && (
                 <>
                   <a

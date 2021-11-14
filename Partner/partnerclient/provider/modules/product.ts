@@ -40,6 +40,12 @@ export interface ProductPage {
   isLast: boolean;
 }
 
+export interface ProductCachePageResponse {
+  content: ProductItem[];
+  isLast: boolean;
+  totalElements: number;
+}
+
 export interface ProductPagingResponse {
   content: ProductResponse[];
   isLast: boolean;
@@ -111,7 +117,9 @@ export interface ProductRequest {
 
 export interface ProductState {
   data: ProductItem[];
+  chche?: ProductItem[];
   isFetched: boolean;
+  isChcheFetch?: boolean;
   isAddCompleted?: boolean;
   isRemoveCompleted?: boolean;
   isModifyCompleted?: boolean;
@@ -135,10 +143,12 @@ export interface SalesStatus {
 
 const initialState: ProductState = {
   data: [],
+  chche: [],
   isFetched: false,
   page: 0,
   pageSize: 10,
   totalPages: 0,
+  isChcheFetch: false,
   isAddCompleted: false,
   isRemoveCompleted: false,
   isModifyCompleted: false,
@@ -164,6 +174,13 @@ export const productSlice = createSlice({
 
       state.isFetched = true;
     },
+    initialCacheProduct: (state, action: PayloadAction<ProductPage>) => {
+      if (state.chche) {
+        state.chche = action.payload.data;
+        state.isChcheFetch = true;
+      }
+    },
+
     editProduct: (state, action: PayloadAction<number>) => {
       const data = state.data.find((item) => item.productId === action.payload);
       if (data) {
@@ -258,6 +275,7 @@ export const {
   initialIsComplted,
   initialSalesState,
   modifyProduct,
+  initialCacheProduct,
 } = productSlice.actions;
 
 export default productSlice.reducer;

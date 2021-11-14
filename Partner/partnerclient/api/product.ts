@@ -1,9 +1,15 @@
 import axios from "axios";
 import {
+  ProductCachePageResponse,
   ProductPagingResponse,
   ProductRequest,
   ProductResponse,
 } from "../provider/modules/product";
+
+export interface ProductId {
+  productId: number;
+  partnerId: number;
+}
 
 const productApi = {
   add: (productItem: ProductRequest) =>
@@ -16,21 +22,26 @@ const productApi = {
 
   modify: (productItem: ProductRequest) =>
     axios.put<ProductResponse>(
-      `http://localhost:8082/product/modify`,
+      `http://localhost:8082/product/semimodify`,
       productItem
     ),
 
-  modifyItem: (productId: number, productRequestItem: ProductRequest) =>
+  modifyItem: (productRequestItem: ProductRequest) =>
     axios.put<ProductResponse>(
-      `http://localhost:8082/product/modified/${productId}`,
+      `http://localhost:8082/product/modify`,
       productRequestItem
     ),
 
-  remove: (id: number) =>
-    axios.delete<boolean>(`http://localhost:8082/product/remove/${id}`),
+  remove: (productId: ProductId) =>
+    axios.put<boolean>(`http://localhost:8082/product/remove`, productId),
 
-  salesChange: (id: number) =>
-    axios.put<number>(`http://localhost:8082/product/sales/${id}`),
+  salesChange: (productId: ProductId) =>
+    axios.put<number>(`http://localhost:8082/product/sales`, productId),
+
+  getProductCache: (companyName: string) =>
+    axios.get<ProductCachePageResponse>(
+      `http://localhost:8082/products/${companyName}?page=0&size=8`
+    ),
 };
 //partner/products/paging/{partnerId}
 export default productApi;
