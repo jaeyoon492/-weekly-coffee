@@ -3,7 +3,10 @@ import { Card } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import DashboardContent from "../../components/material/Dashboard";
 import { getTimeString } from "../../lib/string";
-import { requestFetchSubscribe } from "../../middleware/modules/subscribe";
+import {
+  requestFetchNextSubscribe,
+  requestFetchSubscribe,
+} from "../../middleware/modules/subscribe";
 import { AppDispatch, RootState } from "../../provider";
 import styles from "../product/product.module.css";
 
@@ -13,7 +16,7 @@ const Subscribe = () => {
   const partner = useSelector((state: RootState) => state.partner);
 
   useEffect(() => {
-    if (partner.data.partnerId > 0 && subscribe.isFetched === false) {
+    if (partner.data.partnerId > 0) {
       const subscribePageSize = localStorage.getItem("subscribe_page_size");
 
       console.log("주문 정보 조회");
@@ -25,7 +28,7 @@ const Subscribe = () => {
         })
       );
     }
-  }, [dispatch, partner.data.partnerId, subscribe.isFetched]);
+  }, [dispatch, partner.data.partnerId]);
 
   return (
     <>
@@ -37,7 +40,15 @@ const Subscribe = () => {
               {subscribe.data.map((item, index) => (
                 <div className="mt-5 border border-2 border-success">
                   <Card key={index}>
-                    <Card.Header as="h5">주문이요!</Card.Header>
+                    <Card.Header as="h3">
+                      주문이요!{" "}
+                      <button
+                        className={`${styles.button} btn btn-primary ms-2 mt-0 float-end`}
+                        onClick={() => {}}
+                      >
+                        주문접수
+                      </button>{" "}
+                    </Card.Header>
                     <Card.Body>
                       <Card.Title>주문자: {item.subscriberName}</Card.Title>
                       <Card.Text>
@@ -54,6 +65,15 @@ const Subscribe = () => {
                         <br />
                         구독기간:{" "}
                         {item.details.map((item) => item.term) + "개월"}
+                        <br />
+                        제품단가:{" "}
+                        {item.details.map((item) =>
+                          new Intl.NumberFormat().format(item.productPrice)
+                        )}
+                        원
+                        <br />
+                        주문금액:{" "}
+                        {new Intl.NumberFormat().format(item.totalPayment)}원
                         <br />
                         주문시각: {getTimeString(item.createdTime)}
                         <br />
@@ -72,7 +92,7 @@ const Subscribe = () => {
                     onClick={(e) => {
                       e.preventDefault();
                       dispatch(
-                        requestFetchSubscribe({
+                        requestFetchNextSubscribe({
                           partnerId: partner.data.partnerId,
                           page: subscribe.page + 1,
                           size: subscribe.pageSize,

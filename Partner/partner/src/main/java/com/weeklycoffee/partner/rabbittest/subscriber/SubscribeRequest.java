@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import java.time.LocalDate;
 import java.util.List;
 
 @Data
@@ -20,7 +21,7 @@ public class SubscribeRequest {
     private int subscriberId;
 
     private long partnerId;
-    private String subscribeDate;
+    private LocalDate subscribeDate;
     private String subscriberName;
     private String subscriberPhone;
     private String location;

@@ -27,21 +27,9 @@ function* fetchPartnerDataNext(action: PayloadAction<number>) {
       partnerId
     );
 
-    if (result.data.partnerId === 0) {
-      yield put(endProgress());
-      yield put(
-        addAlert({
-          id: nanoid(),
-          variant: "danger",
-          message: "조회된 파트너가 없습니다.",
-        })
-      );
-      return;
-    }
-
     yield put(endProgress());
 
-    if (result.data.partnerId > 0) {
+    if (result) {
       const data: Partner = {
         partnerId: result.data.partnerId,
         memberId: result.data.memberId,

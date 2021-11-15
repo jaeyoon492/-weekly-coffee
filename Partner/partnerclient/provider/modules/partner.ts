@@ -62,7 +62,7 @@ export const partnerSlice = createSlice({
         state.data.subscribes = partner.subscribes;
       }
       state.isAddComplete = true;
-      state.isFetched = true;
+      if (partner.partnerId > 0) state.isFetched = true;
     },
     initialIsComplted: (state) => {
       delete state.isAddComplete;

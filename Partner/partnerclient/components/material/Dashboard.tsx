@@ -26,6 +26,7 @@ import {
   requestRefreshFetchAll,
 } from "../../middleware/modules/member";
 import { useEffect } from "react";
+import { requestFetchPartner } from "../../middleware/modules/partner";
 
 const drawerWidth: number = 240;
 
@@ -114,9 +115,7 @@ interface DashboardProps {
 
 export default function DashboardContent({ children }: DashboardProps) {
   const dispatch = useDispatch<AppDispatch>();
-  const memberFetched = useSelector(
-    (state: RootState) => state.member.isFetched
-  );
+  const member = useSelector((state: RootState) => state.member);
 
   const [open, setOpen] = React.useState(true);
   const toggleDrawer = () => {
@@ -127,14 +126,15 @@ export default function DashboardContent({ children }: DashboardProps) {
     (state: RootState) => state.member.data.partnerState
   );
 
+  const partnerFetched = useSelector(
+    (state: RootState) => state.partner.isFetched
+  );
+
   useEffect(() => {
-    if (memberFetched === false) {
+    if (member.isFetched === false) {
       dispatch(requestFetchMember(1));
     }
-    if (memberFetched === true) {
-      dispatch(requestRefreshFetchAll());
-    }
-  }, []);
+  }, [member.isFetched]);
 
   return (
     <ThemeProvider theme={mdTheme}>

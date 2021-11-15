@@ -9,7 +9,6 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../provider";
 import { nanoid } from "@reduxjs/toolkit";
-import styleConnect from "../styles/connect.module.css";
 import Image from "next/image";
 import {
   checkSubscribe,
@@ -18,9 +17,6 @@ import {
 } from "../provider/modules/subscribe";
 import { Alert } from "react-bootstrap";
 import { useRouter } from "next/dist/client/router";
-import axios from "axios";
-import product, { ProductCachePageResponse } from "../provider/modules/product";
-import partner from "../provider/modules/partner";
 import { requestProductCachePage } from "../middleware/modules/product";
 
 const Home: NextPage = () => {
@@ -30,38 +26,35 @@ const Home: NextPage = () => {
   );
   const router = useRouter();
   const partner = useSelector((state: RootState) => state.partner.data);
-  const productIsFetched = useSelector(
-    (state: RootState) => state.product.isChcheFetch
-  );
-  const productCache = useSelector(
-    (state: RootState) => state.product.chche && state.product.chche
-  );
+
+  const product = useSelector((state: RootState) => state.product);
 
   useEffect(() => {
-    if (partner.companyName !== "" && productIsFetched === false) {
+    if (product.isFetched === true && product.isChcheFetch === false) {
       dispatch(requestProductCachePage(partner.companyName));
     }
-  }, [partner, productIsFetched]);
+  }, [product.isChcheFetch]);
 
   useEffect(() => {
-    let clientId = sessionStorage.getItem("event-client-id");
-    if (!clientId) {
-      clientId = nanoid();
-      sessionStorage.setItem("event-client-id", clientId);
-    }
-
-    const eventUrl = `http://localhost:8082/event/${clientId}`;
-    const eventSource = new EventSource(eventUrl);
-
-    eventSource.onmessage = (event) => {
-      console.log(event.data);
-      console.log(new Date().getTime() + ": " + event.data);
-      if (event.data !== "connect") {
-        const data: SubscribeMessage = JSON.parse(event.data);
-        console.log(data);
-        dispatch(receiveSubscribeEvent(data));
+    if (partner.partnerId > 0) {
+      let clientId = sessionStorage.getItem("event-clientId-id");
+      if (!clientId) {
+        clientId = partner.partnerId.toString();
+        sessionStorage.setItem("event-clientId-id", clientId);
       }
-    };
+      const eventUrl = `http://localhost:8082/event/${clientId}`;
+      const eventSource = new EventSource(eventUrl);
+
+      eventSource.onmessage = (event) => {
+        console.log(event.data);
+        console.log(new Date().getTime() + ": " + event.data);
+        if (event.data !== "connect") {
+          const data: SubscribeMessage = JSON.parse(event.data);
+          // console.log(data);
+          dispatch(receiveSubscribeEvent(data));
+        }
+      };
+    }
   }, []);
 
   const handleCheck = (subscribeId: number) => {
@@ -128,7 +121,7 @@ const Home: NextPage = () => {
                         >
                           <div className="ms-2 mb-1 fs-3">주문이요!</div>
                           <div className="float-end fs-5">
-                            {item.subscribeDate}
+                            {item.subscribeDate.substring(0, 10)}
                           </div>
                           <button
                             className={`${styles.button} btn btn-primary ms-2 mt-0`}
@@ -165,8 +158,8 @@ const Home: NextPage = () => {
                 }}
               >
                 <div className="d-flex flex-wrap">
-                  {productCache &&
-                    productCache.map((item, index) => (
+                  {product.chche &&
+                    product.chche.map((item, index) => (
                       <div
                         key={`photo-item-${index}`}
                         className="card"

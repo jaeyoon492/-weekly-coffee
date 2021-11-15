@@ -5,6 +5,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 @Data
@@ -15,7 +17,7 @@ public class SubscribeResponse {
 
     private long partnerId;
     private long subscribeId;
-    private String subscribeDate;
+    private Date subscribeDate;
     private int subscriberId;
     private String subscriberName;
     private String subscriberPhone;
@@ -39,5 +41,6 @@ public class SubscribeResponse {
         private String groundPoint;
         private int productPrice;
         private int orderQuantity;
+
     }
 }

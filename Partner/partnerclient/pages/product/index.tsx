@@ -85,8 +85,7 @@ const ProductList = () => {
     console.log(item);
     if (item) {
       const productId = item.productId;
-      const partnerId = item.partnerId;
-      dispatch(requestProductSalesChange({productId,partnerId}));
+      dispatch(requestProductSalesChange(productId));
     }
   };
 
@@ -131,7 +130,7 @@ const ProductList = () => {
                       }}
                       className="fs-5 fw-bolder"
                     >
-                      {item.productId}
+                      {product.data.length - index}
                     </td>
                     {!item.isEdit && (
                       <td

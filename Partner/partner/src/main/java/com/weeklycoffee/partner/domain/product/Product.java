@@ -12,9 +12,9 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@IdClass(ProductId.class)
 public class Product {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long productId;
 
     private long partnerId;
@@ -44,6 +44,4 @@ public class Product {
     private String roastingPoint;
     private String variety;
     private int salesStatus;
-
-
 }

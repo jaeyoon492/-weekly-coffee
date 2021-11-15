@@ -13,6 +13,8 @@ import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 import javax.transaction.Transactional;
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -41,14 +43,14 @@ public class SubscribeService {
     }
     // subscriber -> partner (주문요청 MQ)
 
-    @RabbitListener(queues = "subscriber.subscribe.send")
+    @RabbitListener(queues = "test.subscribe.send")
     public void receiveSubscribe(SubscribeResponse subscribe) {
         Subscribe saveSubscribe = saveSubscribe(subscribe);
         SubscribeMessage sbMessage = SubscribeMessage.builder()
                 .orderCheck(false)
                 .partnerId(saveSubscribe.getPartnerId())
                 .subscribeId(saveSubscribe.getSubscribeId())
-                .subscribeDate(saveSubscribe.getSubscribeDate())
+                .subscribeDate(new Date())
                 .totalPayment(saveSubscribe.getTotalPayment())
                 .build();
 
@@ -78,7 +80,7 @@ public class SubscribeService {
         Subscribe toSubscribe = Subscribe.builder()
                 .subscribeId(subRes.getSubscribeId())
                 .partnerId(subRes.getPartnerId())
-                .subscribeDate(subRes.getSubscribeDate())
+                .subscribeDate(new Date())
                 .subscriberId(subRes.getSubscriberId())
                 .subscriberName(subRes.getSubscriberName())
                 .subscriberPhone(subRes.getSubscriberPhone())

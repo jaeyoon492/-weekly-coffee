@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,7 +24,7 @@ public class TestSubscribeController {
 
         SubscribeRequest toSubscribe = SubscribeRequest.builder()
                 .partnerId(testSubReq.getPartnerId())
-                .subscribeDate(testSubReq.getSubscribeDate())
+//                .subscribeDate(LocalDate.now())
                 .subscriberId(testSubReq.getSubscriberId())
                 .subscriberName(testSubReq.getSubscriberName())
                 .subscriberPhone(testSubReq.getSubscriberPhone())

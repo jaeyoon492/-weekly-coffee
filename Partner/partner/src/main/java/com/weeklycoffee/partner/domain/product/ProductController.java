@@ -51,10 +51,8 @@ public class ProductController {
     }
 
     @PutMapping(value = "/product/semimodify")
-    public Product semiModifyProdudt(@RequestBody ProductRequest productRequest) {
-        long productId = productRequest.getProductId();
-        long partnerId = productRequest.getPartnerId();
-        Optional<Product> productOptional = productRepo.findById(new ProductId(productId, partnerId));
+    public Product semiModifyProduct(@RequestBody ProductRequest productRequest) {
+        Optional<Product> productOptional = productRepo.findById(productRequest.getProductId());
         Product product = productOptional.get();
 
         product.setProductName(productRequest.getProductName());
@@ -65,10 +63,8 @@ public class ProductController {
 
     @PutMapping(value = "/product/modify")
     public Product ModifyProductItem(@RequestBody ProductRequest productRequest, HttpServletResponse res) {
-        long productId = productRequest.getProductId();
-        long partnerId = productRequest.getPartnerId();
 
-        Optional<Product> productOptional = productRepo.findById(new ProductId(productId, partnerId));
+        Optional<Product> productOptional = productRepo.findById(productRequest.getProductId());
         Product product = productOptional.get();
 
         if (productOptional.isEmpty()) {
@@ -117,7 +113,6 @@ public class ProductController {
         System.out.println("프로덕트 리퀘스트" + productRequest);
 
         Product productItem = Product.builder()
-                .productId(productRequest.getProductId())
                 .partnerId(productRequest.getPartnerId())
                 .productName(productRequest.getProductName())
                 .productUploadDate(productRequest.getProductUploadDate())
@@ -157,28 +152,24 @@ public class ProductController {
         return productResponse;
     }
 
-    @PutMapping(value = "/product/remove")
-    public boolean removeProduct(@RequestBody ProductId id, HttpServletResponse res) {
-        long productId = id.getProductId();
-        long partnerId = id.getPartnerId();
+    @DeleteMapping(value = "/product/remove/{productId}")
+    public boolean removeProduct(@PathVariable long productId, HttpServletResponse res) {
 
-        Optional<Product> product = productRepo.findById(new ProductId(productId, partnerId));
+        Optional<Product> product = productRepo.findById(productId);
 
         if (product.isEmpty()) {
             res.setStatus(HttpServletResponse.SC_BAD_REQUEST);
             return false;
         }
-        productRepo.deleteById(new ProductId(productId, partnerId));
+        productRepo.deleteById(productId);
 
         return true;
     }
 
-    @PutMapping(value = "/product/sales")
-    public int salesOnProduct(@RequestBody ProductId id, HttpServletResponse res) {
-        long productId = id.getProductId();
-        long partnerId = id.getPartnerId();
+    @PutMapping(value = "/product/sales/{productId}")
+    public int salesOnProduct(@PathVariable long productId, HttpServletResponse res) {
 
-        Optional<Product> productOptional = productRepo.findById(new ProductId(productId, partnerId));
+        Optional<Product> productOptional = productRepo.findById(productId);
         if (productOptional.isEmpty()) {
             res.setStatus(HttpServletResponse.SC_BAD_REQUEST);
             return 0;
@@ -192,7 +183,7 @@ public class ProductController {
         }
         productRepo.save(product);
 
-        productService.sendProductSales(new ProductSalesSendRequest(product.getProductId(), product.getSalesStatus()));
+        productService.sendProductSales(new ProductSalesSendRequest(product.getPartnerId(), product.getProductId(), product.getSalesStatus()));
 
         return product.getSalesStatus();
     }

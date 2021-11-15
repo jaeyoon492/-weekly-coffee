@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface ProductRepository extends JpaRepository<Product,ProductId> {
+public interface ProductRepository extends JpaRepository<Product, Long> {
 //    List<Product> findByPartnerId(Sort sort, long partnerId);
 
     @Query(value = "SELECT * FROM PRODUCT p WHERE p.partner_id = :id ORDER BY product_id DESC LIMIT 10",nativeQuery = true)

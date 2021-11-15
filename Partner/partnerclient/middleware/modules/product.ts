@@ -8,7 +8,7 @@ import {
 import { createAction, nanoid, PayloadAction } from "@reduxjs/toolkit";
 import { AxiosResponse } from "axios";
 import fileApi from "../../api/file";
-import productApi, { ProductId } from "../../api/product";
+import productApi from "../../api/product";
 import { dataUrlToFile } from "../../lib/string";
 import { RootState } from "../../provider";
 import { addAlert } from "../../provider/modules/alert";
@@ -58,7 +58,7 @@ export const requestDeleteProduct = createAction<number>(
   `${productReducer.name}/requestDeleteProduct`
 );
 
-export const requestProductSalesChange = createAction<ProductId>(
+export const requestProductSalesChange = createAction<number>(
   `${productReducer.name}/requestProductSalesOn`
 );
 
@@ -115,8 +115,6 @@ function* addDataNext(action: PayloadAction<ProductItem>) {
       salesStatus: 0,
     };
 
-    console.log(productItem);
-
     const result: AxiosResponse<ProductResponse> = yield call(
       productApi.add,
       productItem
@@ -158,6 +156,8 @@ function* addDataNext(action: PayloadAction<ProductItem>) {
     yield put(addProduct(data));
 
     yield put(initialIsComplted());
+
+    yield put(requestProductCachePage(result.data.companyName));
 
     yield put(
       addAlert({ id: nanoid(), variant: "success", message: "저장되었습니다." })
@@ -346,14 +346,13 @@ function* deleteProductData(action: PayloadAction<number>) {
   const urlArr = productItem.productImageUrl.split("/");
   const objectKey = urlArr[urlArr.length - 1];
   const productId = productItem.productId;
-  const partnerId = productItem.partnerId;
 
   yield call(fileApi.remove, objectKey);
 
-  const result: AxiosResponse<boolean> = yield call(productApi.remove, {
-    productId,
-    partnerId,
-  });
+  const result: AxiosResponse<boolean> = yield call(
+    productApi.remove,
+    productId
+  );
 
   yield put(endProgress());
 
@@ -371,7 +370,7 @@ function* deleteProductData(action: PayloadAction<number>) {
   }
 }
 
-function* modifyProductSalesState(action: PayloadAction<ProductId>) {
+function* modifyProductSalesState(action: PayloadAction<number>) {
   yield console.log("--Product Sales On --");
 
   const productId = action.payload;
@@ -388,7 +387,7 @@ function* modifyProductSalesState(action: PayloadAction<ProductId>) {
     console.log(status);
 
     const data: SalesStatus = {
-      productId: productId.productId,
+      productId: productId,
       status,
     };
 
@@ -567,9 +566,9 @@ function* fetchConnectData(action: PayloadAction<string>) {
 export default function* productSaga() {
   yield takeEvery(requestAddProduct, addDataNext);
   yield takeLatest(requestFetchProductsPaging, fetchProductPaging);
-  yield takeLatest(requestSemiModify, modifyProductData);
   yield takeLatest(requestDeleteProduct, deleteProductData);
   yield takeEvery(requestProductSalesChange, modifyProductSalesState);
+  yield takeLatest(requestSemiModify, modifyProductData);
   yield takeLatest(requestModifyProduct, modifyProductDataNext);
   yield takeLatest(requestProductCachePage, fetchConnectData);
 }

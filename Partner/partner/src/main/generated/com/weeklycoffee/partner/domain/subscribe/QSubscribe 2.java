@@ -32,7 +32,7 @@ public class QSubscribe extends EntityPathBase<Subscribe> {
 
     public final NumberPath<Long> partnerId = createNumber("partnerId", Long.class);
 
-    public final DateTimePath<java.util.Date> subscribeDate = createDateTime("subscribeDate", java.util.Date.class);
+    public final StringPath subscribeDate = createString("subscribeDate");
 
     public final NumberPath<Long> subscribeId = createNumber("subscribeId", Long.class);
 

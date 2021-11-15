@@ -5,14 +5,13 @@ import { MemberResponse } from "../../api/member";
 import memberReducer, {
   fetchMember,
   Member,
-  MemberState,
 } from "../../provider/modules/member";
 import api from "../../api/member";
 import { addAlert } from "../../provider/modules/alert";
 import { RootState } from "../../provider";
 import { requestFetchPartner } from "./partner";
 import { endProgress, startProgress } from "../../provider/modules/progress";
-import partner, { Partner, PartnerState } from "../../provider/modules/partner";
+import partner, { Partner } from "../../provider/modules/partner";
 import { ProductItem, ProductState } from "../../provider/modules/product";
 import { requestFetchProductsPaging } from "./product";
 
@@ -25,12 +24,8 @@ export const requestRefreshFetchAll = createAction(
 );
 
 function* fetchMemberDataNext(action: PayloadAction<number>) {
+  yield console.log("-- fetchMember --");
   const memberId = action.payload;
-
-  const partner: PartnerState = yield select(
-    (state: RootState) => state.partner
-  );
-
   try {
     yield put(startProgress());
 
@@ -51,11 +46,8 @@ function* fetchMemberDataNext(action: PayloadAction<number>) {
 
     yield put(fetchMember(member));
 
-    const serializedState = sessionStorage.getItem("partner_id");
-    if (serializedState === null) {
-      return undefined;
-    } else if (partner.isFetched === false) {
-      yield put(requestFetchPartner(+JSON.parse(serializedState)));
+    if (member.partner !== null) {
+      yield put(requestFetchPartner(memberData.partner.partnerId));
     }
   } catch (e: any) {
     yield put(endProgress());
@@ -74,17 +66,10 @@ function* refreshFetchAll() {
     (state: RootState) => state.product
   );
   const products = product.data;
-  const mBspartner: Partner = yield select(
-    (state: RootState) => state.member.data.partner
-  );
+
   const partner: Partner = yield select(
     (state: RootState) => state.partner.data
   );
-
-  if (mBspartner !== null && mBspartner.partnerId !== 0) {
-    const serializedState = JSON.stringify(mBspartner.partnerId);
-    sessionStorage.setItem("partner_id", serializedState);
-  }
 
   if (
     partner.products.length > 0 &&

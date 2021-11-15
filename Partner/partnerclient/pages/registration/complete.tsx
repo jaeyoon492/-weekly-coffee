@@ -1,11 +1,18 @@
 import { useRouter } from "next/dist/client/router";
-import React from "react";
-import { useSelector } from "react-redux";
-import { RootState } from "../../provider";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { requestFetchMember } from "../../middleware/modules/member";
+import { requestFetchPartner } from "../../middleware/modules/partner";
+import { AppDispatch, RootState } from "../../provider";
 
 const Complete = () => {
   const router = useRouter();
   const registration = useSelector((state: RootState) => state.registration);
+  const dispatch = useDispatch<AppDispatch>();
+
+  useEffect(() => {
+    dispatch(requestFetchMember(1));
+  }, []);
 
   return (
     <div

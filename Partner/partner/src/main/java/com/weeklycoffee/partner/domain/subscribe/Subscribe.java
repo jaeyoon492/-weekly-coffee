@@ -7,6 +7,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 @Data
@@ -20,7 +23,7 @@ public class Subscribe {
     private long subscribeId;
     private long partnerId;
 
-    private String subscribeDate;
+    private Date subscribeDate;
     private int subscriberId;
     private String subscriberName;
     private String subscriberPhone;

@@ -78,7 +78,7 @@ const initialState: SubscribeState = {
   isFetched: false,
   totalPages: 0,
   page: 0,
-  pageSize: 10,
+  pageSize: 5,
 };
 
 export const subscribeSlice = createSlice({
@@ -86,6 +86,17 @@ export const subscribeSlice = createSlice({
   initialState,
   reducers: {
     initialNextSubscribe: (state, action: PayloadAction<SubScribePage>) => {
+      state.data = action.payload.data;
+
+      state.totalElements = action.payload.totalElements;
+      state.totalPages = action.payload.totalPages;
+      state.page = action.payload.page;
+      state.pageSize = action.payload.pageSize;
+      state.isLast = action.payload.isLast;
+
+      state.isFetched = true;
+    },
+    initialNextSubscribePage: (state, action: PayloadAction<SubScribePage>) => {
       state.data = state.data.concat(action.payload.data);
 
       state.totalElements = action.payload.totalElements;
@@ -110,7 +121,11 @@ export const subscribeSlice = createSlice({
   },
 });
 
-export const { initialNextSubscribe, receiveSubscribeEvent, checkSubscribe } =
-  subscribeSlice.actions;
+export const {
+  initialNextSubscribe,
+  receiveSubscribeEvent,
+  checkSubscribe,
+  initialNextSubscribePage,
+} = subscribeSlice.actions;
 
 export default subscribeSlice.reducer;

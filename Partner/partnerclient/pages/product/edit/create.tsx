@@ -79,7 +79,6 @@ const ProductCreate = () => {
           variety: varietyInput.current.value,
           salesStatus: 0,
         };
-        console.log(data);
         dispatch(requestAddProduct(data));
       };
       reader.readAsDataURL(imageFile);
@@ -147,7 +146,7 @@ const ProductCreate = () => {
                       </td>
                     </tr>
                     <tr>
-                      <th>업장명</th>
+                      <th>업체명</th>
                       <td>
                         <input
                           className="form-control"

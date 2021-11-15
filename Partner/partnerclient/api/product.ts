@@ -6,10 +6,6 @@ import {
   ProductResponse,
 } from "../provider/modules/product";
 
-export interface ProductId {
-  productId: number;
-  partnerId: number;
-}
 
 const productApi = {
   add: (productItem: ProductRequest) =>
@@ -32,11 +28,11 @@ const productApi = {
       productRequestItem
     ),
 
-  remove: (productId: ProductId) =>
-    axios.put<boolean>(`http://localhost:8082/product/remove`, productId),
+  remove: (productId: number) =>
+    axios.delete<boolean>(`http://localhost:8082/product/remove/${productId}`),
 
-  salesChange: (productId: ProductId) =>
-    axios.put<number>(`http://localhost:8082/product/sales`, productId),
+  salesChange: (productId: number) =>
+    axios.put<number>(`http://localhost:8082/product/sales/${productId}`),
 
   getProductCache: (companyName: string) =>
     axios.get<ProductCachePageResponse>(

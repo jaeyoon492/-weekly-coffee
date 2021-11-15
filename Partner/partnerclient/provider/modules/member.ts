@@ -5,7 +5,7 @@ export interface Member {
   memberId: number;
   name: string;
   partnerState: boolean;
-  partner?: Partner;
+  partner: Partner;
 }
 
 export interface MemberState {
