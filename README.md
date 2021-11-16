@@ -526,3 +526,45 @@ https://www.notion.so/df2be95613ba49d6965c28ac790ba53f
 
 </div>
 </details><br>
+
+
+# 2021년 11월 16일
+커밋 링크입니다.<br>
+- https://github.com/jaeyoon492/-weekly-coffee/commit/c3a9d30460ad32a3bb11f0a02592f78cc4429ae4
+- https://github.com/jaeyoon492/-weekly-coffee/commit/bb1319a5509ed4754ea856864f087cc47bbd0a5e
+ <br>
+
+<details>
+<summary>여기를 눌러주세요</summary>
+<div markdown="1">
+
+## 백엔드
+1. 제품 삭제 코드 수정 [주문 데이터가 있을때 (포린키로 묶여 있을 때)]
+
+2. 메세지큐로 잘못된 데이터가 넘어올때 무한으로 메세지를 보내는데 yml에 제한을 설정해 무한으로 메세지가 넘어오는걸 막을수 있었습니다.
+
+
+## 프론트엔드
+1. 프론트엔드 서버를 배포하였습니다. 
+
+.  기존 nginx를 사용해 배포했던것을 github 클로닝으로 배포하였습니다. 일련의 문제로 화면에 ui는 나오지만 백엔드와 CORS 에러가 발생하여 수정중에 있습니다.
+
+
+
+## 트러블슈팅
+- 이슈 관련내용을 적어놓은 트러블 슈팅 링크 입니다.
+- 제품 삭제 관련 트러블 슈팅
+https://www.notion.so/b5ec397ecdee4279878fd245175dba19
+
+- 배포이후 ec2 서버에서 생긴 CORS 에러
+- https://www.notion.so/ec2-CORS-474a0b07265248ac83b50f8abd9370be
+
+
+## 이슈 내용
+- 주문 과 제품이 many to one으로 관계가 맵핑 되어있는데 주문이 들어오면 제품이 삭제가 되지 않았다.
+
+- 배포 이후 localhost3000에서는 원래처럼 백엔드 local8082와 통신이 잘 되었지만 배폰한 ec2와 백엔드 8080과는 통신이 제대로 되지 않았다.
+
+
+</div>
+</details><br>
