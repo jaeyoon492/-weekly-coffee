@@ -3,9 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
+    "dev": "NEXT_PUBLIC_API_BASE=development next dev",
+    "build": "NEXT_PUBLIC_API_BASE=production next build",
+    "start": "NEXT_PUBLIC_API_BASE=production next start",
     "lint": "next lint",
     "deploy": "ssh -i \"/Users/myeongjaeyun/Documents/git2021-working/myworkspace.pem\" ubuntu@ec2-54-180-141-62.ap-northeast-2.compute.amazonaws.com \"pkill -f node; cd /home/ubuntu/-weekly-coffee/Partner/partnerclient; git pull; npm install; npm run build; nohup npm start 1>/dev/null 2>&1 &\""
   },
