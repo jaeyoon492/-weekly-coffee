@@ -19,7 +19,6 @@ import java.util.List;
 @Entity
 public class Subscribe {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long subscribeId;
     private long partnerId;
 
