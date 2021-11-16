@@ -1,6 +1,7 @@
 package com.weeklycoffee.partner.domain.subscribe;
 
 
+import com.weeklycoffee.partner.domain.profit.Profit;
 import com.weeklycoffee.partner.domain.subscribe.dto.SubscribeMessage;
 import com.weeklycoffee.partner.domain.subscribe.dto.SubscribeResponse;
 import com.weeklycoffee.partner.domain.product.Product;
@@ -13,8 +14,6 @@ import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 import javax.transaction.Transactional;
 import java.io.IOException;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -29,6 +28,11 @@ public class SubscribeService {
     private SubscribeRepository subscribeRepo;
     private SubscribeDetailRepository subscribeDetailRepo;
 
+    @Autowired
+    public SubscribeService(SubscribeRepository subscribeRepo, SubscribeDetailRepository subscribeDetailRepository) {
+        this.subscribeRepo = subscribeRepo;
+        this.subscribeDetailRepo = subscribeDetailRepository;
+    }
 
     public void putEmitter(String clientId, SseEmitter emitter) {
         this.emitters.put(clientId, emitter);
@@ -41,9 +45,9 @@ public class SubscribeService {
     public void removeEmitter(String clientId) {
         this.emitters.remove(clientId);
     }
-    // subscriber -> partner (주문요청 MQ)
 
-    @RabbitListener(queues = "test.subscribe.send")
+    // subscriber -> partner (주문요청 MQ)
+    @RabbitListener(queues = "subscriber.subscribe.send")
     public void receiveSubscribe(SubscribeResponse subscribe) {
         Subscribe saveSubscribe = saveSubscribe(subscribe);
         SubscribeMessage sbMessage = SubscribeMessage.builder()
@@ -63,19 +67,14 @@ public class SubscribeService {
         });
     }
 
-    @Autowired
-    public SubscribeService(SubscribeRepository subscribeRepo, SubscribeDetailRepository subscribeDetailRepository) {
-        this.subscribeRepo = subscribeRepo;
-        this.subscribeDetailRepo = subscribeDetailRepository;
-    }
-
     @Transactional(rollbackOn = Exception.class)
     public Subscribe saveSubscribe(SubscribeResponse subRes) {
 
         int total = 0;
         for (SubscribeResponse.SubscribeDetail reqDetail : subRes.getSubscribeDetails()) {
-            total += (reqDetail.getTerm() * reqDetail.getProductPrice()) * reqDetail.getOrderQuantity();
+            total += (reqDetail.getTerm() * reqDetail.getProductPrice()) * reqDetail.getOrderQuantity() * reqDetail.getBeanAmount();
         }
+
 
         Subscribe toSubscribe = Subscribe.builder()
                 .subscribeId(subRes.getSubscribeId())
@@ -94,6 +93,7 @@ public class SubscribeService {
         Subscribe saveSubscribe = subscribeRepo.save(toSubscribe);
 
         List<SubscribeDetail> toSubscribeDetail = new ArrayList<SubscribeDetail>();
+        List<Product> toProducts = new ArrayList<>();
         for (SubscribeResponse.SubscribeDetail reqDetail : subRes.getSubscribeDetails()) {
             SubscribeDetail detail = SubscribeDetail.builder()
                     .subscribeId(saveSubscribe.getSubscribeId()) // 상위 레코드의 id값
@@ -109,11 +109,19 @@ public class SubscribeService {
                     .productImageUrl(reqDetail.getProductImageUrl())
                     .build();
             toSubscribeDetail.add(detail);
+
+            toProducts.add(Product.builder().productId(reqDetail.getProductId()).partnerId(reqDetail.getPartnerId()).build());
         }
 
         List<SubscribeDetail> saveSubscribeDetails = subscribeDetailRepo.saveAll(toSubscribeDetail);
 
         saveSubscribe.setDetails(saveSubscribeDetails);
+
+//        for()
+//        Profit profit = Profit.builder()
+//                .orderDate(saveSubscribe.getSubscribeDate())
+//                .product()
+//                .build()
 
         return saveSubscribe;
     }

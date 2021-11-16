@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -25,6 +27,7 @@ public class SubscribeDetail {
     private int seq;
 
     @ManyToOne
+    @Cascade(value = CascadeType.DELETE)
     private Product product;
 
     private long partnerId;

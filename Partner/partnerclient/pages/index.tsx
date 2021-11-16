@@ -8,7 +8,6 @@ import styles from "./product/product.module.css";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../provider";
-import { nanoid } from "@reduxjs/toolkit";
 import Image from "next/image";
 import {
   checkSubscribe,

@@ -27,6 +27,7 @@ import {
 } from "../../middleware/modules/member";
 import { useEffect } from "react";
 import { requestFetchPartner } from "../../middleware/modules/partner";
+import AppBarSign from "../appbar";
 
 const drawerWidth: number = 240;
 
@@ -126,10 +127,6 @@ export default function DashboardContent({ children }: DashboardProps) {
     (state: RootState) => state.member.data.partnerState
   );
 
-  const partnerFetched = useSelector(
-    (state: RootState) => state.partner.isFetched
-  );
-
   useEffect(() => {
     if (member.isFetched === false) {
       dispatch(requestFetchMember(1));
@@ -174,6 +171,7 @@ export default function DashboardContent({ children }: DashboardProps) {
                 <span className={style.span}>파트너 서비스</span>
               </Link>
             </Typography>
+            {/* <AppBarSign /> */}
           </Toolbar>
         </AppBar>
         <Drawer variant="permanent" open={open}>

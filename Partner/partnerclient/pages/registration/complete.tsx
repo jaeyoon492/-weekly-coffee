@@ -2,7 +2,6 @@ import { useRouter } from "next/dist/client/router";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { requestFetchMember } from "../../middleware/modules/member";
-import { requestFetchPartner } from "../../middleware/modules/partner";
 import { AppDispatch, RootState } from "../../provider";
 
 const Complete = () => {

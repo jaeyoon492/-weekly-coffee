@@ -1,4 +1,4 @@
-import { put, select, takeLatest } from "@redux-saga/core/effects";
+import { put, select, takeEvery, takeLatest } from "@redux-saga/core/effects";
 import { createAction, nanoid, PayloadAction } from "@reduxjs/toolkit";
 import {
   initialNextSubscribe,
@@ -27,6 +27,10 @@ export const requestFetchSubscribe = createAction<SubscribePageRequest>(
 
 export const requestFetchNextSubscribe = createAction<SubscribePageRequest>(
   `${subscribeReducer.name}/requestFetchNextSubscribe`
+);
+
+export const requestRemoveProductInDetail = createAction<number>(
+  `${subscribeReducer.name}/requestRemoveProductInDetail`
 );
 
 function* fetchNextData(action: PayloadAction<SubscribePageRequest>) {
@@ -103,10 +107,6 @@ function* fetchNextSubscribePage(action: PayloadAction<SubscribePageRequest>) {
   const page = action.payload.page;
   const size = action.payload.size;
 
-  const subscribeArray: Subscribe[] = yield select(
-    (state: RootState) => state.subscribe.data
-  );
-
   localStorage.setItem("subscribe_page_size", size.toString());
 
   yield put(startProgress());
@@ -161,7 +161,12 @@ function* fetchNextSubscribePage(action: PayloadAction<SubscribePageRequest>) {
   }
 }
 
+function* removeProductInDetail(action: PayloadAction<number>) {
+  yield console.log("--removeProductInDetail--");
+}
+
 export default function* subscribeSaga() {
   yield takeLatest(requestFetchSubscribe, fetchNextData);
   yield takeLatest(requestFetchNextSubscribe, fetchNextSubscribePage);
+  yield takeEvery(requestRemoveProductInDetail, removeProductInDetail);
 }

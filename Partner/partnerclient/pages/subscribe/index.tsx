@@ -6,8 +6,10 @@ import { getTimeString } from "../../lib/string";
 import {
   requestFetchNextSubscribe,
   requestFetchSubscribe,
+  requestRemoveProductInDetail,
 } from "../../middleware/modules/subscribe";
 import { AppDispatch, RootState } from "../../provider";
+import { checkSubscribe } from "../../provider/modules/subscribe";
 import styles from "../product/product.module.css";
 
 const Subscribe = () => {
@@ -30,6 +32,10 @@ const Subscribe = () => {
     }
   }, [dispatch, partner.data.partnerId]);
 
+  const checkSubscribe = (subscribeId: number) => {
+    dispatch(requestRemoveProductInDetail(subscribeId));
+  };
+
   return (
     <>
       <DashboardContent>
@@ -44,7 +50,9 @@ const Subscribe = () => {
                       주문이요!{" "}
                       <button
                         className={`${styles.button} btn btn-primary ms-2 mt-0 float-end`}
-                        onClick={() => {}}
+                        onClick={() => {
+                          checkSubscribe(item.subscribeId);
+                        }}
                       >
                         주문접수
                       </button>{" "}
@@ -102,22 +110,6 @@ const Subscribe = () => {
                   >
                     더보기
                   </button>
-                  {/* <a
-                    href="#!"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      dispatch(
-                        requestFetchSubscribe({
-                          partnerId: partner.data.partnerId,
-                          page: subscribe.page + 1,
-                          size: subscribe.pageSize,
-                        })
-                      );
-                    }}
-                    className="link-secondary fs-6 text-nowrap"
-                  >
-                    더보기
-                  </a> */}
                 </div>
               )}
             </div>

@@ -1,5 +1,4 @@
 import { configureStore } from "@reduxjs/toolkit";
-import profileReducer from "./modules/profile";
 import alertReducer from "./modules/alert";
 import progressReducer from "./modules/progress";
 import memberReducer from "./modules/member";
@@ -16,7 +15,6 @@ const sagaMiddleware = createSagaMiddleware();
 
 export const store = configureStore({
   reducer: {
-    profile: profileReducer,
     alert: alertReducer,
     progress: progressReducer,
     product: productReducer,
