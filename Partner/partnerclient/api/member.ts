@@ -11,7 +11,7 @@ export interface MemberResponse {
 
 const MemberApi = {
   fetch: (memberId: number) =>
-    axios.get<MemberResponse>(`http://localhost:8082/members/${memberId}`),
+    axios.get<MemberResponse>(`${process.env.NEXT_PUBLIC_API_BASE}/members/${memberId}`),
 };
 
 export default MemberApi;

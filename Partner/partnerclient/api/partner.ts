@@ -18,7 +18,7 @@ export interface PartnerResponse {
 
 const partnerApi = {
   fetch: (partnerId: number) =>
-    axios.get<PartnerResponse>(`http://localhost:8082/partner/${partnerId}`),
+    axios.get<PartnerResponse>(`${process.env.NEXT_PUBLIC_API_BASE}/${partnerId}`),
 };
 
 

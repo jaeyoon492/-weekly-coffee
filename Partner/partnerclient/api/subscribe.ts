@@ -4,7 +4,7 @@ import { SubscribePageResponse } from "../provider/modules/subscribe";
 const subScribeApi = {
   fetch: (partnerId: number, page: number, size: number) =>
     axios.get<SubscribePageResponse>(
-      `http://localhost:8082/partner/subscribes/paging/${partnerId}?page=${page}&size=${size}`
+      `${process.env.NEXT_PUBLIC_API_BASE}/partner/subscribes/paging/${partnerId}?page=${page}&size=${size}`
     ),
 };
 

@@ -43,10 +43,6 @@ export const registrationSlice = createSlice({
   reducers: {
     addRegistration: (state, action: PayloadAction<RegistrationItem>) => {
       const registration = action.payload;
-
-      const array = [[1,1],[2,2],[3,3],[4,4],[5,5]];
-      const firstArr = array.find((item, index) => index === 0);
-      console.log(firstArr);
       
       if (registration) {
         state.data.registrationId = registration.registrationId;

@@ -32,7 +32,7 @@ export interface RegistrationRequest {
 const registrationApi = {
   add: (registration: RegistrationRequest) =>
     axios.post<RegistrationResponse>(
-      `http://localhost:8082/registration`,
+      `${process.env.NEXT_PUBLIC_API_BASE}/registration`,
       registration
     ),
 };

@@ -9,34 +9,34 @@ import {
 
 const productApi = {
   add: (productItem: ProductRequest) =>
-    axios.post<ProductResponse>(`http://localhost:8082/products`, productItem),
+    axios.post<ProductResponse>(`${process.env.NEXT_PUBLIC_API_BASE}/products`, productItem),
 
   fetch: (partnerId: number, page: number, size: number) =>
     axios.get<ProductPagingResponse>(
-      `http://localhost:8082/partner/products/paging/${partnerId}?page=${page}&size=${size}`
+      `${process.env.NEXT_PUBLIC_API_BASE}/partner/products/paging/${partnerId}?page=${page}&size=${size}`
     ),
 
   modify: (productItem: ProductRequest) =>
     axios.put<ProductResponse>(
-      `http://localhost:8082/product/semimodify`,
+      `${process.env.NEXT_PUBLIC_API_BASE}/product/semimodify`,
       productItem
     ),
 
   modifyItem: (productRequestItem: ProductRequest) =>
     axios.put<ProductResponse>(
-      `http://localhost:8082/product/modify`,
+      `${process.env.NEXT_PUBLIC_API_BASE}/product/modify`,
       productRequestItem
     ),
 
   remove: (productId: number) =>
-    axios.delete<boolean>(`http://localhost:8082/product/remove/${productId}`),
+    axios.delete<boolean>(`${process.env.NEXT_PUBLIC_API_BASE}/product/remove/${productId}`),
 
   salesChange: (productId: number) =>
-    axios.put<number>(`http://localhost:8082/product/sales/${productId}`),
+    axios.put<number>(`${process.env.NEXT_PUBLIC_API_BASE}/product/sales/${productId}`),
 
   getProductCache: (companyName: string) =>
     axios.get<ProductCachePageResponse>(
-      `http://localhost:8082/products/${companyName}?page=0&size=8`
+      `${process.env.NEXT_PUBLIC_API_BASE}/products/${companyName}?page=0&size=8`
     ),
 };
 //partner/products/paging/{partnerId}
