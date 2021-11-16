@@ -3,9 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "NEXT_PUBLIC_API_BASE=development next dev",
-    "build": "NEXT_PUBLIC_API_BASE=production next build",
-    "start": "NEXT_PUBLIC_API_BASE=production next start",
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
     "lint": "next lint",
     "deploy": "ssh -i \"/Users/myeongjaeyun/Documents/git2021-working/myworkspace.pem\" ubuntu@ec2-54-180-141-62.ap-northeast-2.compute.amazonaws.com \"pkill -f node; cd /home/ubuntu/-weekly-coffee/Partner/partnerclient; git pull; npm install; npm run build; nohup npm start 1>/dev/null 2>&1 &\""
   },
@@ -22,6 +22,7 @@
     "bootstrap-icons": "^1.6.1",
     "next": "11.1.2",
     "next-auth": "^3.29.0",
+    "production": "0.0.2",
     "react": "17.0.2",
     "react-apexcharts": "^1.3.9",
     "react-bootstrap": "^2.0.0",
