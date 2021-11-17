@@ -10,7 +10,6 @@ import org.hibernate.annotations.CascadeType;
 
 import javax.persistence.*;
 import java.util.Date;
-import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -23,10 +22,8 @@ public class Profit {
     @GeneratedValue (strategy = GenerationType.IDENTITY)
     private long profitNumber;
 
-    private int totalPayment;
-    private Date orderDate;
+    private int totalProfit;
+    private String orderDate;
 
-    @ManyToOne
-    @Cascade(value = CascadeType.DELETE)
-    private Product product;
+
 }

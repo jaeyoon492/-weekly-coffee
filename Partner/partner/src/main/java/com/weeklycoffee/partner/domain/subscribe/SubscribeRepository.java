@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.Date;
 import java.util.List;
 
 @Repository
@@ -18,4 +19,6 @@ public interface SubscribeRepository extends JpaRepository<Subscribe, Long> {
 
     @Query(value = "SELECT * FROM SUBSCRIBE s WHERE s.partner_id = :id ORDER BY subscribe_id DESC LIMIT 10",nativeQuery = true)
     List<Subscribe> findByPartnerConnect(@Param("id")long partnerId);
+
+    List<Subscribe> findBySubscribeDate(String date);
 }

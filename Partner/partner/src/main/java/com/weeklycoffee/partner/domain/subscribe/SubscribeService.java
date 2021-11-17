@@ -14,6 +14,7 @@ import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 import javax.transaction.Transactional;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -23,6 +24,7 @@ import java.util.concurrent.ConcurrentHashMap;
 @Service
 public class SubscribeService {
 
+    LocalDate now = LocalDate.now();
     private Map<String, SseEmitter> emitters = new ConcurrentHashMap<String, SseEmitter>();
 
     private SubscribeRepository subscribeRepo;
@@ -67,6 +69,8 @@ public class SubscribeService {
         });
     }
 
+
+
     @Transactional(rollbackOn = Exception.class)
     public Subscribe saveSubscribe(SubscribeResponse subRes) {
 
@@ -79,7 +83,7 @@ public class SubscribeService {
         Subscribe toSubscribe = Subscribe.builder()
                 .subscribeId(subRes.getSubscribeId())
                 .partnerId(subRes.getPartnerId())
-                .subscribeDate(new Date())
+                .subscribeDate(now.toString())
                 .subscriberId(subRes.getSubscriberId())
                 .subscriberName(subRes.getSubscriberName())
                 .subscriberPhone(subRes.getSubscriberPhone())

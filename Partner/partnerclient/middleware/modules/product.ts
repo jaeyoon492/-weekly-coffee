@@ -73,6 +73,7 @@ function* addDataNext(action: PayloadAction<ProductItem>) {
   try {
     const payloadData = action.payload;
     const photoItem = payloadData.productImageUrl;
+    console.log(photoItem);
     const fileName = payloadData.fileName;
     const fileType = payloadData.fileType;
 

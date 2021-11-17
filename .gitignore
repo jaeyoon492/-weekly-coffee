@@ -1,2 +1,3 @@
 aws-access-info.txt
 FileConfiguration.java
+*.pem

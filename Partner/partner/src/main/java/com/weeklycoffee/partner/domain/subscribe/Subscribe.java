@@ -22,7 +22,7 @@ public class Subscribe {
     private long subscribeId;
     private long partnerId;
 
-    private Date subscribeDate;
+    private String subscribeDate;
     private int subscriberId;
     private String subscriberName;
     private String subscriberPhone;

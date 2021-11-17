@@ -54,7 +54,7 @@ const Home: NextPage = () => {
         }
       };
     }
-  }, []);
+  }, [partner.partnerId]);
 
   const handleCheck = (subscribeId: number) => {
     dispatch(checkSubscribe(subscribeId));
