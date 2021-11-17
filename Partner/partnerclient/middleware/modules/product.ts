@@ -571,5 +571,5 @@ export default function* productSaga() {
   yield takeEvery(requestProductSalesChange, modifyProductSalesState);
   yield takeLatest(requestSemiModify, modifyProductData);
   yield takeLatest(requestModifyProduct, modifyProductDataNext);
-  yield takeLatest(requestProductCachePage, fetchConnectData);
+  yield takeEvery(requestProductCachePage, fetchConnectData);
 }
