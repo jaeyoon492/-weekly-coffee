@@ -41,7 +41,7 @@ const Home: NextPage = () => {
         clientId = partner.partnerId.toString();
         sessionStorage.setItem("event-clientId-id", clientId);
       }
-      const eventUrl = `http://localhost:8082/event/${clientId}`;
+      const eventUrl = `http://ec2-15-164-230-72.ap-northeast-2.compute.amazonaws.com/event/${clientId}`;
       const eventSource = new EventSource(eventUrl);
 
       eventSource.onmessage = (event) => {
