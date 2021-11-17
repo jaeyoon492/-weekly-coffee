@@ -41,7 +41,7 @@ const Home: NextPage = () => {
         clientId = partner.partnerId.toString();
         sessionStorage.setItem("event-clientId-id", clientId);
       }
-      const eventUrl = `${NEXT_PUBLIC_API_BASE}/event/${clientId}`;
+      const eventUrl = `${process.env.NEXT_PUBLIC_API_BASE}/event/${clientId}`;
       const eventSource = new EventSource(eventUrl);
 
       eventSource.onmessage = (event) => {
