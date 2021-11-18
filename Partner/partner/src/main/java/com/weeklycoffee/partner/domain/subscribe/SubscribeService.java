@@ -70,7 +70,6 @@ public class SubscribeService {
     }
 
 
-
     @Transactional(rollbackOn = Exception.class)
     public Subscribe saveSubscribe(SubscribeResponse subRes) {
 
@@ -97,7 +96,6 @@ public class SubscribeService {
         Subscribe saveSubscribe = subscribeRepo.save(toSubscribe);
 
         List<SubscribeDetail> toSubscribeDetail = new ArrayList<SubscribeDetail>();
-        List<Product> toProducts = new ArrayList<>();
         for (SubscribeResponse.SubscribeDetail reqDetail : subRes.getSubscribeDetails()) {
             SubscribeDetail detail = SubscribeDetail.builder()
                     .subscribeId(saveSubscribe.getSubscribeId()) // 상위 레코드의 id값
@@ -113,19 +111,11 @@ public class SubscribeService {
                     .productImageUrl(reqDetail.getProductImageUrl())
                     .build();
             toSubscribeDetail.add(detail);
-
-            toProducts.add(Product.builder().productId(reqDetail.getProductId()).partnerId(reqDetail.getPartnerId()).build());
         }
 
         List<SubscribeDetail> saveSubscribeDetails = subscribeDetailRepo.saveAll(toSubscribeDetail);
 
         saveSubscribe.setDetails(saveSubscribeDetails);
-
-//        for()
-//        Profit profit = Profit.builder()
-//                .orderDate(saveSubscribe.getSubscribeDate())
-//                .product()
-//                .build()
 
         return saveSubscribe;
     }

@@ -21,6 +21,8 @@ public class QProfit extends EntityPathBase<Profit> {
 
     public final StringPath orderDate = createString("orderDate");
 
+    public final NumberPath<Long> partnerId = createNumber("partnerId", Long.class);
+
     public final NumberPath<Long> profitNumber = createNumber("profitNumber", Long.class);
 
     public final NumberPath<Integer> totalProfit = createNumber("totalProfit", Integer.class);

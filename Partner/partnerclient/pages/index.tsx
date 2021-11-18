@@ -5,7 +5,7 @@ import Paper from "@mui/material/Paper";
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
 import styles from "./product/product.module.css";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../provider";
 import Image from "next/image";
@@ -17,16 +17,27 @@ import {
 import { Alert } from "react-bootstrap";
 import { useRouter } from "next/dist/client/router";
 import { requestProductCachePage } from "../middleware/modules/product";
+import DateByProfit from '../components/charts/DateByProfit';
+import axios from 'axios';
 
-const Home: NextPage = () => {
+export interface Profit {
+  data:{
+    totalProfit: number;
+    orderDate: string;
+  }[];
+}
+
+const Home = () => {
+
   const dispatch = useDispatch<AppDispatch>();
   const subscribeMessage = useSelector(
     (state: RootState) => state.subscribe.message
   );
   const router = useRouter();
   const partner = useSelector((state: RootState) => state.partner.data);
-
   const product = useSelector((state: RootState) => state.product);
+
+  const [data, setData] = useState<Profit>();
 
   useEffect(() => {
     if (product.isFetched === true && product.isChcheFetch === false) {
@@ -56,9 +67,29 @@ const Home: NextPage = () => {
     }
   }, [partner.partnerId]);
 
+  
   const handleCheck = (subscribeId: number) => {
     dispatch(checkSubscribe(subscribeId));
   };
+
+  const getData = async (partnerId: number, date: string) => {
+    if(partnerId > 0){
+      const result = await axios.get<Profit>(
+        `${process.env.NEXT_PUBLIC_API_BASE}/profits/${partnerId}/${date}`
+      );
+      const data = result.data;
+
+      setData(data);
+      return;
+    }
+  };
+  
+  useEffect(() => {
+    const year = new Date().getFullYear();
+    const month = new Date().getMonth()+1;
+    const date = year + "-" + month;
+    getData(partner.partnerId, date)
+  },[partner.partnerId])
 
   return (
     <>
@@ -83,7 +114,9 @@ const Home: NextPage = () => {
                   flexDirection: "column",
                   height: 280,
                 }}
-              ></Paper>
+              >
+               {data && <DateByProfit data={data.data} />}
+              </Paper>
             </Grid>
             {/* Recent Deposits */}
             <Grid item xs={12} md={4} lg={4}>
@@ -198,6 +231,7 @@ const Home: NextPage = () => {
     </>
   );
 };
+
 
 
 export default Home;

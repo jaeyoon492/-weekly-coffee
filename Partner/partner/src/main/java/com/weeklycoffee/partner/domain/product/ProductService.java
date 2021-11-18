@@ -1,7 +1,6 @@
 package com.weeklycoffee.partner.domain.product;
 
 import com.weeklycoffee.partner.domain.product.dto.ProductSalesSendRequest;
-import com.weeklycoffee.partner.domain.registration.Registration;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.stereotype.Service;
 
@@ -23,5 +22,3 @@ public class ProductService {
 
 
 }
-
-//partner.product.send

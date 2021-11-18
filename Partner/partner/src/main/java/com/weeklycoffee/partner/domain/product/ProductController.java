@@ -105,7 +105,7 @@ public class ProductController {
         return productRepo.save(product);
     }
 
-//    @Transactional(rollbackOn = Exception.class)
+    //    @Transactional(rollbackOn = Exception.class)
     @CacheEvict(value = "products", allEntries = true)
     @PostMapping(value = "/products")
     public Product createProduct(@RequestBody ProductRequest productRequest) {

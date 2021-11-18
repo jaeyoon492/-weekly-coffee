@@ -570,3 +570,43 @@ https://www.notion.so/b5ec397ecdee4279878fd245175dba19
 
 </div>
 </details><br>
+
+# 2021년 11월 17일
+커밋 링크입니다.<br>
+- https://github.com/jaeyoon492/-weekly-coffee/commit/75af5ec83b0cfe46a66fabbd84c2073d8d6ff451
+- https://github.com/jaeyoon492/-weekly-coffee/commit/ab6390bf65b52670bc828037cbd9c21276291672
+ <br>
+
+<details>
+<summary>여기를 눌러주세요</summary>
+<div markdown="1">
+
+## 백엔드
+1. 일 매출을 집계하여 수집하는 테이블을 추가했습니다. - Profit
+
+2. 메세지큐 수신중 에러가 나면 메세지를 제대로 수신할때 까지 무한대로 송신하는 버그를 yml파일 수정을 통해 해결했습니다.
+
+3. 백엔드 서버를 ec2서버에 배포 하였습니다.
+
+
+## 프론트엔드
+1. 클라이언트 서버의 CORS 에러를 고치고 배포후 백엔드 배포 서버와 통신할수 있도록 했습니다.
+
+
+## 트러블슈팅
+### 이슈 관련내용을 적어놓은 트러블 슈팅 링크 입니다.
+- 배포이후 ec2 서버에서 생긴 CORS 에러
+- https://www.notion.so/ec2-CORS-474a0b07265248ac83b50f8abd9370be
+
+- Next.js github Pages배포 중 에러 및 해결<br>
+https://www.notion.so/Next-js-github-Pages-7ec603ba06aa4ce3a1fb0f88e3927a9d
+
+
+## 이슈 내용
+- ec2 배포중 서버 과부하로 인한 서버중지 현상
+
+- 배포 이후 localhost3000에서는 원래처럼 백엔드 localhost8082와 통신이 잘 되었지만 배포한 ec2와 백엔드 localhost8082포트는 통신이 제대로 되지 않았다.
+
+
+</div>
+</details><br>

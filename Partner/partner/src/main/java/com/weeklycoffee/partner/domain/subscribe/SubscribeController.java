@@ -8,14 +8,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 @Controller
 public class SubscribeController {
@@ -27,7 +24,7 @@ public class SubscribeController {
     private Map<String, String> clientConnectMap = new HashMap<>();
 
     @Autowired
-    public SubscribeController(SubscribeService service,SubscribeRepository subscribeRepository, SubscribeDetailRepository subscribeDetailRepository) {
+    public SubscribeController(SubscribeService service, SubscribeRepository subscribeRepository, SubscribeDetailRepository subscribeDetailRepository) {
         this.service = service;
         this.subscribeRepository = subscribeRepository;
         this.subscribeDetailRepository = subscribeDetailRepository;
@@ -54,7 +51,7 @@ public class SubscribeController {
 
         return emitter;
     }
-    
+
 
 // 디테일에서 매출데이터만 따로 저장할 테이블이 있어야 할듯, 그리고 매출데이터에 product랑 매출 저장하고 디테일 삭제 해야 할듯 ㄷㄷ;;
 //    @DeleteMapping(value = "/subscribe/product/{subscribeId}")
@@ -66,7 +63,7 @@ public class SubscribeController {
 //
 //        Product product = Product.builder().build();
 //
-//        subscribeDetail.stream().map(item -> item.setProduct(product));
+//        subscribeDetail.stream().map();
 //
 //
 //        return true;

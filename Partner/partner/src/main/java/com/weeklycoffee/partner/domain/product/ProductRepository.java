@@ -16,8 +16,8 @@ import java.util.Optional;
 public interface ProductRepository extends JpaRepository<Product, Long> {
 //    List<Product> findByPartnerId(Sort sort, long partnerId);
 
-    @Query(value = "SELECT * FROM PRODUCT p WHERE p.partner_id = :id ORDER BY product_id DESC LIMIT 10",nativeQuery = true)
-    List<Product> findByPartnerConnect(@Param("id")long partnerId);
+    @Query(value = "SELECT * FROM PRODUCT p WHERE p.partner_id = :id ORDER BY product_id DESC LIMIT 10", nativeQuery = true)
+    List<Product> findByPartnerConnect(@Param("id") long partnerId);
 
     Page<Product> findByPartnerId(Pageable page, long partnerId);
 

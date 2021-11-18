@@ -13,6 +13,3 @@ sudo scp -i "/Users/myeongjaeyun/Documents/weekly-coffee/partner.pem" -r ./build
 sudo ssh -i "/Users/myeongjaeyun/Documents/weekly-coffee/partner.pem" ubuntu@ec2-15-164-230-72.ap-northeast-2.compute.amazonaws.com "pkill -9 -f java"
 @rem ===== 3. dev프로필로 jar 파일 실행
 sudo ssh -i "/Users/myeongjaeyun/Documents/weekly-coffee/partner.pem" ubuntu@ec2-15-164-230-72.ap-northeast-2.compute.amazonaws.com "cd /home/ubuntu/app/partnerserver; nohup java -Dspring.profiles.active=dev -jar partner*.jar 1>partner.log 2>&1 &"
-
-
-
