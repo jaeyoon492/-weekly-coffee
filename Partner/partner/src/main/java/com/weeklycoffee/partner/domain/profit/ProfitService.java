@@ -24,7 +24,7 @@ public class ProfitService {
         this.profitRepo = profitRepo;
     }
 
-    @Scheduled(cron = "3 * * * * *")
+    @Scheduled(cron = "30 59 23 * * *")
     @Transactional(rollbackOn = Exception.class)
     public void collectProfit() {
         LocalDate now = LocalDate.now();
@@ -47,3 +47,5 @@ public class ProfitService {
     }
 
 }
+
+

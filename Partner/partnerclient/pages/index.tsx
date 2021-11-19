@@ -20,15 +20,8 @@ import { requestProductCachePage } from "../middleware/modules/product";
 import DateByProfit from '../components/charts/DateByProfit';
 import axios from 'axios';
 
-export interface Profit {
-  data:{
-    totalProfit: number;
-    orderDate: string;
-  }[];
-}
 
 const Home = () => {
-
   const dispatch = useDispatch<AppDispatch>();
   const subscribeMessage = useSelector(
     (state: RootState) => state.subscribe.message
@@ -37,7 +30,12 @@ const Home = () => {
   const partner = useSelector((state: RootState) => state.partner.data);
   const product = useSelector((state: RootState) => state.product);
 
-  const [data, setData] = useState<Profit>();
+  const [data, setData] = useState<
+    {
+      orderDate: string;
+      totalPayment: number;
+    }[]
+  >();
 
   useEffect(() => {
     if (product.isFetched === true && product.isChcheFetch === false) {
@@ -67,29 +65,27 @@ const Home = () => {
     }
   }, [partner.partnerId]);
 
-  
   const handleCheck = (subscribeId: number) => {
     dispatch(checkSubscribe(subscribeId));
   };
 
   const getData = async (partnerId: number, date: string) => {
-    if(partnerId > 0){
-      const result = await axios.get<Profit>(
+    if (partnerId > 0) {
+      const result = await axios.get<typeof data>(
         `${process.env.NEXT_PUBLIC_API_BASE}/profits/${partnerId}/${date}`
       );
-      const data = result.data;
-
-      setData(data);
+      console.log(result.data);
+      setData(result.data);
       return;
     }
   };
-  
+
   useEffect(() => {
     const year = new Date().getFullYear();
-    const month = new Date().getMonth()+1;
+    const month = new Date().getMonth() + 1;
     const date = year + "-" + month;
-    getData(partner.partnerId, date)
-  },[partner.partnerId])
+    getData(partner.partnerId, date);
+  }, [partner.partnerId]);
 
   return (
     <>
@@ -115,10 +111,10 @@ const Home = () => {
                   height: 280,
                 }}
               >
-               {data && <DateByProfit data={data.data} />}
+                {data && <DateByProfit data={data} />}
               </Paper>
             </Grid>
-            {/* Recent Deposits */}
+            {/* order */}
             <Grid item xs={12} md={4} lg={4}>
               <Typography
                 component="h1"
@@ -169,7 +165,7 @@ const Home = () => {
                   )}
               </Paper>
             </Grid>
-            {/* Recent Orders */}
+            {/* Products */}
             <Grid item xs={12}>
               <Typography
                 component="h1"
@@ -231,7 +227,5 @@ const Home = () => {
     </>
   );
 };
-
-
 
 export default Home;

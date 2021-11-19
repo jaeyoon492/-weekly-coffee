@@ -610,3 +610,39 @@ https://www.notion.so/Next-js-github-Pages-7ec603ba06aa4ce3a1fb0f88e3927a9d
 
 </div>
 </details><br>
+
+# 2021년 11월 18일
+커밋 링크입니다.<br>
+- https://github.com/jaeyoon492/-weekly-coffee/commit/636bd4692b88a95570ab11c0394e77549b7eb3a3
+ <br>
+
+<details>
+<summary>여기를 눌러주세요</summary>
+<div markdown="1">
+
+## 백엔드
+1. 매출 데이터 집계용 테이블 Profit울 만들어 Subscribe에서 하루에 한번 데이터를 불러와 합산하여 다른 테이블에 저장하는걸 querydsl로 구현 했습니다.
+    - 현재 테스트 중이어서 3초에 한번씩 받아오는데 기능이 완성된면 하루에 한번 데어터를 집게할수 있도록 스케줄을 고칠 예정 입니다.
+
+2. Profit 구현시 조건절에 날짜 값을 문자열로 받는데, 추후 성능 개선을 위해 Date 타입이나 숫자 타입으로 바꿀 예정입니다.
+
+
+## 프론트엔드
+1. ApexChart로 일 매출 통계 데이터를 끌어와 그래프화 하였습니다.
+    - 데이터는 화면까지 잘 받아올수 있자만 화면에서 차트 컴포넌트로 Props down 해주는 부븐에 데이터가 안들가 있는데, 제대로 돌아가지 않는다.
+
+## 트러블슈팅
+### 이슈 관련내용을 적어놓은 트러블 슈팅 링크 입니다.
+- https://www.notion.so/queryDsl-94cee6068b734e33910e0095019a15bb
+
+
+## 이슈 내용
+- 빌드시 querydel이 빌드가 안되는 현상이 있었습니다.
+
+
+
+</div>
+</details><br>
+
+
+

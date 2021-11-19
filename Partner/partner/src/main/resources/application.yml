@@ -32,26 +32,3 @@ spring:
     addresses: amqps://b-2c76102e-2ad9-459d-b4f8-9656a169070f.mq.ap-northeast-2.amazonaws.com:5671
     username: rabbitmq
     password: password123!
-#eureka:
-#  client:
-#    service-url:
-#      defaultZone: http://localhost:8761/eureka/
-#  instance:
-#    hostname: localhost
-#management:
-#  endpoints:
-#    web:
-#      exposure:
-#        include: "*"
-
----
-#spring:
-#  profiles: dev
-#eureka:
-#  client:
-#    service-url:
-#      defaultZone: http://ec2-3-34-216-213.ap-northeast-2.compute.amazonaws.com:8761/eureka/
-#  instance:
-#    hostname: ec2-3-34-216-213.ap-northeast-2.compute.amazonaws.com
-
-

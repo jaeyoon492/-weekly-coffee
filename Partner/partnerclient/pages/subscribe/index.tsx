@@ -75,10 +75,12 @@ const Subscribe = () => {
                         {item.details.map((item) => item.term) + "개월"}
                         <br />
                         제품단가:{" "}
-                        {item.details.map((item) =>
-                          new Intl.NumberFormat().format(item.productPrice)
-                        )}
-                        원
+                        {item.details.length > 1
+                          ? item.details.find((elem, index) => index === 0)
+                              ?.productPrice +
+                            `원` +
+                            `, 외 ${item.details.length - 1}건`
+                          : item.details.map((item) => item.productPrice)}
                         <br />
                         주문금액:{" "}
                         {new Intl.NumberFormat().format(item.totalPayment)}원

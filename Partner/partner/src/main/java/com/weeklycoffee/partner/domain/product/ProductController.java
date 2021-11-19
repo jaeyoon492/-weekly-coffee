@@ -162,7 +162,6 @@ public class ProductController {
             return false;
         }
         productRepo.deleteById(productId);
-
         return true;
     }
 

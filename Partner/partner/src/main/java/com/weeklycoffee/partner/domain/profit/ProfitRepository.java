@@ -5,5 +5,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ProfitRepository extends JpaRepository<Profit, Long> {
-
+    boolean findByPartnerId(long partnerId);
 }
