@@ -14,7 +14,7 @@ public class TestSubscribeService {
     }
 
     public void sendSubscribeTest(SubscribeRequest testSubscribe){
-        rabbit.convertAndSend("test.subscribe.send",testSubscribe);
+        rabbit.convertAndSend("subscriber.subscribe.send",testSubscribe);
     }
 
 }

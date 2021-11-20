@@ -42,6 +42,7 @@ public class ProductController {
     }
 
     @PutMapping(value = "/product/semimodify")
+    @CacheEvict(value = "products", allEntries = true)
     public Product semiModifyProduct(@RequestBody ProductRequest productRequest) {
         Optional<Product> productOptional = productRepo.findById(productRequest.getProductId());
         Product product = productOptional.get();
@@ -56,6 +57,7 @@ public class ProductController {
     }
 
     @PutMapping(value = "/product/modify")
+    @CacheEvict(value = "products", allEntries = true)
     public Product ModifyProductItem(@RequestBody ProductRequest productRequest, HttpServletResponse res) {
 
         Optional<Product> productOptional = productRepo.findById(productRequest.getProductId());
@@ -106,8 +108,6 @@ public class ProductController {
     @PostMapping(value = "/products")
     public Product createProduct(@RequestBody ProductRequest productRequest) {
 
-        System.out.println("프로덕트 리퀘스트" + productRequest);
-
         Product productItem = Product.builder()
                 .partnerId(productRequest.getPartnerId())
                 .productName(productRequest.getProductName())
@@ -145,6 +145,7 @@ public class ProductController {
     }
 
     @DeleteMapping(value = "/product/remove/{productId}")
+    @CacheEvict(value = "products", allEntries = true)
     public boolean removeProduct(@PathVariable long productId, HttpServletResponse res) {
 
         Optional<Product> product = productRepo.findById(productId);

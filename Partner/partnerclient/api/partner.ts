@@ -21,5 +21,4 @@ const partnerApi = {
     axios.get<PartnerResponse>(`${process.env.NEXT_PUBLIC_API_BASE}/partner/${partnerId}`),
 };
 
-
 export default partnerApi;

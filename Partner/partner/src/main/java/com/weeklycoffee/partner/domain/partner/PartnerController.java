@@ -9,6 +9,7 @@ import com.weeklycoffee.partner.domain.product.dto.ProductPageResponse;
 import com.weeklycoffee.partner.domain.subscribe.SubscribeRepository;
 import com.weeklycoffee.partner.domain.subscribe.Subscribe;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -69,12 +70,15 @@ public class PartnerController {
     }
 
     @GetMapping("/partner/{partnerId}")
-    public PartnerAllResponse getPartnerAll(@PathVariable long partnerId) {
+    @CacheEvict(value = "products", allEntries = true)
+    public PartnerAllResponse getPartnerAll(@PathVariable long partnerId, HttpServletResponse res) {
+        Optional<Partner> partnerOptional = partnerRepo.findById(partnerId);
 
-        if (partnerId <= 0) {
+        if(partnerOptional.isEmpty() == true){
+            res.setStatus(HttpServletResponse.SC_NOT_FOUND);
             return null;
         }
-        Optional<Partner> partnerOptional = partnerRepo.findById(partnerId);
+
         Partner partner = partnerOptional.get();
 
         List<Product> products = productRepo.findByPartnerConnect(partnerId);
