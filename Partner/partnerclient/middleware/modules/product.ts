@@ -14,7 +14,7 @@ import { RootState } from "../../provider";
 import { addAlert } from "../../provider/modules/alert";
 import productReducer, {
   addProduct,
-  initialCacheProduct,
+  // initialCacheProduct,
   initialIsComplted,
   initialPagedProduct,
   initialSalesState,
@@ -62,9 +62,9 @@ export const requestProductSalesChange = createAction<number>(
   `${productReducer.name}/requestProductSalesOn`
 );
 
-export const requestProductCachePage = createAction<string>(
-  `${productReducer.name}/requestProductCachePage`
-);
+// export const requestProductCachePage = createAction<string>(
+//   `${productReducer.name}/requestProductCachePage`
+// );
 
 function* addDataNext(action: PayloadAction<ProductItem>) {
   yield console.log("-- addProduct --");
@@ -158,7 +158,7 @@ function* addDataNext(action: PayloadAction<ProductItem>) {
 
     yield put(initialIsComplted());
 
-    yield put(requestProductCachePage(result.data.companyName));
+    // yield put(requestProductCachePage(result.data.companyName));
 
     yield put(
       addAlert({ id: nanoid(), variant: "success", message: "저장되었습니다." })
@@ -510,59 +510,59 @@ function* modifyProductDataNext(action: PayloadAction<ProductItem>) {
   yield put(initialIsComplted());
 }
 
-function* fetchConnectData(action: PayloadAction<string>) {
-  console.log("--fetchConnect--");
+// function* fetchConnectData(action: PayloadAction<string>) {
+//   console.log("--fetchConnect--");
 
-  const companyName = action.payload;
+//   const companyName = action.payload;
 
-  const result: AxiosResponse<ProductCachePageResponse> = yield call(
-    productApi.getProductCache,
-    companyName
-  );
+//   const result: AxiosResponse<ProductCachePageResponse> = yield call(
+//     productApi.getProductCache,
+//     companyName
+//   );
 
-  const productpage: ProductPage = {
-    data: result.data.content.map(
-      (item) =>
-        ({
-          productId: item.productId,
-          partnerId: item.partnerId,
-          productName: item.productName,
-          productPrice: item.productPrice,
-          productImageUrl: item.productImageUrl,
-          productInfo: item.productInfo,
-          fileName: item.fileName,
-          fileType: item.fileType,
-          foodType: item.foodType,
-          expirationData: item.expirationData,
-          manufacturer: item.manufacturer,
-          manufacturingDate: item.manufacturingDate,
-          companyName: item.companyName,
-          companyIntroduce: item.companyIntroduce,
-          companyAddress: item.companyAddress,
-          companyContact: item.companyContact,
-          beanType: item.beanType,
-          beanTag: item.beanTag,
-          processing: item.processing,
-          country: item.country,
-          region: item.region,
-          farm: item.farm,
-          cupNote: item.cupNote,
-          roastingPoint: item.roastingPoint,
-          variety: item.variety,
-          productUploadDate: item.productUploadDate,
-          salesStatus: item.salesStatus,
-          isEdit: false,
-        } as ProductItem)
-    ),
-    totalElements: result.data.totalElements,
-    isLast: result.data.isLast,
-    totalPages: 0,
-    page: 0,
-    pageSize: 0,
-  };
+//   const productpage: ProductPage = {
+//     data: result.data.content.map(
+//       (item) =>
+//         ({
+//           productId: item.productId,
+//           partnerId: item.partnerId,
+//           productName: item.productName,
+//           productPrice: item.productPrice,
+//           productImageUrl: item.productImageUrl,
+//           productInfo: item.productInfo,
+//           fileName: item.fileName,
+//           fileType: item.fileType,
+//           foodType: item.foodType,
+//           expirationData: item.expirationData,
+//           manufacturer: item.manufacturer,
+//           manufacturingDate: item.manufacturingDate,
+//           companyName: item.companyName,
+//           companyIntroduce: item.companyIntroduce,
+//           companyAddress: item.companyAddress,
+//           companyContact: item.companyContact,
+//           beanType: item.beanType,
+//           beanTag: item.beanTag,
+//           processing: item.processing,
+//           country: item.country,
+//           region: item.region,
+//           farm: item.farm,
+//           cupNote: item.cupNote,
+//           roastingPoint: item.roastingPoint,
+//           variety: item.variety,
+//           productUploadDate: item.productUploadDate,
+//           salesStatus: item.salesStatus,
+//           isEdit: false,
+//         } as ProductItem)
+//     ),
+//     totalElements: result.data.totalElements,
+//     isLast: result.data.isLast,
+//     totalPages: 0,
+//     page: 0,
+//     pageSize: 0,
+//   };
 
-  yield put(initialCacheProduct(productpage));
-}
+//   yield put(initialCacheProduct(productpage));
+// }
 
 export default function* productSaga() {
   yield takeEvery(requestAddProduct, addDataNext);
@@ -571,5 +571,5 @@ export default function* productSaga() {
   yield takeEvery(requestProductSalesChange, modifyProductSalesState);
   yield takeLatest(requestSemiModify, modifyProductData);
   yield takeLatest(requestModifyProduct, modifyProductDataNext);
-  yield takeEvery(requestProductCachePage, fetchConnectData);
+  // yield takeEvery(requestProductCachePage, fetchConnectData);
 }

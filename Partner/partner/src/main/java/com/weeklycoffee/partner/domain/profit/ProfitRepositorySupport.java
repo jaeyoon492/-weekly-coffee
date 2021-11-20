@@ -30,12 +30,11 @@ public class ProfitRepositorySupport {
                 .groupBy(profit.orderDate)
                 .orderBy(profit.orderDate.asc())
                 .fetch();
+
         if (payments == null) {
             return null;
-        } else {
-            return payments;
         }
+
+        return payments;
     }
 }
-// 
-//select * from profit p where order_date = '2021-11-18' and partner_id = 1 order by profit_number desc;

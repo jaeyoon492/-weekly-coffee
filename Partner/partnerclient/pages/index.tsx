@@ -16,10 +16,13 @@ import {
 } from "../provider/modules/subscribe";
 import { Alert } from "react-bootstrap";
 import { useRouter } from "next/dist/client/router";
-import { requestProductCachePage } from "../middleware/modules/product";
-import DateByProfit from '../components/charts/DateByProfit';
-import axios from 'axios';
-
+import DateByProfit from "../components/charts/DateByProfit";
+import axios from "axios";
+import {
+  ProductCachePageResponse,
+  ProductItem,
+  ProductPage,
+} from "../provider/modules/product";
 
 const Home = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -37,11 +40,7 @@ const Home = () => {
     }[]
   >();
 
-  useEffect(() => {
-    if (product.isFetched === true && product.isChcheFetch === false) {
-      dispatch(requestProductCachePage(partner.companyName));
-    }
-  }, [product.isChcheFetch]);
+  const [productCache, setProductCache] = useState<ProductItem[]>();
 
   useEffect(() => {
     if (partner.partnerId > 0) {
@@ -80,11 +79,63 @@ const Home = () => {
     }
   };
 
+  const getProductCheche = async (companyName: string) => {
+    if (partner.companyName !== "" && product.isChcheFetch === false) {
+      const result = await axios.get<ProductCachePageResponse>(
+        `${process.env.NEXT_PUBLIC_API_BASE}/products/${companyName}?page=0&size=8`
+      );
+
+      const productpage: ProductPage = {
+        data: result.data.content.map(
+          (item) =>
+            ({
+              productId: item.productId,
+              partnerId: item.partnerId,
+              productName: item.productName,
+              productPrice: item.productPrice,
+              productImageUrl: item.productImageUrl,
+              productInfo: item.productInfo,
+              fileName: item.fileName,
+              fileType: item.fileType,
+              foodType: item.foodType,
+              expirationData: item.expirationData,
+              manufacturer: item.manufacturer,
+              manufacturingDate: item.manufacturingDate,
+              companyName: item.companyName,
+              companyIntroduce: item.companyIntroduce,
+              companyAddress: item.companyAddress,
+              companyContact: item.companyContact,
+              beanType: item.beanType,
+              beanTag: item.beanTag,
+              processing: item.processing,
+              country: item.country,
+              region: item.region,
+              farm: item.farm,
+              cupNote: item.cupNote,
+              roastingPoint: item.roastingPoint,
+              variety: item.variety,
+              productUploadDate: item.productUploadDate,
+              salesStatus: item.salesStatus,
+              isEdit: false,
+            } as ProductItem)
+        ),
+        totalElements: result.data.totalElements,
+        isLast: result.data.isLast,
+        totalPages: 0,
+        page: 0,
+        pageSize: 0,
+      };
+
+      setProductCache(productpage.data);
+    }
+  };
+
   useEffect(() => {
     const year = new Date().getFullYear();
     const month = new Date().getMonth() + 1;
     const date = year + "-" + month;
     getData(partner.partnerId, date);
+    getProductCheche(partner.companyName);
   }, [partner.partnerId]);
 
   return (
@@ -186,8 +237,8 @@ const Home = () => {
                 }}
               >
                 <div className="d-flex flex-wrap">
-                  {product.chche &&
-                    product.chche.map((item, index) => (
+                  {productCache &&
+                    productCache.map((item, index) => (
                       <div
                         key={`photo-item-${index}`}
                         className="card"

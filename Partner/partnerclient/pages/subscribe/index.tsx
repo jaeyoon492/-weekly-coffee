@@ -64,15 +64,35 @@ const Subscribe = () => {
                         <br />
                         연락처: {item.subscriberPhone}
                         <br />
-                        제품명: {item.details.map((item) => item.productName)}
+                        제품명:{" "}
+                        {item.details.length > 1
+                          ? item.details.find((elem, index) => index === 0)
+                              ?.productName +
+                            `, 외 ${item.details.length - 1}건`
+                          : item.details.map((item) => item.productName)}
                         <br />
-                        분쇄도: {item.details.map((item) => item.groundPoint)}
+                        분쇄도:{" "}
+                        {item.details.length > 1
+                          ? item.details.find((elem, index) => index === 0)
+                              ?.groundPoint +
+                            `, 외 ${item.details.length - 1}건`
+                          : item.details.map((item) => item.groundPoint)}
                         <br />
                         주문수량:{" "}
-                        {item.details.map((item) => item.orderQuantity) + "개"}
+                        {item.details.length > 1
+                          ? item.details.find((elem, index) => index === 0)
+                              ?.orderQuantity +
+                            `개` +
+                            `, 외 ${item.details.length - 1}건`
+                          : item.details.map((item) => item.orderQuantity)}
                         <br />
                         구독기간:{" "}
-                        {item.details.map((item) => item.term) + "개월"}
+                        {item.details.length > 1
+                          ? item.details.find((elem, index) => index === 0)
+                              ?.term +
+                            `개월` +
+                            `, 외 ${item.details.length - 1}건`
+                          : item.details.map((item) => item.term)}
                         <br />
                         제품단가:{" "}
                         {item.details.length > 1

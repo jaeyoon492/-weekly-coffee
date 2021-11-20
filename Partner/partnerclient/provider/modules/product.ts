@@ -174,12 +174,12 @@ export const productSlice = createSlice({
 
       state.isFetched = true;
     },
-    initialCacheProduct: (state, action: PayloadAction<ProductPage>) => {
-      if (state.chche) {
-        state.chche = action.payload.data;
-        state.isChcheFetch = true;
-      }
-    },
+    // initialCacheProduct: (state, action: PayloadAction<ProductPage>) => {
+    //   if (state.chche) {
+    //     state.chche = action.payload.data;
+    //     state.isChcheFetch = true;
+    //   }
+    // },
 
     editProduct: (state, action: PayloadAction<number>) => {
       const data = state.data.find((item) => item.productId === action.payload);
@@ -275,7 +275,7 @@ export const {
   initialIsComplted,
   initialSalesState,
   modifyProduct,
-  initialCacheProduct,
+  // initialCacheProduct,
 } = productSlice.actions;
 
 export default productSlice.reducer;

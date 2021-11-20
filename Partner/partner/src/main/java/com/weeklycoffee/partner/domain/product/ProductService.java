@@ -20,5 +20,13 @@ public class ProductService {
         rabbit.convertAndSend("partner.productSales.send", productSalesSend);
     }
 
+    public void sendSemiModifiedProduct(Product product){
+        rabbit.convertAndSend("partner.semiModify.send",product);
+    }
+
+    public void removeProduct(long productId){
+        rabbit.convertAndSend("partner.removeProduct.send",productId);
+    }
+
 
 }

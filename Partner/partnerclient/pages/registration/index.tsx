@@ -16,7 +16,6 @@ const Registration = () => {
   const companyEmailInput = useRef<HTMLInputElement>(null);
   const bankSelect = useRef<HTMLSelectElement>(null);
   const bankAccountInput = useRef<HTMLInputElement>(null);
-  const registrationDateInput = useRef<HTMLInputElement>(null);
 
   const memberId = useSelector(
     (state: RootState) => state.member.data.memberId
@@ -58,9 +57,7 @@ const Registration = () => {
       bankAccount: bankAccountInput.current
         ? bankAccountInput.current.value
         : "",
-      registrationDate: registrationDateInput.current
-        ? registrationDateInput.current.value
-        : "",
+      registrationDate: new Date().getDate().toLocaleString(),
     };
     dispatch(requestAddRegistration(item));
   };
@@ -185,17 +182,6 @@ const Registration = () => {
                           type="text"
                           ref={bankAccountInput}
                           defaultValue={"111-222-3333333"}
-                        />
-                      </td>
-                    </tr>
-                    <tr>
-                      <th>입점신청 날짜</th>
-                      <td>
-                        <input
-                          className="form-control"
-                          type="text"
-                          ref={registrationDateInput}
-                          defaultValue={"2021-11-04"}
                         />
                       </td>
                     </tr>

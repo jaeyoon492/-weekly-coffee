@@ -3,7 +3,6 @@ package com.weeklycoffee.partner.domain.product;
 import com.weeklycoffee.partner.domain.product.dto.ProductPageResponse;
 import com.weeklycoffee.partner.domain.product.dto.ProductRequest;
 import com.weeklycoffee.partner.domain.product.dto.ProductSalesSendRequest;
-import com.weeklycoffee.partner.files.FileController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
@@ -28,16 +27,8 @@ public class ProductController {
     }
 
     @Cacheable(value = "products"
-            // 카테고리별 앞쪽 10개의 레코드까지만 캐시함
             , condition = "(#page + 1) * #size <= 10"
-            // 페이지크기가 고정이면 카테고리별로 0번째 페이지만 캐시
-//				, condition="#page == 0"
-            // 캐시키이름) 카테고리-페이지-사이즈  ex) all-0-10, beverage-0-5
             , key = "#country+'-'+#page+'-'+#size")
-    // 페이지크기가 고정이면
-    // 캐시키이름) 카테고리-페이지  ex) all-0, beverage-0
-    //, key = "#category+'-'+#page")
-
     @GetMapping(value = "/products/{companyName}")
     public ProductPageResponse getProductsByCategory(@PathVariable String companyName, @RequestParam int page, @RequestParam int size) {
         Page<Product> productsPage;
@@ -58,7 +49,10 @@ public class ProductController {
         product.setProductName(productRequest.getProductName());
         product.setProductPrice(productRequest.getProductPrice());
 
-        return productRepo.save(product);
+        Product modifiedProduct = productRepo.save(product);
+        productService.sendSemiModifiedProduct(modifiedProduct);
+        return modifiedProduct;
+
     }
 
     @PutMapping(value = "/product/modify")
@@ -101,11 +95,13 @@ public class ProductController {
         product.setRoastingPoint(productRequest.getRoastingPoint());
         product.setVariety(productRequest.getVariety());
 
+        Product modifiedProduct = productRepo.save(product);
 
-        return productRepo.save(product);
+        productService.sendSemiModifiedProduct(modifiedProduct);
+        return modifiedProduct;
     }
 
-    //    @Transactional(rollbackOn = Exception.class)
+    @Transactional(rollbackOn = Exception.class)
     @CacheEvict(value = "products", allEntries = true)
     @PostMapping(value = "/products")
     public Product createProduct(@RequestBody ProductRequest productRequest) {
@@ -141,11 +137,7 @@ public class ProductController {
                 .variety(productRequest.getVariety())
                 .build();
 
-        System.out.println("프로덕트 아이템" + productItem);
-
         Product productResponse = productRepo.save(productItem);
-
-        System.out.println("프로덕트 저장후" + productResponse);
 
         productService.sendProduct(productResponse);
 
@@ -161,7 +153,10 @@ public class ProductController {
             res.setStatus(HttpServletResponse.SC_BAD_REQUEST);
             return false;
         }
+
         productRepo.deleteById(productId);
+        productService.removeProduct(productId);
+
         return true;
     }
 
