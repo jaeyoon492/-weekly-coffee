@@ -644,3 +644,73 @@ https://www.notion.so/Next-js-github-Pages-7ec603ba06aa4ce3a1fb0f88e3927a9d
 
 
 
+# 2021년 11월 19일
+커밋 링크입니다.<br>
+- https://github.com/jaeyoon492/-weekly-coffee/commit/26a9c060baa72832988089074b8989d447022650
+ <br>
+
+<details>
+<summary>여기를 눌러주세요</summary>
+<div markdown="1">
+
+## 백엔드
+1. 주문 데이터를 집계하여 일매출 데이터로 환산 저장하는 테이블의 쿼리문을 수정하여 일자기준으로 그룹핑하여 새로운 필드로 만들었습니다.
+    - 그룹핑한 데이터를 TotalPaymentByDateAndPartnerId 타입의 필드 만들었습니다.
+
+
+## 프론트엔드
+1. ApexChart의 그래프 높이값을 변경 하였습니다.
+
+2. 주문 데이터에서 복수의 SubscribeDetail이 들어올경우 첫번째 데이터 이후에는 , 외 몇건 으로 처리 했습니다.
+
+## 트러블슈팅
+### 이슈 관련내용을 적어놓은 트러블 슈팅 링크 입니다.
+- https://www.notion.so/0abdb02565bc4f76a662e054905c15c7
+
+
+## 이슈 내용
+- 일 매출 데이터를 받아서 그래프로 처리 할때, 데이터 타입이 제대로 맞지 않아 데이터를 차트에 띄워주는게 제대로 되지 않았습니다.
+
+</div>
+</details><br>
+
+
+# 2021년 11월 20일
+커밋 링크입니다.<br>
+- https://github.com/jaeyoon492/-weekly-coffee/commit/7698fc66f8af235712c7066b4a4e3c66e077e41a
+ <br>
+
+<details>
+<summary>여기를 눌러주세요</summary>
+<div markdown="1">
+
+## 프론트엔드
+1. 최근 등록 제품 캐시데이터 조회 reduxSaga 사용 -> 화면에서 바로 조회 하도록 변경했습니다.
+
+2. 수정시 메세지큐 로 subscribe서비스에 수정된 데이터 전송할수 있도록 구현, 삭제시 메세지큐로 subscribe서비스에 삭제한 제품의 id를 전송할 수 있도록 구현했습니다.
+
+
+## 이슈 내용
+- 기존에 제품데이터를 끌어오지 않으면 별도로 최근 등록 제품이 조회 되지 않는 버그가 있었습니다.
+
+</div>
+</details><br>
+
+
+# 2021년 11월 21일
+커밋 링크입니다.<br>
+- https://github.com/jaeyoon492/-weekly-coffee/commit/dd1b350bc4719538fb98a0ebe207c1c8db9a7104
+ <br>
+
+<details>
+<summary>여기를 눌러주세요</summary>
+<div markdown="1">
+
+## 백엔드
+1. 주문, 수정, 삭제를 메세지큐로 보내면 subscribe서비스 쪽에서 제대로 반영되는지 테스트 했습니다.
+
+
+</div>
+</details><br>
+
+
