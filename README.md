@@ -639,8 +639,6 @@ https://www.notion.so/Next-js-github-Pages-7ec603ba06aa4ce3a1fb0f88e3927a9d
 ## 이슈 내용
 - 빌드시 querydel이 빌드가 안되는 현상이 있었습니다.
 
-
-
 </div>
 </details><br>
 

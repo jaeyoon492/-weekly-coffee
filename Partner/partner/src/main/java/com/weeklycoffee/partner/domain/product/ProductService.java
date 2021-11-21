@@ -28,5 +28,4 @@ public class ProductService {
         rabbit.convertAndSend("partner.removeProduct.send",productId);
     }
 
-
 }

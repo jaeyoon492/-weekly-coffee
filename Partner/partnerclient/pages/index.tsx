@@ -73,7 +73,6 @@ const Home = () => {
       const result = await axios.get<typeof data>(
         `${process.env.NEXT_PUBLIC_API_BASE}/profits/${partnerId}/${date}`
       );
-      console.log(result.data);
       setData(result.data);
       return;
     }
