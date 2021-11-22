@@ -8,6 +8,7 @@ import com.weeklycoffee.partner.domain.product.Product;
 import com.weeklycoffee.partner.domain.subscribe.subscribeDetail.SubscribeDetail;
 import com.weeklycoffee.partner.domain.subscribe.subscribeDetail.SubscribeDetailRepository;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
@@ -24,6 +25,8 @@ import java.util.concurrent.ConcurrentHashMap;
 @Service
 public class SubscribeService {
 
+    RabbitTemplate rabbit;
+
     LocalDate now = LocalDate.now();
     private Map<String, SseEmitter> emitters = new ConcurrentHashMap<String, SseEmitter>();
 
@@ -31,9 +34,10 @@ public class SubscribeService {
     private SubscribeDetailRepository subscribeDetailRepo;
 
     @Autowired
-    public SubscribeService(SubscribeRepository subscribeRepo, SubscribeDetailRepository subscribeDetailRepository) {
+    public SubscribeService(SubscribeRepository subscribeRepo, SubscribeDetailRepository subscribeDetailRepository, RabbitTemplate rabbit) {
         this.subscribeRepo = subscribeRepo;
         this.subscribeDetailRepo = subscribeDetailRepository;
+        this.rabbit = rabbit;
     }
 
     public void putEmitter(String clientId, SseEmitter emitter) {
@@ -119,4 +123,10 @@ public class SubscribeService {
 
         return saveSubscribe;
     }
+
+
+//    public void sendCheckSubscribe(long subscribeId){
+//        rabbit.convertAndSend("partner.removeProduct.send",subscribeId);
+//    }
+
 }

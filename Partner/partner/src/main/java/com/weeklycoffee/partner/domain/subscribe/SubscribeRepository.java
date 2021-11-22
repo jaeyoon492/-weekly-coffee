@@ -14,7 +14,7 @@ import java.util.List;
 
 @Repository
 public interface SubscribeRepository extends JpaRepository<Subscribe, Long> {
-    Page<Subscribe> findByPartnerId(Pageable page, long partnerId);
+    Page<Subscribe> findByPartnerIdAndOrderCheck(Pageable page, long partnerId, boolean orderCheck);
 //    List<Subscribe> findByPartnerId(Sort sort, long partnerId);
 
     @Query(value = "SELECT * FROM SUBSCRIBE s WHERE s.partner_id = :id ORDER BY subscribe_id DESC LIMIT 10", nativeQuery = true)

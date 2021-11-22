@@ -163,6 +163,30 @@ function* fetchNextSubscribePage(action: PayloadAction<SubscribePageRequest>) {
 
 function* removeProductInDetail(action: PayloadAction<number>) {
   yield console.log("--removeProductInDetail--");
+
+  const subscribeId = action.payload;
+
+  const partnerId: number = yield select(
+    (state: RootState) => state.partner.data.partnerId
+  );
+
+  const result: AxiosResponse<boolean> = yield call(
+    subScribeApi.check,
+    subscribeId
+  );
+  if (result.data === true) {
+    const pageRequest = localStorage.getItem("subscribe_page_size");
+
+    if (pageRequest) {
+      yield put(
+        requestFetchSubscribe({
+          partnerId: partnerId,
+          page: 0,
+          size: +pageRequest,
+        })
+      );
+    }
+  }
 }
 
 export default function* subscribeSaga() {

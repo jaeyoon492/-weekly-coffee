@@ -33,6 +33,7 @@ const Subscribe = () => {
   }, [dispatch, partner.data.partnerId]);
 
   const checkSubscribe = (subscribeId: number) => {
+    console.log(subscribeId);
     dispatch(requestRemoveProductInDetail(subscribeId));
   };
 

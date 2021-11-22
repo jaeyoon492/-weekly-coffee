@@ -13,12 +13,15 @@ import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Function;
 
 @RestController
 public class PartnerController {
@@ -61,12 +64,14 @@ public class PartnerController {
     // 파트너 주문목록 페이징 조회
     // GET /partner/subscribes/paging/{id}?page=0&size=4
     @GetMapping("/partner/subscribes/paging/{partnerId}")
-    public Page<Subscribe> getPagingSubscribesContainPartnerId(@PathVariable long partnerId, @RequestParam int size, @RequestParam int page) {
+    public Page<Subscribe> getPagingSubscribesContainPartnerId(@PathVariable long partnerId, @RequestParam int size, @RequestParam int page, HttpServletResponse res) {
         System.out.println(partnerId);
         System.out.println(page);
         System.out.println(size);
 
-        return subscribeRepo.findByPartnerId(PageRequest.of(page, size, Sort.by("subscribeId").descending()), partnerId);
+        Page<Subscribe> data = subscribeRepo.findByPartnerIdAndOrderCheck(PageRequest.of(page, size, Sort.by("subscribeId").descending()), partnerId, false);
+
+        return data;
     }
 
     @GetMapping("/partner/{partnerId}")
@@ -74,7 +79,7 @@ public class PartnerController {
     public PartnerAllResponse getPartnerAll(@PathVariable long partnerId, HttpServletResponse res) {
         Optional<Partner> partnerOptional = partnerRepo.findById(partnerId);
 
-        if(partnerOptional.isEmpty() == true){
+        if (partnerOptional.isEmpty() == true) {
             res.setStatus(HttpServletResponse.SC_NOT_FOUND);
             return null;
         }
@@ -84,7 +89,7 @@ public class PartnerController {
         List<Product> products = productRepo.findByPartnerConnect(partnerId);
         List<Subscribe> subscribes = subscribeRepo.findByPartnerConnect(partnerId);
 
-        return new PartnerAllResponse(partner,subscribes, products);
+        return new PartnerAllResponse(partner, subscribes, products);
     }
 
 }

@@ -79,6 +79,7 @@ const ProductCreate = () => {
           variety: varietyInput.current.value,
           salesStatus: 0,
         };
+        console.log(data.productImageUrl);
         dispatch(requestAddProduct(data));
       };
       reader.readAsDataURL(imageFile);
