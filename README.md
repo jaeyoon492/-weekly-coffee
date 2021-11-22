@@ -714,3 +714,29 @@ https://www.notion.so/Next-js-github-Pages-7ec603ba06aa4ce3a1fb0f88e3927a9d
 </details><br>
 
 
+# 2021년 11월 22일
+커밋 링크입니다.<br>
+- https://github.com/jaeyoon492/-weekly-coffee/commit/087301215a8df97afbc509687a28de5cbf3833d4
+ <br>
+
+<details>
+<summary>여기를 눌러주세요</summary>
+<div markdown="1">
+
+## 백엔드
+1. 주문 접수시 접수가 완료됐음을 subscribeService 쪽으로 데이터를 보내주어야 할것 같아 메세지큐연동, 서비스, 컨트롤러에 기능을 추가 했습니다.
+
+## 프론트엔드
+1. 주문 접수버튼 클릭 이벤트 발생시 접수완료 된 subscribeId를 넘겨주기 위해 redux와 redux-saga에 내용을 추가했습니다.
+
+2. 카카오의 주소 조회 Api를 구현 했습니다.
+    - 데이터를 이벤트로 올려주는 과정에서 어려움이 있어 트러블 슈팅을 남겼습니다.
+
+## 트러블 슈팅
+ - PropsUp - eventDown 방식이해하기
+ - https://www.notion.so/eventUp-Props-Down-c6e9da9d504b4d588ec73f4679a6a785
+
+
+</div>
+</details><br>
+
