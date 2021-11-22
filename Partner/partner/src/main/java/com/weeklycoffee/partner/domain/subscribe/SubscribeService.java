@@ -125,8 +125,8 @@ public class SubscribeService {
     }
 
 
-//    public void sendCheckSubscribe(long subscribeId){
-//        rabbit.convertAndSend("partner.removeProduct.send",subscribeId);
-//    }
+    public void sendCheckSubscribe(long subscribeId){
+        rabbit.convertAndSend("partner.subscribeCheck.send",subscribeId);
+    }
 
 }

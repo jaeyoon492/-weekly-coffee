@@ -62,9 +62,7 @@ public class SubscribeController {
         subscribe.setOrderCheck(true);
 
         subscribeRepository.save(subscribe);
-
-
-
+        service.sendCheckSubscribe(subscribeId);
         return true;
     }
 }

@@ -1,21 +1,22 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../provider";
 import { RegistrationItem } from "../../provider/modules/registration";
 import { requestAddRegistration } from "../../middleware/modules/registration";
 import { useRouter } from "next/dist/client/router";
 import DashboardContent from "../../components/material/Dashboard";
+import Search from "../../components/search/Search";
 
 const Registration = () => {
   const companyNameInput = useRef<HTMLInputElement>(null);
   const businessRegistrationNumberInput = useRef<HTMLInputElement>(null);
   const ceoNameInput = useRef<HTMLInputElement>(null);
   const companyIntroduceText = useRef<HTMLTextAreaElement>(null);
-  const companyAddressInput = useRef<HTMLInputElement>(null);
   const companyContactInput = useRef<HTMLInputElement>(null);
   const companyEmailInput = useRef<HTMLInputElement>(null);
   const bankSelect = useRef<HTMLSelectElement>(null);
   const bankAccountInput = useRef<HTMLInputElement>(null);
+  const [address, setAddress] = useState("");
 
   const memberId = useSelector(
     (state: RootState) => state.member.data.memberId
@@ -44,9 +45,7 @@ const Registration = () => {
       companyIntroduce: companyIntroduceText.current
         ? companyIntroduceText.current.value
         : "",
-      companyAddress: companyAddressInput.current
-        ? companyAddressInput.current.value
-        : "",
+      companyAddress: address ? address : "",
       companyContact: companyContactInput.current
         ? companyContactInput.current.value
         : "",
@@ -119,15 +118,18 @@ const Registration = () => {
                     </tr>
                     <tr>
                       <th>로스터리 주소</th>
-                      <td>
+                      <td className="d-flex">
                         <input
                           className="form-control"
-                          type="text"
-                          ref={companyAddressInput}
-                          defaultValue={
-                            "서울특별시 마포구 마포대로 156 공덕푸르지오시티 1층 107호"
-                          }
+                          defaultValue={address}
                         />
+                        <div className="float-end">
+                          <Search
+                            addData={(data: string) => {
+                              setAddress(data);
+                            }}
+                          />
+                        </div>
                       </td>
                     </tr>
                     <tr>

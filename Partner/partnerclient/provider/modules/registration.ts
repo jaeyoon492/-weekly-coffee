@@ -43,12 +43,13 @@ export const registrationSlice = createSlice({
   reducers: {
     addRegistration: (state, action: PayloadAction<RegistrationItem>) => {
       const registration = action.payload;
-      
+
       if (registration) {
         state.data.registrationId = registration.registrationId;
         state.data.memberId = registration.memberId;
         state.data.businessRegistrationNumber =
           registration.businessRegistrationNumber;
+        state.data.companyName = registration.companyName;
         state.data.ceoName = registration.ceoName;
         state.data.companyIntroduce = registration.companyIntroduce;
         state.data.companyAddress = registration.companyAddress;
@@ -63,8 +64,6 @@ export const registrationSlice = createSlice({
     initialIsComplted: (state) => {
       delete state.isAddComplete;
     },
-
-    
   },
 });
 
