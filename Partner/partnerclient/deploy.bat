@@ -1,7 +1,7 @@
 - 프론트 pkill
 sudo ssh -i "/Users/myeongjaeyun/Documents/weekly-coffee/myworkspace.pem" ubuntu@ec2-54-180-141-62.ap-northeast-2.compute.amazonaws.com "pkill -f node"
 - 프론트 빌드, 엔피엠 인스톨, 엔피엠 스타트
-sudo ssh -i "/Users/myeongjaeyun/Documents/weekly-coffee/myworkspace.pem" ubuntu@ec2-54-180-141-62.ap-northeast-2.compute.amazonaws.com "cd /home/ubuntu/-weekly-coffee/Partner/partnerclient; git pull; npm install; npm run build; nohup npm start 1>/dev/null 2>&1 &"
+sudo ssh -i "/Users/myeongjaeyun/Documents/weekly-coffee/myworkspace.pem" ubuntu@ec2-54-180-141-62.ap-northeast-2.compute.amazonaws.com "cd /home/ubuntu/weekly-coffee/Partner/partnerclient; git pull; npm install; npm run build; nohup npm start 1>/dev/null 2>&1 &"
 
 - 백엔드 ec2 접속
 sudo ssh -i "/Users/myeongjaeyun/Documents/weekly-coffee/partner.pem"  ubuntu@ec2-15-164-230-72.ap-northeast-2.compute.amazonaws.com
