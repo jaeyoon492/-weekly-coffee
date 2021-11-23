@@ -119,10 +119,7 @@ const Registration = () => {
                     <tr>
                       <th>로스터리 주소</th>
                       <td className="d-flex">
-                        <input
-                          className="form-control"
-                          defaultValue={address}
-                        />
+                        <input className="form-control" value={address} />
                         <div className="float-end">
                           <Search
                             addData={(data: string) => {
