@@ -20,6 +20,7 @@ public class SubscribeRequest {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int subscriberId;
 
+    private long subscribeId;
     private long partnerId;
     private LocalDate subscribeDate;
     private String subscriberName;

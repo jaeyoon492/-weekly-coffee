@@ -22,11 +22,18 @@ const DateByProfit = ({ data }: Prop) => {
     }[];
     options: ApexOptions;
   } = {
-    // series: 실제 데이터 값
-    // series: [{name: "일자"}],
     series: [
       { name: "일자", data: data && data.map((item) => item.totalPayment) },
     ],
+    // series: [
+    //   {
+    //     name: "일자",
+    //     data: [
+    //       153400, 124000, 323040, 180000, 23000, 140000, 50123, 45000, 300000,
+    //       210000,
+    //     ],
+    //   },
+    // ],
     options: {
       chart: {
         toolbar: {
@@ -35,9 +42,19 @@ const DateByProfit = ({ data }: Prop) => {
       },
       // x축의 라벨
       xaxis: {
-        //   categories: data && data.map(item => item.totalProfit)
-        // categories: ["01-01", "01-02"]
-        categories: data && data.map((item) => item.orderDate.substr(5, 5)),
+        // categories: [
+        //   "11-01",
+        //   "11-02",
+        //   "11-03",
+        //   "11-04",
+        //   "11-05",
+        //   "11-06",
+        //   "11-07",
+        //   "11-08",
+        //   "11-09",
+        //   "11-10",
+        // ],
+        categories: data && data.map((item) => item.orderDate),
       },
       // y축의 형식을 지정
       yaxis: {

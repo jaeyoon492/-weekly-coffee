@@ -24,7 +24,7 @@ public class TestSubscribeController {
 
         SubscribeRequest toSubscribe = SubscribeRequest.builder()
                 .partnerId(testSubReq.getPartnerId())
-//                .subscribeDate(LocalDate.now())
+                .subscribeId(testSubReq.getSubscribeId())
                 .subscriberId(testSubReq.getSubscriberId())
                 .subscriberName(testSubReq.getSubscriberName())
                 .subscriberPhone(testSubReq.getSubscriberPhone())
