@@ -23,7 +23,7 @@ public class PartnerService {
     // admin -> partner (MQ)
     @RabbitListener(queues = "admin.partner.send")
     public void receivePartnerConfirm(PartnerConfirmResponse partnerConfirm) {
-        System.out.println("파트너 승인됨");
+        System.out.println("어드민 메세지");
         Partner partner = savePartner(partnerConfirm);
         mergeToMember(partner);
     }

@@ -21,13 +21,10 @@ import AlertStack from "../alert/alertStack";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../provider";
 import style from "./list.module.css";
-import {
-  requestFetchMember,
-  requestRefreshFetchAll,
-} from "../../middleware/modules/member";
+import { requestFetchMember } from "../../middleware/modules/member";
+import Head from "next/head";
+
 import { useEffect } from "react";
-import { requestFetchPartner } from "../../middleware/modules/partner";
-import AppBarSign from "../appbar";
 
 const drawerWidth: number = 240;
 
@@ -128,111 +125,123 @@ export default function DashboardContent({ children }: DashboardProps) {
   );
 
   useEffect(() => {
-    if (member.isFetched === false) {
+    if (member.isFetched === false || isPartner === false) {
       dispatch(requestFetchMember(1));
     }
-  }, [member.isFetched]);
+  }, []);
 
   return (
-    <ThemeProvider theme={mdTheme}>
-      <Box
-        sx={{
-          display: "flex",
-        }}
-      >
-        <CssBaseline />
-        <AppBar position="absolute" open={open}>
-          <Toolbar
-            sx={{
-              pr: "24px", // keep right padding when drawer closed
-            }}
-          >
-            <IconButton
-              edge="start"
-              color="inherit"
-              aria-label="open drawer"
-              onClick={toggleDrawer}
-              sx={{
-                marginRight: "36px",
-                ...(open && { display: "none" }),
-              }}
-            >
-              <MenuIcon />
-            </IconButton>
-
-            <Typography
-              component="h1"
-              variant="h5"
-              color="inherit"
-              noWrap
-              sx={{ flexGrow: 1 }}
-            >
-              <Link href="/">
-                <span className={style.span}>파트너 서비스</span>
-              </Link>
-            </Typography>
-            {/* <AppBarSign /> */}
-          </Toolbar>
-        </AppBar>
-        <Drawer variant="permanent" open={open}>
-          <Toolbar
-            sx={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "flex-end",
-              px: [1],
-              backgroundColor: "#403726ce",
-            }}
-          >
-            <IconButton onClick={toggleDrawer}>
-              <ChevronLeftIcon fontSize="large" htmlColor="#fff" />
-            </IconButton>
-          </Toolbar>
-          {isPartner && (
-            <>
-              <Divider />
-              <List>{mainListItems}</List>
-              <Divider />
-            </>
-          )}
-          {!isPartner && (
-            <>
-              <Divider />
-              <List>{notPartnerListItems}</List>
-              <Divider />
-            </>
-          )}
-        </Drawer>
+    <>
+      <Head>
+        <title>WEEKLY COFFEE</title>
+        <meta name="description" content="weekly coffee home" />
+        <link rel="icon" href="/favicon.ico" />
+        <link
+          type="text/css"
+          rel="stylesheet"
+          href="../styles/globals.css"
+        ></link>
+      </Head>
+      <ThemeProvider theme={mdTheme}>
         <Box
-          component="main"
           sx={{
-            backgroundColor: (theme) =>
-              theme.palette.mode === "light"
-                ? theme.palette.grey[100]
-                : theme.palette.grey[900],
-            flexGrow: 1,
-            height: "100vh",
-            overflow: "auto",
+            display: "flex",
           }}
         >
-          <Toolbar />
-          <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-            <Paper
+          <CssBaseline />
+          <AppBar position="absolute" open={open}>
+            <Toolbar
               sx={{
-                p: 8,
-                display: "flex",
+                pr: "24px", // keep right padding when drawer closed
               }}
             >
-              <main className={styles.main}>
-                {children}
-                <Progress />
-                <AlertStack />
-              </main>
-            </Paper>
-            <Copyright sx={{ pt: 4 }} />
-          </Container>
+              <IconButton
+                edge="start"
+                color="inherit"
+                aria-label="open drawer"
+                onClick={toggleDrawer}
+                sx={{
+                  marginRight: "36px",
+                  ...(open && { display: "none" }),
+                }}
+              >
+                <MenuIcon />
+              </IconButton>
+
+              <Typography
+                component="h1"
+                variant="h5"
+                color="inherit"
+                noWrap
+                sx={{ flexGrow: 1 }}
+              >
+                <Link href="/">
+                  <span className={style.span}>파트너 서비스</span>
+                </Link>
+              </Typography>
+              {/* <AppBarSign /> */}
+            </Toolbar>
+          </AppBar>
+          <Drawer variant="permanent" open={open}>
+            <Toolbar
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "flex-end",
+                px: [1],
+                backgroundColor: "#403726ce",
+              }}
+            >
+              <IconButton onClick={toggleDrawer}>
+                <ChevronLeftIcon fontSize="large" htmlColor="#fff" />
+              </IconButton>
+            </Toolbar>
+            {isPartner && (
+              <>
+                <Divider />
+                <List>{mainListItems}</List>
+                <Divider />
+              </>
+            )}
+            {!isPartner && (
+              <>
+                <Divider />
+                <List>{notPartnerListItems}</List>
+                <Divider />
+              </>
+            )}
+          </Drawer>
+          <Box
+            component="main"
+            sx={{
+              backgroundColor: (theme) =>
+                theme.palette.mode === "light"
+                  ? theme.palette.grey[100]
+                  : theme.palette.grey[900],
+              flexGrow: 1,
+              height: "100vh",
+              overflow: "auto",
+            }}
+          >
+            <Toolbar />
+            <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
+              <Paper
+                sx={{
+                  p: 8,
+                  display: "flex",
+                }}
+              >
+                <main className={styles.main}>
+                  {children}
+                  <Progress />
+                  <AlertStack />
+                </main>
+              </Paper>
+              <Copyright sx={{ pt: 4 }} />
+            </Container>
+          </Box>
         </Box>
-      </Box>
-    </ThemeProvider>
+      </ThemeProvider>
+    </>
   );
 }

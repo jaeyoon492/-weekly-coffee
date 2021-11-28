@@ -46,7 +46,7 @@ function* fetchMemberDataNext(action: PayloadAction<number>) {
 
     yield put(fetchMember(member));
 
-    if (member.partner !== null) {
+    if (member.partner.partnerId > 0) {
       yield put(requestFetchPartner(memberData.partner.partnerId));
     }
   } catch (e: any) {

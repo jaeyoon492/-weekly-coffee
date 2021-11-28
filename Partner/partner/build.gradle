@@ -50,6 +50,10 @@ dependencies {
 
     //S3
     implementation group: 'com.amazonaws', name: 'aws-java-sdk', version: '1.12.90'
+
+    // SWAGGER 관련 의존성
+    // https://mvnrepository.com/artifact/io.springfox/springfox-boot-starter
+    implementation group: 'io.springfox', name: 'springfox-boot-starter', version: '3.0.0'
 }
 
 // spring cloud 추가

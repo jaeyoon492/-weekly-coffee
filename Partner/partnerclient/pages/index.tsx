@@ -62,7 +62,7 @@ const Home = () => {
         }
       };
     }
-  }, [partner.partnerId]);
+  }, []);
 
   const handleCheck = (subscribeId: number) => {
     dispatch(checkSubscribe(subscribeId));

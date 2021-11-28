@@ -14,4 +14,10 @@ a {
 
 * {
   box-sizing: border-box;
+  font-family: "rBC1R_TkgdvXlXY8FF2VsPmaosg", sans-serif;
+}
+
+@font-face {
+  font-family: "rBC1R_TkgdvXlXY8FF2VsPmaosg";
+  src: url("../public/font/rBC1R_TkgdvXlXY8FF2VsPmaosg.ttf") format("truetype");
 }

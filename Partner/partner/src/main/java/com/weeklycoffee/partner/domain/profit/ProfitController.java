@@ -10,13 +10,11 @@ import java.util.List;
 
 @RestController
 public class ProfitController {
-    private ProfitRepository profitRepository;
     private ProfitRepositorySupport profitRepositorySupport;
 
     @Autowired
     ProfitController(ProfitRepositorySupport profitRepositorySupport, ProfitRepository profitRepository) {
         this.profitRepositorySupport = profitRepositorySupport;
-        this.profitRepository = profitRepository;
     }
 
     @GetMapping(value = "profits/{partnerId}/{date}")

@@ -58,7 +58,7 @@ public class ProductController {
 
     @PutMapping(value = "/product/modify")
     @CacheEvict(value = "products", allEntries = true)
-    public Product ModifyProductItem(@RequestBody ProductRequest productRequest, HttpServletResponse res) {
+    public Product modifyProductItem(@RequestBody ProductRequest productRequest, HttpServletResponse res) {
 
         Optional<Product> productOptional = productRepo.findById(productRequest.getProductId());
         Product product = productOptional.get();

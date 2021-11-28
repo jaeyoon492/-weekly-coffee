@@ -78,7 +78,7 @@ const Registration = () => {
                           className="form-control"
                           type="text"
                           ref={companyNameInput}
-                          defaultValue={"프릳츠커피컴퍼니"}
+                          defaultValue={"프릿츠커피컴퍼니"}
                         />
                       </td>
                     </tr>
@@ -111,7 +111,7 @@ const Registration = () => {
                           className="form-control"
                           ref={companyIntroduceText}
                           defaultValue={
-                            "프릳츠의 탄생은 신선한 원두를 찾아내어 로스팅하고 다양한 맛의 커피를 테스팅하길 좋아하는 커피업계 종사자와 학창 시절부터 제빵의 길을 걷던 제빵업계 종사자 여섯 명이 공동 창업한 회사이다"
+                            "프릿츠의 탄생은 신선한 원두를 찾아내어 로스팅하고 다양한 맛의 커피를 테스팅하길 좋아하는 커피업계 종사자와 학창 시절부터 제빵의 길을 걷던 제빵업계 종사자 여섯 명이 공동 창업한 회사이다"
                           }
                         ></textarea>
                       </td>
