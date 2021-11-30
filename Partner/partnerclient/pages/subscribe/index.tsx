@@ -86,14 +86,16 @@ const Subscribe = () => {
                             `개` +
                             `, 외 ${item.details.length - 1}건`
                           : item.details.map((item) => item.orderQuantity)}
+                        개
                         <br />
                         구독기간:{" "}
                         {item.details.length > 1
                           ? item.details.find((elem, index) => index === 0)
                               ?.term +
-                            `개월` +
+                            `주` +
                             `, 외 ${item.details.length - 1}건`
                           : item.details.map((item) => item.term)}
+                        주
                         <br />
                         제품단가:{" "}
                         {item.details.length > 1
@@ -101,7 +103,10 @@ const Subscribe = () => {
                               ?.productPrice +
                             `원` +
                             `, 외 ${item.details.length - 1}건`
-                          : item.details.map((item) => item.productPrice)}
+                          : item.details.map((item) =>
+                              new Intl.NumberFormat().format(item.productPrice)
+                            )}
+                        원
                         <br />
                         주문금액:{" "}
                         {new Intl.NumberFormat().format(item.totalPayment)}원
