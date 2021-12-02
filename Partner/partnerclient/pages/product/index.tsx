@@ -123,7 +123,7 @@ const ProductList = () => {
                 className="align-middle text-center justify-content-md-center flex-column"
               >
                 {product.data.map((item, index) => (
-                  <tr key={item.productId}>
+                  <tr key={item.productId} style={{ cursor: "pointer" }}>
                     <td
                       onClick={() => {
                         router.push(`/product/detail/${item.productId}`);

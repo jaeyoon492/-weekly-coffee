@@ -76,6 +76,7 @@ public class SubscribeService {
 
     @Transactional(rollbackOn = Exception.class)
     public Subscribe saveSubscribe(SubscribeResponse subRes) {
+        System.out.println(now);
 
         int total = 0;
         for (SubscribeResponse.SubscribeDetail reqDetail : subRes.getSubscribeDetails()) {
