@@ -57,7 +57,7 @@ const DateByProfit = ({ data }: Prop) => {
         <Chart
           options={chartData.options}
           series={chartData.series}
-          type="line"
+          type="bar"
           height="250px"
         />
       )}
