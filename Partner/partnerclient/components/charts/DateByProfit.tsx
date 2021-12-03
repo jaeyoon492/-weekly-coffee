@@ -27,7 +27,9 @@ const DateByProfit = ({ data }: Prop) => {
         name: "일자",
         data:
           data &&
-          data.map((item) => new Intl.NumberFormat().format(item.totalPayment)),
+          data.map(
+            (item) => new Intl.NumberFormat().format(item.totalPayment) + "원"
+          ),
       },
     ],
 
