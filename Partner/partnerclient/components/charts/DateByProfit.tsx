@@ -18,13 +18,19 @@ const DateByProfit = ({ data }: Prop) => {
   const chartData: {
     series: {
       name: string;
-      data: number[];
+      data: string[];
     }[];
     options: ApexOptions;
   } = {
     series: [
-      { name: "일자", data: data && data.map((item) => item.totalPayment) },
+      {
+        name: "일자",
+        data:
+          data &&
+          data.map((item) => new Intl.NumberFormat().format(item.totalPayment)),
+      },
     ],
+
     options: {
       chart: {
         toolbar: {
